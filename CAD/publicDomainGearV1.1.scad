@@ -149,9 +149,9 @@ function outer_radius    (mm_per_tooth=3,number_of_teeth=11,clearance=0.1)    //
 //Try it with OpenSCAD View/Animate command with 20 steps and 24 FPS.
 //The gears will continue to be rotated to mesh correctly if you change the number of teeth.
 
-n1 = 7; //red gear number of teeth
+n1 = 30; //red gear number of teeth
 n2 = 6; //green gear
-n3 = 7;  //blue gear
+n3 = 45;  //blue gear
 n4 = 16; //orange gear
 n5 = 19;  //gray rack
 mm_per_tooth = 9; //all meshing gears need the same mm_per_tooth (and the same pressure_angle)
@@ -164,11 +164,11 @@ d12=pitch_radius(mm_per_tooth,n1) + pitch_radius(mm_per_tooth,n2);
 d13=pitch_radius(mm_per_tooth,n1) + pitch_radius(mm_per_tooth,n3);
 d14=pitch_radius(mm_per_tooth,n1) + pitch_radius(mm_per_tooth,n4);
 
-projection(cut = false)translate([ 0,    0, 0]) rotate([0,0, $t*360/n1])                 color([1.00,0.75,0.75]) gear(mm_per_tooth,n1,thickness,hole);
-//translate([ 0,  d12, 0]) rotate([0,0,-($t+n2/2-0*n1+1/2)*360/n2]) color([0.75,1.00,0.75]) gear(mm_per_tooth,n2,thickness,hole,0,108);
-//projection(cut = false)translate([ d13,  0, 0]) rotate([0,0,-($t-n3/4+n1/4+1/2)*360/n3]) color([0.75,0.75,1.00]) gear(mm_per_tooth,n3,thickness,hole);
+projection()translate([ 0,    0, 0]) rotate([0,0, $t*360/n1])                 color([1.00,0.75,0.75]) gear(mm_per_tooth,n1,thickness,hole);
+//translate()projection()([ 0,  d12, 0]) rotate([0,0,-($t+n2/2-0*n1+1/2)*360/n2]) color([0.75,1.00,0.75]) gear(mm_per_tooth,n2,thickness,hole,0,108);
+projection(cut = false)translate([ d13,  0, 0]) rotate([0,0,-($t-n3/4+n1/4+1/2)*360/n3]) color([0.75,0.75,1.00]) gear(mm_per_tooth,n3,thickness,hole);
 //translate([ d13,  0, 0]) rotate([0,0,-($t-n3/4+n1/4+1/2)*360/n3]) color([0.75,0.75,1.00]) gear(mm_per_tooth,n3,thickness,hole);
 //translate([-d14,  0, 0]) rotate([0,0,-($t-n4/4-n1/4+1/2-floor(n4/4)-3)*360/n4]) color([1.00,0.75,0.50]) gear(mm_per_tooth,n4,thickness,hole,0,n4-3);
-projection(cut = false)translate([(-floor(n5/2)-floor(n1/2)+$t+n1/2-1/2)*9, -d1+0.0, 0]) rotate([0,0,0]) color([0.75,0.75,0.75]) rack(mm_per_tooth,n5,thickness,height);
+//projection(cut = false)translate([(-floor(n5/2)-floor(n1/2)+$t+n1/2-1/2)*9, -d1+0.0, 0]) rotate([0,0,0]) color([0.75,0.75,0.75]) rack(mm_per_tooth,n5,thickness,height);
 
 

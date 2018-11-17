@@ -135,22 +135,22 @@ module escapement(radius,thickness,faceAngle,armAngle,armWidth,numberTeeth,tooth
 scale=1; // scaling factor for the whole model
 radius=60*scale; // escapement wheel radius, including the teeth
 thickness=5*scale; // thickness along the Z axis
-bore=5*scale; // radius of the bores on the wheel and the escapement
+bore=4.5; // radius of the bores on the wheel and the escapement
 
-rimWidth=4*scale; // width of the escapement wheel's rim
-numberSpokes=8; // number of spokes in the escapement wheel
-spokeWidth=2*scale; // width of the escapement wheel's spokes
+rimWidth=9*scale; // width of the escapement wheel's rim
+numberSpokes=7; // number of spokes in the escapement wheel
+spokeWidth=6*scale; // width of the escapement wheel's spokes
 
-numberTeeth=30;  // number of teeth in the escapement wheel
+numberTeeth=15;  // number of teeth in the escapement wheel
 toothLength=20*scale; // length of the tooth along longest face and to inner radius of the wheel (the tip of the tooth is what counts, not the base)
 toothLean=20; // how much the tooth leans over, clockwise, in degrees
-toothSharpness=10; //the angle between the two side of each tooth
+toothSharpness=30; //the angle between the two side of each tooth
 
-toothSpan=7.5; // how many teeth the escapement spans
+toothSpan=3.5; // how many teeth the escapement spans
 faceAngle=6; // how many degrees the impulse face covers seen from the hub of the escapement wheel
 armAngle=22; // angle of the escapement's arms
 armWidth=5*scale; //width of the escapement's arms
-hubWidth=7*scale; //width of the escapement's hub
+hubWidth=12*scale; //width of the escapement's hub
 
 projection()escapementWheel(radius,rimWidth,thickness,numberTeeth,toothLength,toothLean,toothSharpness,numberSpokes,spokeWidth,hubWidth,bore);
 
