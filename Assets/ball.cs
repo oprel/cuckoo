@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ball : MonoBehaviour {
+	public float beakBoost = 300f;
 
 	private void OnTriggerEnter(Collider other)
     {
@@ -15,5 +16,11 @@ public class ball : MonoBehaviour {
 			 Destroy(gameObject);
 		}
 	}
-	
+
+	//Boost on tip collision
+	void OnCollisionEnter(Collision col) {
+		if(col.gameObject.tag == "Hitter") {
+			GetComponent<Rigidbody>().AddForceAtPosition(col.transform.forward * beakBoost, col.transform.position);
+		}
+	}
 }
