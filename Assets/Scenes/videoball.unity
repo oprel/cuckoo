@@ -1594,7 +1594,7 @@ Prefab:
     - target: {fileID: 2300002, guid: 416275eea681b4d45a77b9df38e77717, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100002, guid: 416275eea681b4d45a77b9df38e77717, type: 3}
+      objectReference: {fileID: 2100000, guid: 416275eea681b4d45a77b9df38e77717, type: 3}
     - target: {fileID: 400000, guid: 416275eea681b4d45a77b9df38e77717, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
