@@ -11,6 +11,7 @@ public class playerManager : MonoBehaviour {
 	
 	public GameObject textPrefab, oilPrefab;
 
+	public bool DebugMode;
 	public float frequency;
 	public float speed;
 	public input[] leftInput;
@@ -49,8 +50,12 @@ public class playerManager : MonoBehaviour {
 
 	private List<int> temp = new List<int>();
 	public void applyInput() {
-		string str = readArduinoInputs();
-		if(str == null) return;
+		string str = "";
+		if (!DebugMode){
+			str = readArduinoInputs();
+			if(str == null) return;
+		}
+
 		if(str.StartsWith("D")) {
 			int imp;
 			bool stri = int.TryParse(str.Split('=')[1], out imp);
@@ -80,10 +85,13 @@ public class playerManager : MonoBehaviour {
 				if(!l) continue;
 				temp.Add(w);
 			}
-			for(int i = 0; i < temp.Count; i++) rotations[i] = temp[i];
-			for(int i = 0; i < leftPlayers.Count; i++) leftInput[i].direction = rotations[i] + 90;
-			for(int i = 0; i < rightPlayers.Count; i++) rightInput[i].direction = rotations[i+3] - 90;
+			if (!DebugMode){
+				for(int i = 0; i < temp.Count; i++) rotations[i] = temp[i];
+				for(int i = 0; i < leftPlayers.Count; i++) leftInput[i].direction = rotations[i] + 90;
+				for(int i = 0; i < rightPlayers.Count; i++) rightInput[i].direction = rotations[i+3] - 90;
 
+			}
+			
 			//Impulses
 			for(int i = 0; i < leftPlayers.Count; i++) if(Input.GetKey(leftPlayers[i].keyT)) leftInput[i].energy += 1;
 			for(int i = 0; i < rightPlayers.Count; i++) if(Input.GetKey(rightPlayers[i].keyT)) rightInput[i].energy += 1;
@@ -92,9 +100,13 @@ public class playerManager : MonoBehaviour {
 
 	void Awake() {
 		self = this;
-		stream = new SerialPort("COM6", 9600);
-		stream.ReadTimeout = 50;
-		stream.Open();
+		if (!DebugMode){
+			stream = new SerialPort("COM6", 9600);
+			stream.ReadTimeout = 50;
+			stream.Open();
+		}
+		
+		
 	}
 
 	void Update() {
