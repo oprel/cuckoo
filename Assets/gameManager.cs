@@ -13,17 +13,22 @@ public class gameManager : MonoBehaviour {
 	private gamestateVisuals visuals;
 	public Text scoreDisplay;
 
-	private void Awake(){
+	private void Awake() {
 		self = this;
 		visuals = GetComponent<gamestateVisuals>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		if (scoreLeft==0){
-			visuals.msgleft.speedChange(true);
-			scoreLeft++;
-		}
-		scoreDisplay.text= scoreLeft.ToString() + " - " + scoreRight.ToString();
+	void FixedUpdate() {
+		scoreDisplay.text = scoreLeft.ToString() + " - " + scoreRight.ToString();
+	}
+
+	public static void addScoreLeft(int i) {
+		scoreLeft += i;
+		if(scoreLeft < 0) scoreLeft = 0;
+	}
+
+	public static void addScoreRight(int i) {
+		scoreRight += i;
+		if(scoreRight < 0) scoreRight = 0;
 	}
 }

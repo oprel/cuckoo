@@ -8,26 +8,49 @@ public class ball : MonoBehaviour {
 	public static float spawnAnimSpeed = 5;
 	private playerManager.Team team;
 	public bool red = false;
+
+	public float rotationSpeed = 1;
+
+	private float rotBaseSpeed;
 	
 	void Start() {
 		if(red) team = playerManager.self.GetTeam("RED"); 
-		else team = playerManager.self.GetTeam("BLUE");
+		else {
+			team = playerManager.self.GetTeam("BLUE");
+			rotationSpeed *= -1;
+		}
 		GetComponentInChildren<SpriteRenderer>().sprite = team.ballTexture;
+		rotBaseSpeed = rotationSpeed;
+	}
+
+	void FixedUpdate() {
+		transform.Rotate(0, rotationSpeed, 0);
+
+		if(transform.position.y < -10) {
+			ballSpawner.decrementBalls();
+			Destroy(gameObject);
+		}
 	}
 
 	private void OnTriggerEnter(Collider other) {
 		if (other.gameObject == gameManager.self.goalLeft) {
-			 gameManager.scoreRight++;
-			 Destroy(gameObject);
+			gameManager.addScoreLeft((red)? 1 : -1);
+			ballSpawner.decrementBalls();
+			Destroy(gameObject);
 		}
 		if (other.gameObject == gameManager.self.goalRight) {
-			 gameManager.scoreLeft++;
-			 Destroy(gameObject);
+			gameManager.addScoreRight((red)? -1 : 1);
+			ballSpawner.decrementBalls();
+			Destroy(gameObject);
 		}
 	}
 
 	//Boost on beak collision
 	void OnCollisionEnter(Collision col) {
 		if(col.gameObject.tag == "Hitter") GetComponent<Rigidbody>().AddForceAtPosition(col.transform.forward * beakBoost, col.transform.position);
+	}
+
+	public void resetRotation() {
+		rotationSpeed = rotBaseSpeed;
 	}
 }

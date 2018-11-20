@@ -1,0 +1,9 @@
+Update:
+
+- Score systeem werkt nu op gearkleur 
+- Ball gears (which turn clockwise and CCW)
+- The goal gears also turn depending on the score
+- Bug fixes
+- Optimalisation
+- Added max amount of balls per keer (6)
+- van 30FPS naar 50FPS gegaan door minor optimalisaties (thanks to Wessel en the rule of 42)

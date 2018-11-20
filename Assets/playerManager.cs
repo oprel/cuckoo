@@ -55,19 +55,11 @@ public class playerManager : MonoBehaviour {
 		else rightPlayers[p.number] = p;		
 	}
 
-	public string readArduinoInputs(int timeout = 10) {
-		stream.ReadTimeout = timeout;
-		try {
-			return stream.ReadLine();
-		}
-		catch(System.TimeoutException) {return null;}
-	}
-
 	private List<int> temp = new List<int>();
 	public void applyInput() {
 		string str = "";
-		if (!DebugMode){
-			str = readArduinoInputs();
+		if (!DebugMode) {
+			str = stream.ReadLine();
 			if(str == null) return;
 		}
 
@@ -75,12 +67,10 @@ public class playerManager : MonoBehaviour {
 			int imp;
 			bool stri = int.TryParse(str.Split('=')[1], out imp);
 			if(!stri) return;
-			//Debug.Log(imp);
 			if(imp != lastImpulse && !shouldImpulse) shouldImpulse = true;
 			if(imp == lastImpulse && shouldImpulse)
 			{	
 				shouldImpulse = false;
-				//leftInput[1].energy += 0.5f;
 				foreach(input i in leftInput) i.energy += 0.5f;
 				foreach(input i in rightInput) i.energy += 0.5f;
 				return;
@@ -88,7 +78,6 @@ public class playerManager : MonoBehaviour {
 			lastImpulse = imp;
 		}
 		else {
-			//Debug.Log(str);
 			//Direction
 			temp.Clear();
 			string[] sep = str.Split('|');
@@ -115,12 +104,18 @@ public class playerManager : MonoBehaviour {
 	}
 
 	void Awake() {
-		self = this;
-		if (!DebugMode){
-			stream = new SerialPort("COM6", 9600);
-			stream.ReadTimeout = 50;
+		if (!DebugMode) {
+			stream = new SerialPort("COM6", 115200);
 			stream.Open();
+			stream.DataReceived += DataReceivedHandler;
 		}
+		self = this;
+	}
+
+	private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e) {
+		SerialPort sp = (SerialPort)sender;
+		string distance = sp.ReadLine();
+		Debug.Log(distance);
 	}
 
 	void Update() {

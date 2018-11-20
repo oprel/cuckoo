@@ -36,11 +36,17 @@ public class oil : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col) {
 		if(col.tag == "Player") col.GetComponent<player>().changeSpeed(2);
-		else if(col.tag == "Ball") col.GetComponent<Rigidbody>().mass = 0.1f;
+		else if(col.tag == "Ball") {
+			col.GetComponent<Rigidbody>().mass = 0.1f;
+			col.GetComponent<ball>().rotationSpeed *= 2;
+		}
 	}
 
 	void OnTriggerExit(Collider col) {
 		if(col.tag == "Player") col.GetComponent<player>().changeSpeed(1);
-		else if(col.tag == "Ball") col.GetComponent<Rigidbody>().mass = 1;
+		else if(col.tag == "Ball") {
+			col.GetComponent<Rigidbody>().mass = 1;
+			col.GetComponent<ball>().resetRotation();
+		}
 	}
 }

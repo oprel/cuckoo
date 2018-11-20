@@ -16,28 +16,25 @@ public class speedChangeDisplay : MonoBehaviour {
 	public autoRotate handle;
 	
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		rt = GetComponent<RectTransform>();
 		originalPos = rt.anchoredPosition;
 		rt.anchoredPosition += offscreenoffset;
 	}
 
 
-	public void speedChange(bool isUp){
+	public void speedChange(bool isUp) {
 		speedup.SetActive(isUp);
 		speeddown.SetActive(!isUp);
 		StartCoroutine(display());
-		 if (isUp){
-			 handle.speed = -1500;
-		 }else{
-			 handle.speed = 500;
-		 }
+		if (isUp) handle.speed = -1500;
+		else handle.speed = 500;
 	}
 
-	private IEnumerator display(){
-		timer=0;
+	private IEnumerator display() {
+		timer = 0;
 		rt.anchoredPosition = originalPos+offscreenoffset;
-		float travelTime = displayTime/4;
+		float travelTime = displayTime / 4;
 		
 		while (timer <= travelTime) { 
 			timer+= Time.deltaTime;
@@ -45,7 +42,7 @@ public class speedChangeDisplay : MonoBehaviour {
  			rt.anchoredPosition=Vector3.Lerp(originalPos+offscreenoffset, originalPos, normalizedValue); 
 			yield return null;
 		}
-		while (timer>travelTime){
+		while (timer>travelTime) {
 			timer+= Time.deltaTime;
 			yield return null;
 			if (timer>=displayTime-travelTime){

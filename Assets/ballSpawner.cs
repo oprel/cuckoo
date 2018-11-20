@@ -15,9 +15,14 @@ public class ballSpawner : MonoBehaviour {
 
 	private Vector3 pos;
 
-	private bool flipped = false;
+	private bool flipped = false, red = false;
+
+	private static int ballAmount;
+	public int maxBalls = 6;
 
 	void Start () {
+		ballAmount = 2;
+
 		house = transform.GetChild(0);
 		doorL = house.Find("Door_L");
 		doorR = house.Find("Door_R");
@@ -31,11 +36,11 @@ public class ballSpawner : MonoBehaviour {
 		house.gameObject.SetActive(false);
 	}
 	
-	void Update () {
+	void FixedUpdate () {
 		if(resettimer <= 0) timer += Time.deltaTime;
 		
 		//Ball spawning
-		if(timer > frequency && resettimer <= 0) {
+		if(timer > frequency && resettimer <= 0 && ballAmount < maxBalls) {
 			timer = 0;
 			spawn();
 		}
@@ -52,6 +57,11 @@ public class ballSpawner : MonoBehaviour {
 		else if(armExtended && doorsOpen) reset();
 	}
 
+	public static void decrementBalls() {
+		ballAmount--;
+		if(ballAmount < 0) ballAmount = 0;
+	}
+
 	private void reset() {
 		timer = 0;
 		armExtended = doorsOpen = false;
@@ -60,6 +70,9 @@ public class ballSpawner : MonoBehaviour {
 	}
 
 	private void spawn() {
+		ballAmount++;
+		red = Random.Range(0, 2) == 0? true : false;
+		fakeBall.GetComponent<SpriteRenderer>().sprite = (red)?playerManager.self.GetTeam("RED").ballTexture : playerManager.self.GetTeam("BLUE").ballTexture;
 		if(Random.Range(0, 2) == 0) flipped = true;
 		else flipped = false;
 
@@ -83,7 +96,7 @@ public class ballSpawner : MonoBehaviour {
 			yield return new WaitForSeconds(.02f);
 			if(reachedPoint()) {
 				GameObject ball = Instantiate(ballPrefab, transform.position + pos, transform.rotation);
-				ball.GetComponent<ball>().red = (Random.Range(0, 2) == 0)? true : false;
+				ball.GetComponent<ball>().red = red;
 				fakeBall.gameObject.SetActive(false);
 				armExtended = true;
 			}
