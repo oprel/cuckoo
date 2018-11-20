@@ -2406,6 +2406,10 @@ Prefab:
       propertyPath: m_Name
       value: arena3D
       objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: 416275eea681b4d45a77b9df38e77717, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 416275eea681b4d45a77b9df38e77717, type: 3}
   m_IsPrefabAsset: 0
