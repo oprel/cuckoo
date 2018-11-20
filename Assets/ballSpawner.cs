@@ -29,9 +29,6 @@ public class ballSpawner : MonoBehaviour {
 		hingeBase = new Vector3(hinge.localScale.x, 0.35f, hinge.localScale.z);
 		hinge.localScale = hingeBase;
 		house.gameObject.SetActive(false);
-		
-		//Debug
-		timer = frequency / 2;
 	}
 	
 	void Update () {
@@ -85,7 +82,8 @@ public class ballSpawner : MonoBehaviour {
 			if(!reachedPoint()) hinge.localScale = new Vector3(hingeBase.x, hinge.localScale.y + 0.04f, hingeBase.z);
 			yield return new WaitForSeconds(.02f);
 			if(reachedPoint()) {
-				Instantiate(ballPrefab, transform.position + pos, transform.rotation);
+				GameObject ball = Instantiate(ballPrefab, transform.position + pos, transform.rotation);
+				ball.GetComponent<ball>().red = (Random.Range(0, 2) == 0)? true : false;
 				fakeBall.gameObject.SetActive(false);
 				armExtended = true;
 			}

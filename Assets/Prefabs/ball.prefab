@@ -85,7 +85,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1910890095378196}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: df4d3cd46af2e6140ab326c76699adec, type: 3}
 --- !u!54 &54259287551365184
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ceb8dcedaa5ef4b94ec07f25b81ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beakBoost: 300
 --- !u!135 &135476898170326134
 SphereCollider:
   m_ObjectHideFlags: 1

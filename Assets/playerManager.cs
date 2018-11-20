@@ -11,6 +11,21 @@ public class playerManager : MonoBehaviour {
 	
 	public GameObject textPrefab, oilPrefab;
 
+	[System.Serializable]
+	public class Team {
+		public string name;
+		public Sprite texture, ballTexture;
+	}
+	[Header("TeamPlay Settings")]
+	[SerializeField]
+	public Team[] teams;
+
+	public Team GetTeam(string color) {
+		foreach(Team t in teams) if(t.name.ToLower() == color.ToLower()) return t;
+		return null;
+	}
+
+	[Space(10)]
 	public bool DebugMode;
 	public float frequency;
 	public float speed;
