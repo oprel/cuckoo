@@ -7,7 +7,7 @@ public class autoRotate : MonoBehaviour {
 	public float speed;
 	// Use this for initialization
 	void Start () {
-		if (speed<0) speed = Random.value * 10;
+		if (speed==0) speed = Random.value * 20 - 10;
 	}
 	
 	// Update is called once per frame

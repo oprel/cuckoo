@@ -10,14 +10,20 @@ public class gameManager : MonoBehaviour {
 	public GameObject goalLeft;
 	public GameObject goalRight;
 
+	private gamestateVisuals visuals;
 	public Text scoreDisplay;
 
 	private void Awake(){
 		self = this;
+		visuals = GetComponent<gamestateVisuals>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (scoreLeft==0){
+			visuals.msgleft.speedChange(true);
+			scoreLeft++;
+		}
 		scoreDisplay.text= scoreLeft.ToString() + " - " + scoreRight.ToString();
 	}
 }
