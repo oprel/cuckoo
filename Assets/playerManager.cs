@@ -85,11 +85,12 @@ public class playerManager : MonoBehaviour {
 				if(!l) continue;
 				temp.Add(w);
 			}
-			if (!DebugMode){
-				for(int i = 0; i < temp.Count; i++) rotations[i] = temp[i];
-				for(int i = 0; i < leftPlayers.Count; i++) leftInput[i].direction = rotations[i] + 90;
-				for(int i = 0; i < rightPlayers.Count; i++) rightInput[i].direction = rotations[i+3] - 90;
-
+			if (!DebugMode) {
+				try {
+					for(int i = 0; i < temp.Count; i++) rotations[i] = temp[i];
+					for(int i = 0; i < leftPlayers.Count; i++) leftInput[i].direction = rotations[i] + 90;
+					for(int i = 0; i < rightPlayers.Count; i++) rightInput[i].direction = rotations[i+3] - 90;
+				} catch(System.IndexOutOfRangeException) {}
 			}
 			
 			//Impulses
@@ -105,8 +106,6 @@ public class playerManager : MonoBehaviour {
 			stream.ReadTimeout = 50;
 			stream.Open();
 		}
-		
-		
 	}
 
 	void Update() {
