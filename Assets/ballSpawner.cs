@@ -9,7 +9,7 @@ public class ballSpawner : MonoBehaviour {
 	private float timer, resettimer = 0;
 
 	private Transform house, doorL, doorR, hinge, fakeBall, drop;
-	private Vector3 doorLBase, doorRBase, hingeBase;
+	private Vector3 doorLBase, doorRBase, hingeBase, fakeBallBase;
 
 	private bool doorsOpen = false, armExtended = false;
 
@@ -33,6 +33,8 @@ public class ballSpawner : MonoBehaviour {
 		doorLBase = doorL.localPosition;
 		hingeBase = new Vector3(hinge.localScale.x, 0.35f, hinge.localScale.z);
 		hinge.localScale = hingeBase;
+		fakeBallBase = fakeBall.localScale;
+		fakeBall.localScale = new Vector3(0, 0, 0);
 		house.gameObject.SetActive(false);
 	}
 	
@@ -66,6 +68,7 @@ public class ballSpawner : MonoBehaviour {
 		timer = 0;
 		armExtended = doorsOpen = false;
 		house.gameObject.SetActive(false);
+		fakeBall.localScale = new Vector3(0, 0, 0);
 		fakeBall.gameObject.SetActive(true);
 	}
 
@@ -92,7 +95,10 @@ public class ballSpawner : MonoBehaviour {
 
 	IEnumerator extendArm() {
 		while(!armExtended) {
-			if(!reachedPoint()) hinge.localScale = new Vector3(hingeBase.x, hinge.localScale.y + 0.04f, hingeBase.z);
+			if(!reachedPoint()) {
+				hinge.localScale = new Vector3(hingeBase.x, hinge.localScale.y + 0.04f, hingeBase.z);
+				fakeBall.localScale = new Vector3(Mathf.Lerp(fakeBall.localScale.x, fakeBallBase.x, Time.deltaTime * 8), Mathf.Lerp(fakeBall.localScale.y, fakeBallBase.y, Time.deltaTime * 8), Mathf.Lerp(fakeBall.localScale.z, fakeBallBase.z, Time.deltaTime * 8));
+			}
 			yield return new WaitForSeconds(.02f);
 			if(reachedPoint()) {
 				GameObject ball = Instantiate(ballPrefab, transform.position + pos, transform.rotation);

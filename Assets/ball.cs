@@ -10,7 +10,6 @@ public class ball : MonoBehaviour {
 	public bool red = false;
 
 	public float rotationSpeed = 1;
-
 	private float rotBaseSpeed;
 	
 	void Start() {
@@ -36,11 +35,20 @@ public class ball : MonoBehaviour {
 		if (other.gameObject == gameManager.self.goalLeft) {
 			gameManager.addScoreLeft((red)? 1 : -1);
 			ballSpawner.decrementBalls();
+
+			//speed UI
+			if(red) gameManager.self.visuals.msgleft.speedChange(true);
+			else gameManager.self.visuals.msgleft.speedChange(false);
+
 			Destroy(gameObject);
 		}
 		if (other.gameObject == gameManager.self.goalRight) {
 			gameManager.addScoreRight((red)? -1 : 1);
 			ballSpawner.decrementBalls();
+
+			//speed UI
+			if(!red) gameManager.self.visuals.msgright.speedChange(true);
+			else gameManager.self.visuals.msgright.speedChange(false);
 			Destroy(gameObject);
 		}
 	}
