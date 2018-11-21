@@ -34,22 +34,21 @@ public class speedChangeDisplay : MonoBehaviour {
 	private IEnumerator display() {
 		timer = 0;
 		rt.anchoredPosition = originalPos+offscreenoffset;
-		float travelTime = displayTime / 4;
+		float travelTime = displayTime/8;
 		
 		while (timer <= travelTime) { 
 			timer+= Time.deltaTime;
 			float normalizedValue = timer/travelTime;
- 			rt.anchoredPosition=Vector3.Lerp(originalPos+offscreenoffset, originalPos, normalizedValue); 
+			Vector2 a = originalPos;
+			a.x = Vector3.Slerp(a+offscreenoffset, a, normalizedValue).x; 
+ 			rt.anchoredPosition=a;
 			yield return null;
 		}
-		while (timer>travelTime) {
+		while (timer<displayTime){
 			timer+= Time.deltaTime;
 			yield return null;
-			if (timer>=displayTime-travelTime){
-				float normalizedValue = timer/travelTime;
- 				rt.anchoredPosition=Vector3.Lerp(originalPos, originalPos+offscreenoffset, normalizedValue); 
-			}
-			if (timer>displayTime)break;
 		}
+		rt.anchoredPosition=originalPos+offscreenoffset;
+
 	}
 }
