@@ -19,6 +19,7 @@ public class gamestateVisuals : MonoBehaviour {
 	void Update () {
 		gearLeft.speed = gameManager.self.scoreLeft * -10;
 		gearRight.speed = gameManager.self.scoreRight * 10;
+		
 	}
 
 	public static void screenShake(){

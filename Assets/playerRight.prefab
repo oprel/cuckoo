@@ -669,6 +669,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftTeam: 0
   number: 0
+  rotationSpeed: 0
+  eyeGear: {fileID: 114260067926967570}
   keyT: 105
   speed: 1
 --- !u!198 &198408702081467568

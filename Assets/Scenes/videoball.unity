@@ -14198,8 +14198,8 @@ MonoBehaviour:
   speed: 300
   leftInput:
   - name: Left 1
-    energy: 0
-    direction: 0
+    energy: 7.13
+    direction: 193
     timer: 0
   - name: Left 2
     energy: 0

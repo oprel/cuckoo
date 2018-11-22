@@ -8,7 +8,9 @@ public class player : MonoBehaviour {
 	private Rigidbody rb;
 	private Vector3 startPos;
 	public int number;
-
+	[HideInInspector]
+	public float rotationSpeed;
+	public autoRotate eyeGear;
 	public KeyCode keyT;
 
 	private GameObject text;
@@ -33,7 +35,7 @@ public class player : MonoBehaviour {
 
 	public void Update() {
 		if(transform.position.y < -2) Reset();
-
+		eyeGear.speed = rotationSpeed;
 		//Speed
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
 
