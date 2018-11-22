@@ -19,15 +19,20 @@ public class ball : MonoBehaviour {
 		if (other.gameObject == gameManager.self.goalLeft) {
 			 gameManager.scoreRight++;
 			 Destroy(gameObject);
+			 gamestateVisuals.hitStun();
 		}
 		if (other.gameObject == gameManager.self.goalRight) {
 			 gameManager.scoreLeft++;
 			 Destroy(gameObject);
+			 gamestateVisuals.hitStun();
 		}
 	}
 
 	//Boost on beak collision
 	void OnCollisionEnter(Collision col) {
-		if(col.gameObject.tag == "Hitter") GetComponent<Rigidbody>().AddForceAtPosition(col.transform.forward * beakBoost, col.transform.position);
+		if(col.gameObject.tag == "Hitter") {
+			GetComponent<Rigidbody>().AddForceAtPosition(col.transform.forward * beakBoost, col.transform.position);
+			gamestateVisuals.hitStun();
+		}
 	}
 }
