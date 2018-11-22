@@ -42,8 +42,8 @@ public class player : MonoBehaviour {
 		//Leaking
 		if(leakDelay > 0) leakDelay--;
 		rotationDelay += Time.deltaTime;
-		if(rotationDelay > 0.4f && keyT == KeyCode.A) {
-			if(Mathf.Abs(lastRot - transform.rotation.y) > 1 && leakDelay <= 0) leak();
+		if(rotationDelay > 0.4f) {
+			if(Mathf.Abs(lastRot - transform.rotation.y) > 0.5f && leakDelay <= 0) leak();
 			rotationDelay = 0;
 			lastRot = transform.rotation.y;
 		}

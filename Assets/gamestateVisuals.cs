@@ -17,8 +17,8 @@ public class gamestateVisuals : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		gearLeft.speed = gameManager.scoreLeft * -10;
-		gearRight.speed = gameManager.scoreRight * 10;
+		gearLeft.speed = gameManager.self.scoreLeft * -10;
+		gearRight.speed = gameManager.self.scoreRight * 10;
 	}
 
 	public static void hitStun(float t = 5){

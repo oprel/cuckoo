@@ -5,25 +5,30 @@ using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour {
 	public static gameManager self;
-	public static int scoreLeft;
-	public static int scoreRight;
+	public int scoreLeft;
+	public int scoreRight;
 	public GameObject goalLeft;
 	public GameObject goalRight;
 
-	private gamestateVisuals visuals;
+	public gamestateVisuals visuals;
 	public Text scoreDisplay;
 
-	private void Awake(){
+	private void Awake() {
 		self = this;
 		visuals = GetComponent<gamestateVisuals>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		if (scoreLeft==0){
-			visuals.msgleft.speedChange(true);
-			scoreLeft++;
-		}
-		scoreDisplay.text= scoreLeft.ToString() + " - " + scoreRight.ToString();
+	void FixedUpdate() {
+		scoreDisplay.text = scoreLeft.ToString() + " - " + scoreRight.ToString();
+	}
+
+	public static void addScoreLeft(int i) {
+		self.scoreLeft += i;
+		if(self.scoreLeft < 0) self.scoreLeft = 0;
+	}
+
+	public static void addScoreRight(int i) {
+		self.scoreRight += i;
+		if(self.scoreRight < 0) self.scoreRight = 0;
 	}
 }
