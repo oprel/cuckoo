@@ -136,6 +136,8 @@ public class playerManager : MonoBehaviour {
 	void updatePlayer(player p, input inp) {
 		p.transform.rotation =  Quaternion.Euler(0, inp.direction, 0);
 		
+		p.rotationSpeed = inp.energy*50;
+		if (p.leftTeam) p.rotationSpeed*=-1;
 		if(inp.energy > 0) {
 			inp.timer += Time.deltaTime;
 			if (inp.timer > frequency) {

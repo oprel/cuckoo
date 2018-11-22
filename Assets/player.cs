@@ -8,7 +8,9 @@ public class player : MonoBehaviour {
 	private Rigidbody rb;
 	private Vector3 startPos;
 	public int number;
-
+	[HideInInspector]
+	public float rotationSpeed;
+	public autoRotate eyeGear;
 	public KeyCode keyT;
 
 	private GameObject text;
@@ -20,6 +22,7 @@ public class player : MonoBehaviour {
 	[SerializeField]
 	private float speed = 1;
 	private float speedTarget = 1;
+	private GameObject oil;
 
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
@@ -32,7 +35,7 @@ public class player : MonoBehaviour {
 
 	public void Update() {
 		if(transform.position.y < -2) Reset();
-
+		eyeGear.speed = rotationSpeed;
 		//Speed
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
 
@@ -40,7 +43,7 @@ public class player : MonoBehaviour {
 		text.transform.position = transform.position;
 
 		//Leaking
-		if(leakDelay > 0) leakDelay--;
+		if(leakDelay > 0  && !oil) leakDelay--;
 		rotationDelay += Time.deltaTime;
 		if(rotationDelay > 0.4f) {
 			if(Mathf.Abs(lastRot - transform.rotation.y) > 0.5f && leakDelay <= 0) leak();
@@ -63,7 +66,7 @@ public class player : MonoBehaviour {
 	public void leak() {
 		float startrot = Random.Range(0, 360);
 		for(int i = 1; i <= 3; i++) {
-			GameObject oil = Instantiate(playerManager.self.oilPrefab, transform.position, Quaternion.Euler(0, startrot+(90*(i)), 0));
+			oil = Instantiate(playerManager.self.oilPrefab, transform.position, Quaternion.Euler(0, startrot+(90*(i)), 0));
 			oil.GetComponent<Rigidbody>().AddForce(300 * oil.transform.forward);
 		}
 		leakDelay = 5;
