@@ -52,7 +52,7 @@ public class cameraShake : MonoBehaviour {
 	IEnumerator Shake() {
 		isRunning = true;
  
-		while (shakeDuration > 0.01f) {
+		while (shakeDuration > 0.1f) {
 			Vector3 rotationAmount = Random.insideUnitSphere * shakeAmount;//A Vector3 to add to the Local Rotation
 			rotationAmount.z = 0;//Don't change the Z; it looks funny.
  

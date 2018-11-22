@@ -37,8 +37,9 @@ public class ball : MonoBehaviour {
 			ballSpawner.decrementBalls();
 
 			//speed UI
-			if(red) gameManager.self.visuals.msgleft.speedChange(true);
-			else gameManager.self.visuals.msgleft.speedChange(false);
+			if(red) gamestateVisuals.self.msgleft.speedChange(true);
+			else gamestateVisuals.self.msgleft.speedChange(false);
+			gamestateVisuals.hitStun();
 
 			Destroy(gameObject);
 		}
@@ -47,8 +48,9 @@ public class ball : MonoBehaviour {
 			ballSpawner.decrementBalls();
 
 			//speed UI
-			if(!red) gameManager.self.visuals.msgright.speedChange(true);
-			else gameManager.self.visuals.msgright.speedChange(false);
+			if(!red) gamestateVisuals.self.msgright.speedChange(true);
+			else gamestateVisuals.self.msgright.speedChange(false);
+			gamestateVisuals.hitStun();
 			Destroy(gameObject);
 		}
 	}

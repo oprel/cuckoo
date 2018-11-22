@@ -21,9 +21,12 @@ public class gamestateVisuals : MonoBehaviour {
 		gearRight.speed = gameManager.self.scoreRight * 10;
 	}
 
+	public static void screenShake(){
+		self.cameraShake.ShakeCamera(.2f,.2f);
+	}
 	public static void hitStun(float t = 5){
 		self.StartCoroutine(stun(t));
-		self.cameraShake.ShakeCamera(10,.1f);
+		
 	}
 	private static IEnumerator stun(float t){
 		float s = Time.timeScale;
