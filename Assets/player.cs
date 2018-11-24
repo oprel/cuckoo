@@ -28,8 +28,12 @@ public class player : MonoBehaviour {
 		playerManager.addPlayer(leftTeam, this);
 		rb = GetComponent<Rigidbody>();
 		startPos = transform.position;
+		if (keyT==KeyCode.Q){
 		text = Instantiate(playerManager.self.textPrefab, transform.position, Quaternion.Euler(90, 0, 0));
-		text.GetComponent<TextMesh>().text = keyT.ToString();
+		text.GetComponent<TextMesh>().text = "YOU";	
+		}
+		//text = Instantiate(playerManager.self.textPrefab, transform.position, Quaternion.Euler(90, 0, 0));
+		//text.GetComponent<TextMesh>().text = keyT.ToString();
 		lastRot = transform.rotation.y;
 	}
 
@@ -46,7 +50,7 @@ public class player : MonoBehaviour {
 		if(leakDelay > 0  && !oil) leakDelay--;
 		rotationDelay += Time.deltaTime;
 		if(rotationDelay > 0.4f) {
-			if(Mathf.Abs(lastRot - transform.rotation.y) > 0.5f && leakDelay <= 0) leak();
+			//if(Mathf.Abs(lastRot - transform.rotation.y) > 0.5f && leakDelay <= 0) leak();
 			rotationDelay = 0;
 			lastRot = transform.rotation.y;
 		}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class gameManager : MonoBehaviour {
 	public static gameManager self;
@@ -20,6 +21,11 @@ public class gameManager : MonoBehaviour {
 	
 	void FixedUpdate() {
 		scoreDisplay.text = scoreLeft.ToString() + " - " + scoreRight.ToString();
+	if (Input.GetButton("Fire2")){
+		playerManager.self.stream.Dispose();
+		Application.LoadLevel(Application.loadedLevel);
+
+	}
 	}
 
 	public static void addScoreLeft(int i) {

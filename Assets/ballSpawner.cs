@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ballSpawner : MonoBehaviour {
 	public GameObject ballPrefab;
+	public GameObject trashPrefab;
 	public float frequency;
 	public float radius;
 	private float timer, resettimer = 0;

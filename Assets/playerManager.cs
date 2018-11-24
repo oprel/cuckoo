@@ -11,6 +11,18 @@ public class playerManager : MonoBehaviour {
 	
 	public GameObject textPrefab, oilPrefab;
 
+	public enum ports
+	{
+		COM1,
+		COM2,
+		COM3,
+		COM4,
+		COM5,
+		COM6,
+		COM7
+	}
+	public ports port;
+
 	[System.Serializable]
 	public class Team {
 		public string name;
@@ -32,7 +44,7 @@ public class playerManager : MonoBehaviour {
 	public input[] leftInput;
 	public input[] rightInput;
 
-	private SerialPort stream;
+	public SerialPort stream;
 
 	private int[] rotations = new int[6];
 
@@ -105,7 +117,7 @@ public class playerManager : MonoBehaviour {
 
 	void Awake() {
 		if (!DebugMode) {
-			stream = new SerialPort("COM6", 115200);
+			stream = new SerialPort(port.ToString(), 115200);
 			stream.Open();
 			stream.DataReceived += DataReceivedHandler;
 		}
