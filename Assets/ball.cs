@@ -18,8 +18,9 @@ public class ball : MonoBehaviour {
 			team = playerManager.self.GetTeam("BLUE");
 			rotationSpeed *= -1;
 		}
-		GetComponentInChildren<SpriteRenderer>().sprite = team.ballTexture;
+		//GetComponentInChildren<SpriteRenderer>().sprite = team.ballTexture;
 		rotBaseSpeed = rotationSpeed;
+		playerManager.self.balls.Add(gameObject);
 	}
 
 	void FixedUpdate() {

@@ -77,7 +77,7 @@ public class ballSpawner : MonoBehaviour {
 	private void spawn() {
 		ballAmount++;
 		red = Random.Range(0, 2) == 0? true : false;
-		fakeBall.GetComponent<SpriteRenderer>().sprite = (red)?playerManager.self.GetTeam("RED").ballTexture : playerManager.self.GetTeam("BLUE").ballTexture;
+		//fakeBall.GetComponent<SpriteRenderer>().sprite = (red)?playerManager.self.GetTeam("RED").ballTexture : playerManager.self.GetTeam("BLUE").ballTexture;
 		if(Random.Range(0, 2) == 0) flipped = true;
 		else flipped = false;
 

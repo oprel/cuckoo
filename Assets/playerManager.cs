@@ -8,6 +8,7 @@ public class playerManager : MonoBehaviour {
 	public static Dictionary<int, player> leftPlayers = new Dictionary<int, player>();
 	public static Dictionary<int, player> rightPlayers = new Dictionary<int, player>();
 	public static playerManager self;
+	public List<GameObject> balls = new List<GameObject>();
 	
 	public GameObject textPrefab, oilPrefab;
 
@@ -60,6 +61,7 @@ public class playerManager : MonoBehaviour {
 		public float direction;
 		[HideInInspector]
 		public float timer;
+		public bool enableAI;
 	};
 
 	public static void addPlayer(bool addToLeft, player p) {
@@ -131,6 +133,8 @@ public class playerManager : MonoBehaviour {
 	}
 
 	void Update() {
+
+		
 		applyInput();
 
 		for(int i = 0; i < leftPlayers.Count; i++) {
@@ -146,7 +150,25 @@ public class playerManager : MonoBehaviour {
 	}
 
 	void updatePlayer(player p, input inp) {
-		p.transform.rotation =  Quaternion.Euler(0, inp.direction, 0);
+
+		if (inp.enableAI){
+			balls.Sort((a, b)=> 1 - 2 * Random.Range(0, 1));
+			if (!p.aiTarget){
+				foreach (GameObject b in balls){
+					if (b){
+						p.aiTarget = b.transform;
+					}else{
+						balls.Remove(b);
+					}
+				}
+			}
+			//inp.direction = Random.value * 360;
+			p.transform.LookAt(p.aiTarget);
+			Vector3 eulerAngles = p.transform.rotation.eulerAngles;
+			inp.direction = eulerAngles.y;
+			if (inp.energy==0) inp.energy=1;
+		}
+			p.transform.rotation =  Quaternion.Euler(0, inp.direction, 0);
 		
 		p.rotationSpeed = inp.energy*50;
 		if (p.leftTeam) p.rotationSpeed*=-1;
@@ -159,4 +181,6 @@ public class playerManager : MonoBehaviour {
 			}
 		}
 	}
+
+
 }

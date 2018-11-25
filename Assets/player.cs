@@ -23,15 +23,14 @@ public class player : MonoBehaviour {
 	private float speed = 1;
 	private float speedTarget = 1;
 	private GameObject oil;
+	[HideInInspector]
+	public Transform aiTarget;
 
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
 		rb = GetComponent<Rigidbody>();
 		startPos = transform.position;
-		if (keyT==KeyCode.Q){
-		text = Instantiate(playerManager.self.textPrefab, transform.position, Quaternion.Euler(90, 0, 0));
-		text.GetComponent<TextMesh>().text = "YOU";	
-		}
+
 		//text = Instantiate(playerManager.self.textPrefab, transform.position, Quaternion.Euler(90, 0, 0));
 		//text.GetComponent<TextMesh>().text = keyT.ToString();
 		lastRot = transform.rotation.y;
@@ -44,7 +43,7 @@ public class player : MonoBehaviour {
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
 
 		//Key text
-		text.transform.position = transform.position;
+		//text.transform.position = transform.position;
 
 		//Leaking
 		if(leakDelay > 0  && !oil) leakDelay--;
@@ -55,6 +54,7 @@ public class player : MonoBehaviour {
 			lastRot = transform.rotation.y;
 		}
 	}
+
 	
 	public void impulse(float force) {
 		rb.AddForce(transform.forward * force * speed);

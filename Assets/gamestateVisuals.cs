@@ -26,6 +26,7 @@ public class gamestateVisuals : MonoBehaviour {
 		self.cameraShake.ShakeCamera(.2f,.2f);
 	}
 	public static void hitStun(float t = 5){
+		return;
 		self.StartCoroutine(stun(t));
 		
 	}
