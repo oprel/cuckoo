@@ -10,6 +10,7 @@ public class gamestateVisuals : MonoBehaviour {
 	public speedChangeDisplay msgleft;
 	public speedChangeDisplay msgright;
 	public cameraShake cameraShake;
+	public GameObject beakboostvisual;
 
 	void Awake(){
 		self = this;

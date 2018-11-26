@@ -49,7 +49,7 @@ public class player : MonoBehaviour {
 		if(leakDelay > 0  && !oil) leakDelay--;
 		rotationDelay += Time.deltaTime;
 		if(rotationDelay > 0.4f) {
-			//if(Mathf.Abs(lastRot - transform.rotation.y) > 0.5f && leakDelay <= 0) leak();
+		//if(Mathf.Abs(lastRot - transform.rotation.y) > 0.5f && leakDelay <= 0) leak();
 			rotationDelay = 0;
 			lastRot = transform.rotation.y;
 		}

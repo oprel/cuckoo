@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class oil : MonoBehaviour {
+	public Material puddle;
 	private float time = 0;
 	private bool spill = false;
 	private float fade = 0;
 	private bool end = false;
+	private MeshRenderer rend;
+	private Quaternion rot;
 
+
+private void Awake(){
+	rend = GetComponent<MeshRenderer>();
+	rot = transform.rotation = Quaternion.Euler(90,Random.value*360,0);
+}
 	void Update () {
 		time += Time.deltaTime;
+		transform.rotation=rot;
+		
 		if(!spill) {
 			if(time > 0.6f) {
 				spill = true;
@@ -19,6 +29,7 @@ public class oil : MonoBehaviour {
 			}
 		}
 		else {
+			rend.material = puddle;
 			transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x, 2, Time.deltaTime * 2), Mathf.Lerp(transform.localScale.y, 1.4f, Time.deltaTime * 2), Mathf.Lerp(transform.localScale.z, 2, Time.deltaTime * 2));
 			gameObject.layer = 0;
 		}
@@ -28,7 +39,7 @@ public class oil : MonoBehaviour {
 		}
 		if(fade > 0) {
 			fade -= Time.deltaTime;
-			Material mat = GetComponent<MeshRenderer>().material;
+			Material mat = rend.material;
 			mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, fade);
 		}
 		else if(end) Destroy(gameObject);

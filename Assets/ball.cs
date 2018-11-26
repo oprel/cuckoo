@@ -8,6 +8,7 @@ public class ball : MonoBehaviour {
 	public static float spawnAnimSpeed = 5;
 	private playerManager.Team team;
 	public bool red = false;
+	public bool trash = false;
 
 	public float rotationSpeed = 1;
 	private float rotBaseSpeed;
@@ -20,7 +21,7 @@ public class ball : MonoBehaviour {
 		}
 		//GetComponentInChildren<SpriteRenderer>().sprite = team.ballTexture;
 		rotBaseSpeed = rotationSpeed;
-		playerManager.self.balls.Add(gameObject);
+		if (!trash) playerManager.self.balls.Add(gameObject);
 	}
 
 	void FixedUpdate() {
@@ -34,23 +35,21 @@ public class ball : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other) {
 		if (other.gameObject == gameManager.self.goalLeft) {
-			gameManager.addScoreLeft((red)? 1 : -1);
+			gameManager.addScoreLeft((trash)? -1 : 1);
 			ballSpawner.decrementBalls();
 
 			//speed UI
-			if(red) gamestateVisuals.self.msgleft.speedChange(true);
-			else gamestateVisuals.self.msgleft.speedChange(false);
+			gamestateVisuals.self.msgleft.speedChange(!trash);
 			gamestateVisuals.hitStun();
 
 			Destroy(gameObject);
 		}
 		if (other.gameObject == gameManager.self.goalRight) {
-			gameManager.addScoreRight((red)? -1 : 1);
+			gameManager.addScoreRight((trash)? -1 : 1);
 			ballSpawner.decrementBalls();
 
 			//speed UI
-			if(!red) gamestateVisuals.self.msgright.speedChange(true);
-			else gamestateVisuals.self.msgright.speedChange(false);
+			gamestateVisuals.self.msgright.speedChange(!trash);
 			gamestateVisuals.hitStun();
 			Destroy(gameObject);
 		}
@@ -60,6 +59,7 @@ public class ball : MonoBehaviour {
 	void OnCollisionEnter(Collision col) {
 		if(col.gameObject.tag == "Hitter") {
 			GetComponent<Rigidbody>().AddForceAtPosition(col.transform.forward * beakBoost, col.transform.position);
+			Instantiate(gamestateVisuals.self.beakboostvisual,transform.position,Quaternion.identity);
 			gamestateVisuals.hitStun();
 		}
 	}
