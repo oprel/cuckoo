@@ -153,8 +153,9 @@ public class playerManager : MonoBehaviour {
 
 		if (inp.enableAI){
 			balls.Sort((a, b)=> 1 - 2 * Random.Range(0, 1));
+			List<GameObject> bcopy = new List<GameObject>(balls);
 			if (!p.aiTarget){
-				foreach (GameObject b in balls){
+				foreach (GameObject b in bcopy){
 					if (b){
 						p.aiTarget = b.transform;
 					}else{
@@ -166,7 +167,7 @@ public class playerManager : MonoBehaviour {
 			p.transform.LookAt(p.aiTarget);
 			Vector3 eulerAngles = p.transform.rotation.eulerAngles;
 			inp.direction = eulerAngles.y;
-			if (inp.energy==0) inp.energy=1;
+			if (inp.energy<1 && Random.value<.03f) inp.energy=Random.value*10;
 		}
 			p.transform.rotation =  Quaternion.Euler(0, inp.direction, 0);
 		
