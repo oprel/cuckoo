@@ -20,7 +20,7 @@ public class ballSpawner : MonoBehaviour {
 	private bool flipped = false, red = false;
 
 	private static int ballAmount;
-	public int maxBalls = 6;
+	public int maxBalls = 9;
 
 	void Start () {
 		ballAmount = 2;
@@ -38,6 +38,8 @@ public class ballSpawner : MonoBehaviour {
 		fakeBallBase = fakeBall.localScale;
 		fakeBall.localScale = new Vector3(0, 0, 0);
 		house.gameObject.SetActive(false);
+		for (int i = 0; i < 4; i++) spawn(true);
+
 	}
 	
 	void FixedUpdate () {
@@ -46,7 +48,8 @@ public class ballSpawner : MonoBehaviour {
 		//Ball spawning
 		if(timer > frequency && resettimer <= 0 && ballAmount < maxBalls) {
 			timer = 0;
-			spawn();
+				spawn(Random.value>.8f);
+			
 		}
 		fakeBall.position = drop.position;
 
@@ -74,8 +77,14 @@ public class ballSpawner : MonoBehaviour {
 		fakeBall.gameObject.SetActive(true);
 	}
 
-	private void spawn() {
+	private void spawn(bool trash = false) {
 		ballAmount++;
+		if (trash){
+			Vector3 pos = new Vector3(Random.Range(-10,10),5,Random.Range(-7,7));
+			GameObject o = Instantiate(trashPrefab[Random.Range(0,trashPrefab.Length)],pos,Random.rotation);
+			return;
+		}
+		
 		red = Random.Range(0, 2) == 0? true : false;
 		//fakeBall.GetComponent<SpriteRenderer>().sprite = (red)?playerManager.self.GetTeam("RED").ballTexture : playerManager.self.GetTeam("BLUE").ballTexture;
 		if(Random.Range(0, 2) == 0) flipped = true;

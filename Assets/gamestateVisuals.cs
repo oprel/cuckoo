@@ -14,6 +14,8 @@ public class gamestateVisuals : MonoBehaviour {
 
 	void Awake(){
 		self = this;
+		msgleft.gameObject.SetActive(true);
+		msgright.gameObject.SetActive(true);
 	}
 	
 	// Update is called once per frame

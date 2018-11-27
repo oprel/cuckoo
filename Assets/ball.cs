@@ -21,11 +21,12 @@ public class ball : MonoBehaviour {
 		}
 		//GetComponentInChildren<SpriteRenderer>().sprite = team.ballTexture;
 		rotBaseSpeed = rotationSpeed;
-		if (!trash) playerManager.self.balls.Add(gameObject);
+		//if (!trash) 
+		playerManager.self.balls.Add(gameObject);
 	}
 
 	void FixedUpdate() {
-		transform.Rotate(0, rotationSpeed, 0);
+		if (!trash)transform.Rotate(0, rotationSpeed, 0);
 
 		if(transform.position.y < -10) {
 			ballSpawner.decrementBalls();
