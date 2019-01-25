@@ -1,15 +1,56 @@
 fileFormatVersion: 2
-guid: d9a09e3f1780aad46a6acb80905c7125
+guid: 185eeca59716cbe479632106f4fbd86c
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
+    100002: arenaNew
+    100004: clockborder
+    100006: hand1
+    100008: hand2
+    100010: pCylinder4
+    100012: plank1
+    100014: plank2
+    100016: plank3
+    100018: pPlane3
+    100020: transform1
+    100022: transform2
     400000: //RootNode
-    2100000: black2
-    2100002: black1
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: pCube126
+    400002: arenaNew
+    400004: clockborder
+    400006: hand1
+    400008: hand2
+    400010: pCylinder4
+    400012: plank1
+    400014: plank2
+    400016: plank3
+    400018: pPlane3
+    400020: transform1
+    400022: transform2
+    2100000: wall
+    2100002: lambert1
+    2300000: arenaNew
+    2300002: clockborder
+    2300004: hand1
+    2300006: hand2
+    2300008: plank1
+    2300010: plank2
+    2300012: plank3
+    3300000: arenaNew
+    3300002: clockborder
+    3300004: hand1
+    3300006: hand2
+    3300008: plank1
+    3300010: plank2
+    3300012: plank3
+    4300000: arenaNew
+    4300002: clockborder
+    4300004: hand1
+    4300006: hand2
+    4300008: plank1
+    4300010: plank2
+    4300012: plank3
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -41,7 +82,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 10000
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
