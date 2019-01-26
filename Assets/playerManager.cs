@@ -124,6 +124,11 @@ public class playerManager : MonoBehaviour {
 			stream.DataReceived += DataReceivedHandler;
 		}
 		self = this;
+		ball[] bs = FindObjectsOfType<ball>();
+		foreach (ball b in bs){
+			if (!b.trash)
+				balls.Add(b.gameObject);
+		}
 	}
 
 	private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e) {

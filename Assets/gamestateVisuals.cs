@@ -12,6 +12,7 @@ public class gamestateVisuals : MonoBehaviour {
 	public cameraShake cameraShake;
 	public GameObject beakboostvisual;
 
+
 	void Awake(){
 		self = this;
 		msgleft.gameObject.SetActive(true);
@@ -20,8 +21,8 @@ public class gamestateVisuals : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		gearLeft.speed = gameManager.self.scoreLeft * -10;
-		gearRight.speed = gameManager.self.scoreRight * 10;
+		gearLeft.speed = gameManager.self.scoreLeft * -40;
+		gearRight.speed = gameManager.self.scoreRight * 40;
 		
 	}
 
