@@ -338,6 +338,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1189017306221446, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4002434281821274, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.148833
@@ -499,6 +503,10 @@ PrefabInstance:
     - target: {fileID: 1189017306221446, guid: dba05f8075e252941bfe51d5e80fbf47, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189017306221446, guid: dba05f8075e252941bfe51d5e80fbf47, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4002434281821274, guid: dba05f8075e252941bfe51d5e80fbf47, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1343,6 +1351,10 @@ PrefabInstance:
     - target: {fileID: 1189017306221446, guid: dba05f8075e252941bfe51d5e80fbf47, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189017306221446, guid: dba05f8075e252941bfe51d5e80fbf47, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4002434281821274, guid: dba05f8075e252941bfe51d5e80fbf47, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2852,6 +2864,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1189017306221446, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4002434281821274, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.2517915
@@ -3482,6 +3498,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1189017306221446, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4002434281821274, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.64
@@ -3840,6 +3860,10 @@ PrefabInstance:
     - target: {fileID: 1189017306221446, guid: dba05f8075e252941bfe51d5e80fbf47, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189017306221446, guid: dba05f8075e252941bfe51d5e80fbf47, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4002434281821274, guid: dba05f8075e252941bfe51d5e80fbf47, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9812,7 +9836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c402780d8df004ebbf11e57e8e80ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterVolume: 4
+  masterVolume: 2.6
   muteMusic: 0
   mainBass: {fileID: 8300000, guid: bb54b2fb8fa01774c8916b94a4d33e46, type: 3}
   mainDrums: {fileID: 8300000, guid: 52fff3aa6ec25134dbb7075546194c80, type: 3}
@@ -9834,6 +9858,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f157aadafe176d44f976bac0bc162473, type: 3}
   - {fileID: 8300000, guid: 9bfe04c3cec440e4d9e93609eb36882d, type: 3}
   - {fileID: 8300000, guid: ab2da1283ae84fb49a86b0e4e1778bd7, type: 3}
+  - {fileID: 8300000, guid: bb6e3fb1f54b9da4b9df6a0f0077e3b6, type: 3}
+  - {fileID: 8300000, guid: 50c428c8f4c354d4793f1d31e7e43ff3, type: 3}
 --- !u!1 &1905748045
 GameObject:
   m_ObjectHideFlags: 0
@@ -14787,17 +14813,17 @@ MonoBehaviour:
     energy: 0
     direction: 0
     timer: 0
-    enableAI: 0
+    enableAI: 1
   - name: Right 2
     energy: 0
     direction: 0
     timer: 0
-    enableAI: 0
+    enableAI: 1
   - name: Right 3
     energy: 0
     direction: 0
     timer: 0
-    enableAI: 0
+    enableAI: 1
 --- !u!4 &1994311434
 Transform:
   m_ObjectHideFlags: 0
@@ -14884,6 +14910,7 @@ MonoBehaviour:
   beakboostvisual: {fileID: 1157757364395418, guid: 878b28a30efbbc04d9fae51d413ed0a4,
     type: 3}
   tickSpeed: 1
+  clockShowDuration: 10
 --- !u!1 &2022702607
 GameObject:
   m_ObjectHideFlags: 0

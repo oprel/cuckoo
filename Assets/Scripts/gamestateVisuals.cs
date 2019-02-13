@@ -16,12 +16,25 @@ public class gamestateVisuals : MonoBehaviour {
 
 	public float tickSpeed = 0.1f;
 	private float time = 0;
+	private bool alternate = false;
+
+	//Giant clock
+	private Light clockLight;
+	private float clockShowTime = 0;
+	private float baseIntensity;
+	public float clockShowDuration = 10;
+	private float clockMinDelay = 0;
 
 	void Awake() {
 		self = this;
 		msgleft.gameObject.SetActive(true);
 		msgright.gameObject.SetActive(true);
 		hand = GameObject.FindGameObjectWithTag("Arena").transform.Find("arenaNew/clockborder/hand1").gameObject;
+
+		clockLight = GameObject.Find("Lighting/Clock Light").GetComponent<Light>();
+		baseIntensity = clockLight.intensity;
+		clockShowTime = clockShowDuration;	
+		clockMinDelay = clockShowDuration;
 	}
 	
 	void Update () {
@@ -29,9 +42,28 @@ public class gamestateVisuals : MonoBehaviour {
 		gearRight.speed = gameManager.self.scoreRight * 40;
 	
 		time += Time.deltaTime;
+		
+		//Giant Clock tick
+		if(clockShowTime > 0) {
+			clockShowTime -= Time.deltaTime;
+			clockLight.intensity = Mathf.Lerp(clockLight.intensity, baseIntensity, Time.deltaTime);
+		} else {
+			if(clockMinDelay > 0) clockMinDelay -= Time.deltaTime;
+
+			clockLight.intensity = Mathf.Lerp(clockLight.intensity, 0, Time.deltaTime * 2);
+			if(Random.Range(0, 500) < 2 && clockMinDelay <= 0) {
+				clockMinDelay = clockShowDuration;
+				clockShowTime = clockShowDuration;
+			}
+		}
 
 		if(time > 1) {
+			alternate = !alternate;
 			hand.transform.rotation = Quaternion.Euler(0, 0, hand.transform.eulerAngles.z - tickSpeed);
+			playerManager.self.tickPlayers();
+			if(alternate) audioManager.PLAY_STATIONARY("Tick1", clockShowTime / 50, 0.8f);
+			else audioManager.PLAY_STATIONARY("Tick2", clockShowTime / 50, 0.8f);
+			audioManager.PLAY_STATIONARY("Ride", 0.1f, 0.5f);
 			time = 0;
 		}
 	}

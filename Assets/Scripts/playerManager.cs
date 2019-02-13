@@ -118,10 +118,12 @@ public class playerManager : MonoBehaviour {
 						for(int i = 0; i < leftPlayers.Count; i++) {
 							leftInput[i].direction = rotations[i];
 							leftInput[i].energy += impulses[i].energy;
+							audioManager.PLAY_SOUND("CrankLong", leftPlayers[i].transform.position, impulses[i].energy);
 						}
 						for(int i = 0; i < rightPlayers.Count; i++) {
 							rightInput[i].direction = rotations[i + 3];
 							rightInput[i].energy += impulses[i + 3].energy;
+							audioManager.PLAY_SOUND("CrankLong", rightPlayers[i].transform.position, impulses[i + 3].energy);
 						}
 					}
 					catch(KeyNotFoundException) {}
@@ -170,6 +172,17 @@ public class playerManager : MonoBehaviour {
 		}
 	}
 
+	public void tickPlayers() {
+		for(int i = 0; i < leftPlayers.Count; i++) {
+			player p = leftPlayers[i];
+			if(leftInput[i].energy > 0) p.impulse(speed / 5);
+		}
+		for(int i = 0; i < rightPlayers.Count; i++) {
+			player p = rightPlayers[i];
+			if(rightInput[i].energy > 0) p.impulse(speed / 5);
+		}
+	}
+
 	void updatePlayer(player p, Input inp) {
 		if (inp.enableAI) {
 			balls.Sort((a, b) => 1 - 2 * Random.Range(0, 1));
@@ -183,7 +196,7 @@ public class playerManager : MonoBehaviour {
 			p.transform.LookAt(p.aiTarget);
 			Vector3 eulerAngles = p.transform.rotation.eulerAngles;
 			inp.direction = eulerAngles.y / 10 + inp.direction * .9f;
-			if (inp.energy < 1 && Random.value < .03f) inp.energy=Random.value * 10;
+			if (inp.energy < 1 && Random.value < .03f) inp.energy = Random.value * 10;
 		}
 		p.transform.rotation =  Quaternion.Euler(0, inp.direction, 0);
 		

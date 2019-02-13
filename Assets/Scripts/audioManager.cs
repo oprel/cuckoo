@@ -59,7 +59,7 @@ public class audioManager : MonoBehaviour {
 		MELODY = new Voice(mainMelodySrc, 0f);
 		voices = new Voice[]{BASS, DRUMS, MELODY};
 
-		FADE_MUSIC(0.05f, BASS, 0.8f);
+		FADE_MUSIC(0.2f, BASS, 0.8f);
 		FADE_MUSIC(0.03f, DRUMS, 0.5f);
 
 		//Sounds
@@ -101,8 +101,16 @@ public class audioManager : MonoBehaviour {
 		KooKoo.print("Could not find '" + name + "' sound file!", KooKoo.MessageType.ERR);
 	}
 
+	public static AudioClip GET_AUDIO(string name) {
+		if(instance == null) return null;
+		for(int i = 0; i < instance.sounds.Length; i++) {
+			if(instance.names[i] == name) return instance.sounds[i];
+		}
+		return null;
+	}
+
 	private static AudioSource PlayClipAt(AudioClip clip, Vector3 pos, float vol, float pitch) {
-		GameObject tempGO = new GameObject("Sound");
+		GameObject tempGO = new GameObject("Sound: " + clip.name);
 		tempGO.transform.position = pos;
 		var aSource = tempGO.AddComponent<AudioSource>();
 		aSource.clip = clip;

@@ -61,6 +61,7 @@ public class ball : MonoBehaviour {
 			Instantiate(gamestateVisuals.self.beakboostvisual,transform.position, Quaternion.identity);
 			gamestateVisuals.hitStun();
 		}
+		else if(col.gameObject.tag == "Player" || col.gameObject.tag == "Hitter") audioManager.PLAY_SOUND("Nudge", transform.position, 140f, Random.Range(0.8f, 1.2f));
 	}
 
 	public void resetRotation() {
