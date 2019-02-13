@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 114247193686748030}
   - component: {fileID: 54283360327720850}
   m_Layer: 0
-  m_Name: newball 1
+  m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,7 +274,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beakBoost: 300
-  beakBoostVisual: {fileID: 1157757364395418, guid: 878b28a30efbbc04d9fae51d413ed0a4,
-    type: 2}
   red: 0
+  trash: 0
   rotationSpeed: 1
