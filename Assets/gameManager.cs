@@ -21,11 +21,10 @@ public class gameManager : MonoBehaviour {
 	
 	void FixedUpdate() {
 		scoreDisplay.text = scoreLeft.ToString() + " - " + scoreRight.ToString();
-	if (Input.GetButton("Fire2")){
-		playerManager.self.stream.Dispose();
-		Application.LoadLevel(Application.loadedLevel);
-
-	}
+		if (Input.GetButton("Fire2")) {
+			playerManager.self.stream.Dispose();
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		}
 	}
 
 	public static void addScoreLeft(int i) {

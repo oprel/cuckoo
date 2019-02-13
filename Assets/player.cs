@@ -16,7 +16,6 @@ public class player : MonoBehaviour {
 	private GameObject text;
 
 	private float rotationDelay = 0;
-	private float lastRot = 0;
 	private float leakDelay = 0;
 
 	[SerializeField]
@@ -30,10 +29,6 @@ public class player : MonoBehaviour {
 		playerManager.addPlayer(leftTeam, this);
 		rb = GetComponent<Rigidbody>();
 		startPos = transform.position;
-
-		//text = Instantiate(playerManager.self.textPrefab, transform.position, Quaternion.Euler(90, 0, 0));
-		//text.GetComponent<TextMesh>().text = keyT.ToString();
-		lastRot = transform.rotation.y;
 	}
 
 	public void Update() {
@@ -42,17 +37,10 @@ public class player : MonoBehaviour {
 		//Speed
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
 
-		//Key text
-		//text.transform.position = transform.position;
-
 		//Leaking
 		if(leakDelay > 0  && !oil) leakDelay--;
 		rotationDelay += Time.deltaTime;
-		if(rotationDelay > 0.4f) {
-		//if(Mathf.Abs(lastRot - transform.rotation.y) > 0.5f && leakDelay <= 0) leak();
-			rotationDelay = 0;
-			lastRot = transform.rotation.y;
-		}
+		if(rotationDelay > 0.4f) rotationDelay = 0;
 	}
 
 	

@@ -68,4 +68,8 @@ public class ball : MonoBehaviour {
 	public void resetRotation() {
 		rotationSpeed = rotBaseSpeed;
 	}
+
+	public playerManager.Team GetTeam() {
+		return team;
+	}
 }

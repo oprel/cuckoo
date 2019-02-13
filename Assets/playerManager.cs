@@ -12,27 +12,32 @@ public class playerManager : MonoBehaviour {
 	
 	public GameObject textPrefab, oilPrefab;
 
-	public enum ports
-	{
+	private int playerCount;
+
+	public enum Port {
 		COM1,
 		COM2,
 		COM3,
 		COM4,
 		COM5,
 		COM6,
-		COM7
+		COM7,
+		COM8,
+		COM9,
+		COM10,
+		COM11
 	}
-	public ports port;
+	public Port port;
 
 	[System.Serializable]
 	public class Team {
 		public string name;
 		public Sprite texture, ballTexture;
 	}
+
 	[Header("TeamPlay Settings")]
 	[SerializeField]
 	public Team[] teams;
-
 	public Team GetTeam(string color) {
 		foreach(Team t in teams) if(t.name.ToLower() == color.ToLower()) return t;
 		return null;
@@ -42,18 +47,22 @@ public class playerManager : MonoBehaviour {
 	public bool DebugMode;
 	public float frequency;
 	public float speed;
-	public input[] leftInput;
-	public input[] rightInput;
+	public Input[] leftInput;
+	public Input[] rightInput;
 
 	public SerialPort stream;
 
-	private int[] rotations = new int[6];
+	private Dictionary<int, float> rotations = new Dictionary<int, float>();
+	private Dictionary<int, Impulse> impulses = new Dictionary<int, Impulse>();
 
-	private int lastImpulse = -1;
-	private bool shouldImpulse = false;
+	public class Impulse {
+		public int lastImpulse = -1;
+		public bool shouldImpulse = false;
+		public float energy = 0f;
+	}
 
 	[System.Serializable]
-	public class input {
+	public class Input {
 		public string name;
 		[Range(0,10)]
 		public float energy;
@@ -66,96 +75,102 @@ public class playerManager : MonoBehaviour {
 
 	public static void addPlayer(bool addToLeft, player p) {
 		if(addToLeft) leftPlayers[p.number] = p;
-		else rightPlayers[p.number] = p;		
+		else rightPlayers[p.number] = p;
+		self.playerCount++;
 	}
 
-	private List<int> temp = new List<int>();
+	public string readArduinoInputs(int timeout = 1) {
+		stream.ReadTimeout = timeout;
+		try { return stream.ReadLine(); }
+		catch(System.TimeoutException) { return null; }
+	}
+
 	public void applyInput() {
 		string str = "";
 		if (!DebugMode) {
-			str = stream.ReadLine();
+			str = readArduinoInputs();
 			if(str == null) return;
 		}
-
-		if(str.StartsWith("D")) {
-			int imp;
-			bool stri = int.TryParse(str.Split('=')[1], out imp);
-			if(!stri) return;
-			if(imp != lastImpulse && !shouldImpulse) shouldImpulse = true;
-			if(imp == lastImpulse && shouldImpulse)
-			{	
-				shouldImpulse = false;
-				foreach(input i in leftInput) i.energy += 0.5f;
-				foreach(input i in rightInput) i.energy += 0.5f;
-				return;
-			}
-			lastImpulse = imp;
-		}
-		else {
-			//Direction
-			temp.Clear();
-			string[] sep = str.Split('|');
-			for(int i = 0; i < sep.Length; i++) {
-				string part = sep[i].Trim();
-				if(part.Length <= 0) continue;
-				int w = 0;
-				bool l = int.TryParse(part.Substring(3).Trim(), out w);
-				if(!l) continue;
-				temp.Add(w);
-			}
-			if (!DebugMode) {
-				try {
-					for(int i = 0; i < temp.Count; i++) rotations[i] = temp[i];
-					for(int i = 0; i < leftPlayers.Count; i++) leftInput[i].direction = rotations[i] + 90;
-					for(int i = 0; i < rightPlayers.Count; i++) rightInput[i].direction = rotations[i+3] - 90;
-				} catch(System.IndexOutOfRangeException) {}
-			}
+		try { for(int i = 0; i < playerCount; i++) impulses[i].energy = 0; }
+		catch(KeyNotFoundException) {}
+		
+		if(str.Length - 1 < 0) return;
+		string[] players = str.Substring(0, str.Length - 1).Split('|');
+		for(int i = 0; i < players.Length; i++) {
+			string[] val = players[i].Split(':');
+			int rot = 0;
+			if(!int.TryParse(val[0], out rot)) continue;
+			rotations[i] = rot;
 			
-			//Impulses
-			for(int i = 0; i < leftPlayers.Count; i++) if(Input.GetKey(leftPlayers[i].keyT)) leftInput[i].energy += 1;
-			for(int i = 0; i < rightPlayers.Count; i++) if(Input.GetKey(rightPlayers[i].keyT)) rightInput[i].energy += 1;
+			int imp = 0;
+			if(!int.TryParse(val[1], out imp)) continue;
+			if(imp != impulses[i].lastImpulse && !impulses[i].shouldImpulse) impulses[i].shouldImpulse = true;
+			if(imp == impulses[i].lastImpulse && impulses[i].shouldImpulse) {	
+				impulses[i].shouldImpulse = false;
+				impulses[i].energy += 0.5f;
+				continue;
+			}
+			impulses[i].lastImpulse = imp;
+		}
+		if (!DebugMode) {
+				try {
+					try {
+						for(int i = 0; i < leftPlayers.Count; i++) {
+							leftInput[i].direction = rotations[i];
+							leftInput[i].energy += impulses[i].energy;
+						}
+						for(int i = 0; i < rightPlayers.Count; i++) {
+							rightInput[i].direction = rotations[i + 3];
+							rightInput[i].energy += impulses[i + 3].energy;
+						}
+					}
+					catch(KeyNotFoundException) {}
+				} catch(System.IndexOutOfRangeException) {}
 		}
 	}
 
 	void Awake() {
+		int baudRate = 250000;
 		if (!DebugMode) {
-			stream = new SerialPort(port.ToString(), 115200);
-			stream.Open();
-			stream.DataReceived += DataReceivedHandler;
+            string[] portNums = System.Text.RegularExpressions.Regex.Split(port.ToString(), @"\D+");
+            stream = (int.Parse(portNums[1]) >= 10) ? new SerialPort("\\\\.\\" + port.ToString(), baudRate, Parity.None, 8, StopBits.One) :
+                                                      new SerialPort(port.ToString(), baudRate, Parity.None, 8, StopBits.One);
+			try {
+				stream.Open();
+				stream.ReadTimeout = 1;
+			} catch(System.IO.IOException) { 
+				DebugMode = true;
+				Debug.LogWarning("[KOO-KOO]: Nothing found on Port " + port.ToString() + ", entering Debug mode.");
+			}
 		}
 		self = this;
 		ball[] bs = FindObjectsOfType<ball>();
-		foreach (ball b in bs){
-			if (!b.trash)
-				balls.Add(b.gameObject);
+		foreach (ball b in bs) if (!b.trash) balls.Add(b.gameObject);
+	}
+
+	void Start() {
+		for(int i = 0; i < playerCount; i++) {
+			rotations.Add(i, 0);
+			impulses.Add(i, new Impulse());
 		}
 	}
 
-	private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e) {
-		SerialPort sp = (SerialPort)sender;
-		string distance = sp.ReadLine();
-		Debug.Log(distance);
-	}
-
-	void Update() {
-
-		
+	void FixedUpdate() {
 		applyInput();
 
 		for(int i = 0; i < leftPlayers.Count; i++) {
 			player p = leftPlayers[i];
-			input inp = leftInput[i];
+			Input inp = leftInput[i];
 			if(p) updatePlayer(p,inp);
 		}
 		for (int i = 0; i < rightPlayers.Count; i++) {
 			player p = rightPlayers[i];
-			input inp = rightInput[i];
+			Input inp = rightInput[i];
 			if(p) updatePlayer(p,inp);
 		}
 	}
 
-	void updatePlayer(player p, input inp) {
-
+	void updatePlayer(player p, Input inp) {
 		if (inp.enableAI){
 			balls.Sort((a, b)=> 1 - 2 * Random.Range(0, 1));
 			List<GameObject> bcopy = new List<GameObject>(balls);
@@ -168,16 +183,15 @@ public class playerManager : MonoBehaviour {
 					}
 				}
 			}
-			//inp.direction = Random.value * 360;
 			p.transform.LookAt(p.aiTarget);
 			Vector3 eulerAngles = p.transform.rotation.eulerAngles;
-			inp.direction = eulerAngles.y/10 +inp.direction*.9f;
-			if (inp.energy<1 && Random.value<.03f) inp.energy=Random.value*10;
+			inp.direction = eulerAngles.y / 10 + inp.direction * .9f;
+			if (inp.energy < 1 && Random.value < .03f) inp.energy=Random.value * 10;
 		}
 			p.transform.rotation =  Quaternion.Euler(0, inp.direction, 0);
 		
-		p.rotationSpeed = inp.energy*50;
-		if (p.leftTeam) p.rotationSpeed*=-1;
+		p.rotationSpeed = inp.energy * 50;
+		if (p.leftTeam) p.rotationSpeed *= -1;
 		if(inp.energy > 0) {
 			inp.timer += Time.deltaTime;
 			if (inp.timer > frequency) {
@@ -187,6 +201,4 @@ public class playerManager : MonoBehaviour {
 			}
 		}
 	}
-
-
 }

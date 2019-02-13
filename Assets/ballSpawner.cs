@@ -81,12 +81,11 @@ public class ballSpawner : MonoBehaviour {
 		ballAmount++;
 		if (trash){
 			Vector3 pos = new Vector3(Random.Range(-10,10),5,Random.Range(-7,7));
-			GameObject o = Instantiate(trashPrefab[Random.Range(0,trashPrefab.Length)],pos,Random.rotation);
+			Instantiate(trashPrefab[Random.Range(0,trashPrefab.Length)],pos,Random.rotation);
 			return;
 		}
 		
 		red = Random.Range(0, 2) == 0? true : false;
-		//fakeBall.GetComponent<SpriteRenderer>().sprite = (red)?playerManager.self.GetTeam("RED").ballTexture : playerManager.self.GetTeam("BLUE").ballTexture;
 		if(Random.Range(0, 2) == 0) flipped = true;
 		else flipped = false;
 
