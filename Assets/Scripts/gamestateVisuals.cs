@@ -71,7 +71,7 @@ public class gamestateVisuals : MonoBehaviour {
 	public static void screenShake() {
 		self.cameraShake.ShakeCamera(.2f,.2f);
 	}
-	public static void hitStun(float t = 5) {
+	public static void hitStun(float t = 5){
 		//self.StartCoroutine(stun(t));
 		return;
 	}
