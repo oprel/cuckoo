@@ -12,35 +12,41 @@ public class gamestateVisuals : MonoBehaviour {
 	public cameraShake cameraShake;
 	public GameObject beakboostvisual;
 
+	private GameObject hand;
 
-	void Awake(){
+	public float tickSpeed = 0.1f;
+	private float time = 0;
+
+	void Awake() {
 		self = this;
 		msgleft.gameObject.SetActive(true);
 		msgright.gameObject.SetActive(true);
+		hand = GameObject.FindGameObjectWithTag("Arena").transform.Find("arenaNew/clockborder/hand1").gameObject;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		gearLeft.speed = gameManager.self.scoreLeft * -40;
 		gearRight.speed = gameManager.self.scoreRight * 40;
-		
+	
+		time += Time.deltaTime;
+
+		if(time > 1) {
+			hand.transform.rotation = Quaternion.Euler(0, 0, hand.transform.eulerAngles.z - tickSpeed);
+			time = 0;
+		}
 	}
 
-	public static void screenShake(){
+	public static void screenShake() {
 		self.cameraShake.ShakeCamera(.2f,.2f);
 	}
-	public static void hitStun(float t = 5){
-		self.StartCoroutine(stun(t));
+	public static void hitStun(float t = 5) {
+		//self.StartCoroutine(stun(t));
 		return;
 	}
-	private static IEnumerator stun(float t){
+	private static IEnumerator stun(float t) {
 		float s = Time.timeScale;
 		Time.timeScale = 0;
-		for (int i = 0; i < t; i++)
-		{
-			yield return new WaitForEndOfFrame();
-		}
-		Time.timeScale=s;
+		for (int i = 0; i < t; i++) yield return new WaitForEndOfFrame();
+		Time.timeScale = s;
 	}
-
 }

@@ -19,9 +19,7 @@ public class ball : MonoBehaviour {
 			team = playerManager.self.GetTeam("BLUE");
 			rotationSpeed *= -1;
 		}
-		//GetComponentInChildren<SpriteRenderer>().sprite = team.ballTexture;
 		rotBaseSpeed = rotationSpeed;
-		//if (!trash) 
 		playerManager.self.balls.Add(gameObject);
 	}
 
@@ -60,7 +58,7 @@ public class ball : MonoBehaviour {
 	void OnCollisionEnter(Collision col) {
 		if(col.gameObject.tag == "Hitter") {
 			GetComponent<Rigidbody>().AddForceAtPosition(col.transform.forward * beakBoost, col.transform.position);
-			Instantiate(gamestateVisuals.self.beakboostvisual,transform.position,Quaternion.identity);
+			Instantiate(gamestateVisuals.self.beakboostvisual,transform.position, Quaternion.identity);
 			gamestateVisuals.hitStun();
 		}
 	}

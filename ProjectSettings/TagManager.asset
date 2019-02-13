@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ball
   - Hitter
+  - Arena
   layers:
   - Default
   - TransparentFX

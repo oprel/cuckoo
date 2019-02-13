@@ -171,16 +171,13 @@ public class playerManager : MonoBehaviour {
 	}
 
 	void updatePlayer(player p, Input inp) {
-		if (inp.enableAI){
-			balls.Sort((a, b)=> 1 - 2 * Random.Range(0, 1));
+		if (inp.enableAI) {
+			balls.Sort((a, b) => 1 - 2 * Random.Range(0, 1));
 			List<GameObject> bcopy = new List<GameObject>(balls);
-			if (!p.aiTarget || Random.value<.001f){
-				foreach (GameObject b in bcopy){
-					if (b){
-						p.aiTarget = b.transform;
-					}else{
-						balls.Remove(b);
-					}
+			if (!p.aiTarget || Random.value < .001f) {
+				foreach (GameObject b in bcopy) {
+					if (b) p.aiTarget = b.transform;
+					else balls.Remove(b);
 				}
 			}
 			p.transform.LookAt(p.aiTarget);
@@ -188,7 +185,7 @@ public class playerManager : MonoBehaviour {
 			inp.direction = eulerAngles.y / 10 + inp.direction * .9f;
 			if (inp.energy < 1 && Random.value < .03f) inp.energy=Random.value * 10;
 		}
-			p.transform.rotation =  Quaternion.Euler(0, inp.direction, 0);
+		p.transform.rotation =  Quaternion.Euler(0, inp.direction, 0);
 		
 		p.rotationSpeed = inp.energy * 50;
 		if (p.leftTeam) p.rotationSpeed *= -1;
