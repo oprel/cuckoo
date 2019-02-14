@@ -30,10 +30,12 @@ public class gameManager : MonoBehaviour {
 	public static void addScoreLeft(int i) {
 		self.scoreLeft += i;
 		if(self.scoreLeft < 0) self.scoreLeft = 0;
+		audioManager.PLAY_STATIONARY("Collect", 0.1f, 0.5f);
 	}
 
 	public static void addScoreRight(int i) {
 		self.scoreRight += i;
 		if(self.scoreRight < 0) self.scoreRight = 0;
+		audioManager.PLAY_STATIONARY("Collect", 0.1f, 0.5f);
 	}
 }

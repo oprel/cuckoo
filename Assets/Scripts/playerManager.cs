@@ -200,6 +200,8 @@ public class playerManager : MonoBehaviour {
 		}
 		p.transform.rotation =  Quaternion.Euler(0, inp.direction, 0);
 		
+		p.energy = inp.energy;
+
 		p.rotationSpeed = inp.energy * 50;
 		if (p.leftTeam) p.rotationSpeed *= -1;
 		if(inp.energy > 0) {

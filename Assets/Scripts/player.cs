@@ -25,6 +25,8 @@ public class player : MonoBehaviour {
 	[HideInInspector]
 	public Transform aiTarget;
 
+	public float energy;
+
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
 		rb = GetComponent<Rigidbody>();

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ballSpawner : MonoBehaviour {
 	public GameObject ballPrefab;
-	public GameObject[] trashPrefab;
 	public float frequency;
 	public float radius;
 	private float timer, resettimer = 0;
@@ -14,9 +13,7 @@ public class ballSpawner : MonoBehaviour {
 	private Vector3 doorLBase, doorRBase, hingeBase, fakeBallBase;
 
 	private bool doorsOpen = false, armExtended = false;
-
 	private Vector3 pos;
-
 	private bool flipped = false, red = false;
 
 	private static int ballAmount;
@@ -24,10 +21,7 @@ public class ballSpawner : MonoBehaviour {
 
 	void Start () {
 		ballAmount = 2;
-
 		house = transform.GetChild(0);
-		//doorL = house.Find("Door_L");
-		//doorR = house.Find("Door_R");
 		hinge = house.Find("Hinge");
 		fakeBall = house.Find("FakeBall");
 		drop = hinge.Find("DropPoint");
@@ -48,8 +42,7 @@ public class ballSpawner : MonoBehaviour {
 		//Ball spawning
 		if(timer > frequency && resettimer <= 0 && ballAmount < maxBalls) {
 			timer = 0;
-				spawn(Random.value>.8f);
-			
+			spawn(Random.value > .8f);
 		}
 		fakeBall.position = drop.position;
 
@@ -79,9 +72,9 @@ public class ballSpawner : MonoBehaviour {
 
 	private void spawn(bool trash = false) {
 		ballAmount++;
-		if (trash){
-			Vector3 pos = new Vector3(Random.Range(-10,10),5,Random.Range(-7,7));
-			Instantiate(trashPrefab[Random.Range(0,trashPrefab.Length)],pos,Random.rotation);
+		if (trash) {
+			//Vector3 pos = new Vector3(Random.Range(-10,10),5,Random.Range(-7,7));
+			//Instantiate(trashPrefab[Random.Range(0,trashPrefab.Length)],pos,Random.rotation);
 			return;
 		}
 		
@@ -121,29 +114,17 @@ public class ballSpawner : MonoBehaviour {
 		StopCoroutine("openDoors");
 		resettimer = 2;
 	}
-	/*
-	IEnumerator openDoors() {
-		while(!doorsOpen) {
-			doorL.localPosition = new Vector3(Mathf.Lerp(doorL.localPosition.x, -0.1f, Time.deltaTime * 2), doorL.localPosition.y, doorL.localPosition.z);
-			doorR.localPosition = new Vector3(Mathf.Lerp(doorR.localPosition.x, 0.1f, Time.deltaTime * 2), doorR.localPosition.y, doorR.localPosition.z);
-			yield return new WaitForSeconds(.01f);
-			if(doorL.localPosition.x <= -0.075f) {
-				StartCoroutine("extendArm");
-				doorsOpen = true;
-			}
-		}
-	} */
 	IEnumerator openDoors() {
 		float t=0;
-		doorL.localRotation=Quaternion.identity;
-		doorR.localRotation=Quaternion.identity;
+		doorL.localRotation = Quaternion.identity;
+		doorR.localRotation = Quaternion.identity;
 		while(!doorsOpen) {
-			t+=Time.deltaTime*4;
+			t += Time.deltaTime * 4;
 			float open = Mathf.Lerp(doorL.localRotation.y, 180, t);
-			doorL.localRotation= Quaternion.Euler(0,-open,0);
-			doorR.localRotation= Quaternion.Euler(0,open,0);
+			doorL.localRotation= Quaternion.Euler(0, -open, 0);
+			doorR.localRotation= Quaternion.Euler(0, open, 0);
 			yield return null;
-		if(open>160) {
+		if(open > 160) {
 				StartCoroutine("extendArm");
 				doorsOpen = true;
 			}
@@ -151,10 +132,10 @@ public class ballSpawner : MonoBehaviour {
 	}
 
 	private bool reachedPoint() {
-		return drop.position.z * ((flipped)?-1:1) <= pos.z * ((flipped)?-1:1);
+		return drop.position.z * ((flipped)? -1 : 1) <= pos.z * ((flipped)? -1 : 1);
 	}
 
 	private void OnDrawGizmosSelected() {
-		Gizmos.DrawWireSphere(transform.position,radius);
+		Gizmos.DrawWireSphere(transform.position, radius);
 	}
 }
