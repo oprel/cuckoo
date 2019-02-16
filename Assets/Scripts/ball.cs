@@ -19,9 +19,6 @@ public class ball : MonoBehaviour {
 	private string[] breakSounds = {"CrankShort", "CrankMid", "CrankLong"};
 	private float dmgDelay = 0;
 
-	private MeshRenderer mesh;
-	private Rigidbody rb;
-	
 	void Start() {
 		if(red) team = playerManager.self.GetTeam("RED"); 
 		else {
@@ -30,8 +27,6 @@ public class ball : MonoBehaviour {
 		}
 		rotBaseSpeed = rotationSpeed;
 		playerManager.self.balls.Add(gameObject);
-		mesh = GetComponent<MeshRenderer>();
-		rb = GetComponent<Rigidbody>();
 	}
 
 	void FixedUpdate() {
@@ -90,11 +85,30 @@ public class ball : MonoBehaviour {
 			destroy(col);
 			return;
 		}
-		for(int i = 0; i < mesh.materials.Length; i++) mesh.materials[i].mainTexture = breakTextures[breakState];
+
+		MeshRenderer[] m = GetComponentsInChildren<MeshRenderer>();
+		if(m.Length > 0) foreach(MeshRenderer mesh in m) for(int i = 0; i < mesh.materials.Length; i++) mesh.materials[i].mainTexture = breakTextures[breakState];
 	}
 
 	protected void destroy(Collision col) {
-		if(col.gameObject.tag == "") Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), col.collider);
+		MeshCollider[] me = GetComponentsInChildren<MeshCollider>();
+		foreach(MeshCollider m in me) {
+			Physics.IgnoreCollision(m, col.collider);
+			m.transform.SetParent(null);
+			m.gameObject.AddComponent<Rigidbody>();
+			MeshRenderer mR = m.GetComponent<MeshRenderer>();
+			foreach(Material mat in mR.materials) {
+				mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+				mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+				mat.SetInt("_ZWrite", 0);
+				mat.DisableKeyword("_ALPHATEST_ON");
+				mat.EnableKeyword("_ALPHABLEND_ON");
+				mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+				mat.renderQueue = 3000;
+				mat.color = new Color(mat.color.r * 0.8f - 0.25f, mat.color.g * 0.8f - 0.25f, mat.color.b * 0.8f - 0.25f);
+			}
+			m.gameObject.AddComponent<Fader>();
+		}
 	}
 
 	public void resetRotation() {

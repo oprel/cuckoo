@@ -199,15 +199,14 @@ public class playerManager : MonoBehaviour {
 			if (inp.energy < 1 && Random.value < .03f) inp.energy = Random.value * 10;
 		}
 		p.transform.rotation =  Quaternion.Euler(0, inp.direction, 0);
-		
 		p.energy = inp.energy;
-
 		p.rotationSpeed = inp.energy * 50;
 		if (p.leftTeam) p.rotationSpeed *= -1;
 		if(inp.energy > 0) {
 			inp.timer += Time.deltaTime;
 			if (inp.timer > frequency) {
 				p.impulse(speed);
+				audioManager.PLAY_SOUND("Hit", p.transform.position * 5, 15, Random.Range(1.2f, 2.5f));
 				inp.timer = 0;
 				inp.energy--;
 			}
