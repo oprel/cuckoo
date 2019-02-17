@@ -14,9 +14,12 @@ public class gameManager : MonoBehaviour {
 	public gamestateVisuals visuals;
 	public Text scoreDisplay;
 
+	private cameraShake camShaker;
+
 	private void Awake() {
 		self = this;
 		visuals = GetComponent<gamestateVisuals>();
+		camShaker = Camera.main.GetComponent<cameraShake>();
 	}
 	
 	void FixedUpdate() {
@@ -31,11 +34,13 @@ public class gameManager : MonoBehaviour {
 		self.scoreLeft += i;
 		if(self.scoreLeft < 0) self.scoreLeft = 0;
 		audioManager.PLAY_STATIONARY("Collect", 0.1f, 0.5f);
+		self.camShaker.ShakeCamera(0.15f, 0.1f);
 	}
 
 	public static void addScoreRight(int i) {
 		self.scoreRight += i;
 		if(self.scoreRight < 0) self.scoreRight = 0;
 		audioManager.PLAY_STATIONARY("Collect", 0.1f, 0.5f);
+		self.camShaker.ShakeCamera(0.15f, 0.1f);
 	}
 }
