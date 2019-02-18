@@ -46,7 +46,7 @@ public class playerManager : MonoBehaviour {
 	[Space(10)]
 	public bool DebugMode;
 	public float frequency;
-	public float speed;
+	public float tickSpeed, chargeSpeed;
 	public Input[] leftInput;
 	public Input[] rightInput;
 
@@ -173,13 +173,14 @@ public class playerManager : MonoBehaviour {
 	}
 
 	public void tickPlayers() {
+		Debug.Log("we ticking");
 		for(int i = 0; i < leftPlayers.Count; i++) {
 			player p = leftPlayers[i];
-			if(leftInput[i].energy > 0) p.impulse(speed / 5);
+			if(leftInput[i].energy > 0) p.impulse(tickSpeed);
 		}
 		for(int i = 0; i < rightPlayers.Count; i++) {
 			player p = rightPlayers[i];
-			if(rightInput[i].energy > 0) p.impulse(speed / 5);
+			if(rightInput[i].energy > 0) p.impulse(tickSpeed);
 		}
 	}
 
@@ -205,7 +206,7 @@ public class playerManager : MonoBehaviour {
 		if(inp.energy > 0) {
 			inp.timer += Time.deltaTime;
 			if (inp.timer > frequency) {
-				p.impulse(speed);
+				p.impulse(tickSpeed);
 				audioManager.PLAY_SOUND("Hit", p.transform.position * 5, 15, Random.Range(1.2f, 2.5f));
 				inp.timer = 0;
 				inp.energy--;
