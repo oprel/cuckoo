@@ -43,6 +43,7 @@ public class player : MonoBehaviour {
 		if(leakDelay > 0  && !oil) leakDelay--;
 		rotationDelay += Time.deltaTime;
 		if(rotationDelay > 0.4f) rotationDelay = 0;
+		rb.velocity = transform.forward * rb.velocity.magnitude;
 	}
 
 	
