@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.9096687, g: 0.9096687, b: 0.9096687, a: 1}
+  m_IndirectSpecularColor: {r: 1.5214192, g: 1.5214192, b: 1.5214192, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1693,6 +1693,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: newArena
+      objectReference: {fileID: 0}
+    - target: {fileID: 2901398512497666408, guid: 952a3b9290ad52b48a20d39005c5999f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Arena
       objectReference: {fileID: 0}
     - target: {fileID: 2901398512497505608, guid: 952a3b9290ad52b48a20d39005c5999f,
         type: 3}
@@ -15076,7 +15081,8 @@ MonoBehaviour:
     ballTexture: {fileID: 21300000, guid: 4fc9e0e0335950c41bcb8e6a97307468, type: 3}
   DebugMode: 0
   frequency: 1
-  speed: 500
+  tickSpeed: 0
+  chargeSpeed: 0
   leftInput:
   - name: Left 1
     energy: 0

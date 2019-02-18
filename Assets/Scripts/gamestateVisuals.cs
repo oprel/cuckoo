@@ -32,8 +32,8 @@ public class gamestateVisuals : MonoBehaviour {
 		self = this;
 		msgleft.gameObject.SetActive(true);
 		msgright.gameObject.SetActive(true);
-		hand = GameObject.FindGameObjectWithTag("Arena").transform.Find("arenaNew/clockborder/hand1").gameObject;
-		smallHand = GameObject.FindGameObjectWithTag("Arena").transform.Find("arenaNew/clockborder/hand2").gameObject;
+		hand = GameObject.FindGameObjectWithTag("Arena").transform.Find("hand1").gameObject;
+		smallHand = GameObject.FindGameObjectWithTag("Arena").transform.Find("hand2").gameObject;
 		handBaseScale = hand.transform.localScale.x;
 		smallHandBaseRot = smallHand.transform.localEulerAngles.z;
 
