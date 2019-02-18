@@ -132,4 +132,4 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 4fdba4b39f68c9549810afb4c173c2df, type: 3}
   - {fileID: 2800000, guid: ace989a4cc0341c4f8ac97d38addbd49, type: 3}
   - {fileID: 2800000, guid: 3fcc1d5907ce6e9479a3c2e8c44b3464, type: 3}
-  breakState: 0
+  breakState: -1

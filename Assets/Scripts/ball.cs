@@ -15,7 +15,8 @@ public class ball : MonoBehaviour {
 
 	[Header("Break states / Cracks")]
 	public Texture2D[] breakTextures;
-	public int breakState = 0;
+	public int breakState = -1;
+	private int oldBreakState = -1;
 	private string[] breakSounds = {"CrankShort", "CrankMid", "CrankLong"};
 	private float dmgDelay = 0;
 
@@ -30,6 +31,9 @@ public class ball : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		if(breakState > breakTextures.Length) breakState = breakTextures.Length;
+		if(breakState != oldBreakState && trash) updateBreakState();
+
 		if (!trash) transform.Rotate(0, rotationSpeed, 0);
 
 		if(transform.position.y < -10) {
@@ -79,15 +83,22 @@ public class ball : MonoBehaviour {
 	protected void damage(Collision col) {
 		dmgDelay = 2;
 		breakState++;
-		if(breakState > breakTextures.Length - 1) breakState = breakTextures.Length - 1;
-		audioManager.PLAY_SOUND(breakSounds[Mathf.Clamp(breakState, 0, breakTextures.Length)], transform.position, 40);
-		if(breakState >= breakTextures.Length - 1) {
+		audioManager.PLAY_SOUND(breakSounds[Mathf.Clamp(breakState, 0, breakTextures.Length - 1)], transform.position, 40);
+		if(breakState >= breakTextures.Length) {
 			destroy(col);
 			return;
 		}
 
+		updateBreakState();
+	}
+
+	private void updateBreakState() {
+		oldBreakState = breakState;
 		MeshRenderer[] m = GetComponentsInChildren<MeshRenderer>();
-		if(m.Length > 0) foreach(MeshRenderer mesh in m) for(int i = 0; i < mesh.materials.Length; i++) mesh.materials[i].mainTexture = breakTextures[breakState];
+		if(m.Length > 0) {
+			if(breakState >= 0 && breakTextures[breakState] != null)  foreach(MeshRenderer mesh in m) for(int i = 0; i < mesh.materials.Length; i++) mesh.materials[i].mainTexture = breakTextures[breakState];
+			else foreach(MeshRenderer mesh in m) for(int i = 0; i < mesh.materials.Length; i++) mesh.materials[i].mainTexture = null;
+		}
 	}
 
 	protected void destroy(Collision col) {
