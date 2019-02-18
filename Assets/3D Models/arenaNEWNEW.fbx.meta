@@ -8,29 +8,107 @@ ModelImporter:
     100004: doorframe2
     100006: hand1
     100008: hand2
+    100010: bigClockFront
+    100012: door1
+    100014: door2
+    100016: doorFrame
+    100018: newDoor1
+    100020: newDoor2
+    100022: newDoor3
+    100024: oldDoor1
+    100026: oldDoor2
+    100028: oldDoor3
+    100030: ring
     400000: //RootNode
     400002: doorframe1
     400004: doorframe2
     400006: hand1
     400008: hand2
+    400010: bigClockFront
+    400012: door1
+    400014: door2
+    400016: doorFrame
+    400018: newDoor1
+    400020: newDoor2
+    400022: newDoor3
+    400024: oldDoor1
+    400026: oldDoor2
+    400028: oldDoor3
+    400030: ring
     2100000: floor
     2100002: lambert1
     2100004: falloff
+    2100006: hole
+    2100008: pasted__pasted__doormodern_mc
+    2100010: pasted__pasted__modernglass
+    2100012: pasted__pasted__modern_handle
+    2100014: pasted__pasted__old_knob
+    2100016: pasted__pasted__olddoor_color
+    2100018: extrudedclock_SVGMat_0014
+    2100020: extrudedclock_SVGMat_0013
+    2100022: extrudedclock_SVGMat_0011
+    2100024: extrudedclock_SVGMat_019
+    2100026: extrudedclock_SVGMat_026
+    2100028: extrudedclock_SVGMat_020
+    2100030: extrudedclock_SVGMat_021
+    2100032: extrudedclock_SVGMat_022
+    2100034: extrudedclock_SVGMat_025
+    2100036: extrudedclock_SVGMat_023
+    2100038: extrudedclock_SVGMat_024
+    2100040: extrudedclock_SVGMat_027
+    2100042: extrudedclock_SVGMat_0010
+    2100044: clockExterior
+    2100046: see_through
+    2100048: seethrough
     2300000: //RootNode
     2300002: doorframe1
     2300004: doorframe2
     2300006: hand1
     2300008: hand2
+    2300010: bigClockFront
+    2300012: door1
+    2300014: door2
+    2300016: doorFrame
+    2300018: newDoor1
+    2300020: newDoor2
+    2300022: newDoor3
+    2300024: oldDoor1
+    2300026: oldDoor2
+    2300028: oldDoor3
+    2300030: ring
     3300000: //RootNode
     3300002: doorframe1
     3300004: doorframe2
     3300006: hand1
     3300008: hand2
+    3300010: bigClockFront
+    3300012: door1
+    3300014: door2
+    3300016: doorFrame
+    3300018: newDoor1
+    3300020: newDoor2
+    3300022: newDoor3
+    3300024: oldDoor1
+    3300026: oldDoor2
+    3300028: oldDoor3
+    3300030: ring
     4300000: newArena
     4300002: doorframe2
     4300004: doorframe1
     4300006: hand2
     4300008: hand1
+    4300010: newDoor1
+    4300012: newDoor2
+    4300014: newDoor3
+    4300016: ring
+    4300018: oldDoor3
+    4300020: oldDoor2
+    4300022: oldDoor1
+    4300024: bigClockFront
+    4300026: doorFrame
+    4300028: door2
+    4300030: door1
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
