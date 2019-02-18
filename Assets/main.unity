@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.9096687, g: 0.9096687, b: 0.9096687, a: 1}
+  m_IndirectSpecularColor: {r: 1.5214192, g: 1.5214192, b: 1.5214192, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15182,39 +15182,39 @@ MonoBehaviour:
     ballTexture: {fileID: 21300000, guid: 4fc9e0e0335950c41bcb8e6a97307468, type: 3}
   DebugMode: 0
   frequency: 1
-  tickSpeed: 500
-  chargeSpeed: 200
+  tickSpeed: 400
+  chargeSpeed: 100
   leftInput:
   - name: Left 1
     energy: 0
+    prevEnergy: 0
     direction: 0
-    timer: 0
     enableAI: 0
   - name: Left 2
     energy: 0
+    prevEnergy: 0
     direction: 0
-    timer: 0
     enableAI: 0
   - name: Left 3
     energy: 0
+    prevEnergy: 0
     direction: 0
-    timer: 0
     enableAI: 0
   rightInput:
   - name: Right 1
     energy: 0
+    prevEnergy: 0
     direction: 0
-    timer: 0
     enableAI: 0
   - name: Right 2
     energy: 0
+    prevEnergy: 0
     direction: 0
-    timer: 0
     enableAI: 0
   - name: Right 3
     energy: 0
+    prevEnergy: 0
     direction: 0
-    timer: 0
     enableAI: 0
 --- !u!4 &1994311434
 Transform:

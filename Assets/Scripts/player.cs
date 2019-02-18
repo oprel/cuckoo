@@ -61,7 +61,7 @@ public class player : MonoBehaviour {
 	public void leak() {
 		float startrot = Random.Range(0, 360);
 		for(int i = 1; i <= 3; i++) {
-			oil = Instantiate(playerManager.self.oilPrefab, transform.position, Quaternion.Euler(0, startrot+(90*(i)), 0));
+			oil = Instantiate(playerManager.self.oilPrefab, transform.position, Quaternion.Euler(0, startrot + (90 * (i)), 0));
 			oil.GetComponent<Rigidbody>().AddForce(300 * oil.transform.forward);
 		}
 		leakDelay = 5;

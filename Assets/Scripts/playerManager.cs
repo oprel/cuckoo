@@ -66,10 +66,12 @@ public class playerManager : MonoBehaviour {
 		public string name;
 		[Range(0,10)]
 		public float energy;
+
+		[HideInInspector]
+		public float prevEnergy;
+
 		[Range(-360, 360)]
 		public float direction = 0;
-		[HideInInspector]
-		public float timer;
 		public bool enableAI;
 	};
 
@@ -175,11 +177,17 @@ public class playerManager : MonoBehaviour {
 	public void tickPlayers() {
 		for(int i = 0; i < leftPlayers.Count; i++) {
 			player p = leftPlayers[i];
-			if(leftInput[i].energy > 0) p.impulse(tickSpeed);
+			if(leftInput[i].energy > 0) {
+				p.impulse(tickSpeed);
+				leftInput[i].energy -= frequency;
+			}
 		}
 		for(int i = 0; i < rightPlayers.Count; i++) {
 			player p = rightPlayers[i];
-			if(rightInput[i].energy > 0) p.impulse(tickSpeed);
+			if(rightInput[i].energy > 0) {
+				p.impulse(tickSpeed);
+				rightInput[i].energy -= frequency;
+			}
 		}
 	}
 
@@ -202,14 +210,12 @@ public class playerManager : MonoBehaviour {
 		p.energy = inp.energy;
 		p.rotationSpeed = inp.energy * 50;
 		if (p.leftTeam) p.rotationSpeed *= -1;
-		if(inp.energy > 0) {
-			inp.timer += Time.deltaTime;
-			if (inp.timer > frequency) {
-				p.impulse(chargeSpeed);
-				audioManager.PLAY_SOUND("Hit", p.transform.position * 5, 15, Random.Range(1.2f, 2.5f));
-				inp.timer = 0;
-				inp.energy--;
-			}
+
+		//Charge
+		if(inp.energy > inp.prevEnergy) {
+			p.impulse(chargeSpeed * (inp.energy - inp.prevEnergy));
+			audioManager.PLAY_SOUND("Hit", p.transform.position * 5, 15, Random.Range(1.2f, 2.5f));
 		}
+		inp.prevEnergy = inp.energy;
 	}
 }
