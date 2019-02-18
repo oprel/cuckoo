@@ -173,7 +173,6 @@ public class playerManager : MonoBehaviour {
 	}
 
 	public void tickPlayers() {
-		Debug.Log("we ticking");
 		for(int i = 0; i < leftPlayers.Count; i++) {
 			player p = leftPlayers[i];
 			if(leftInput[i].energy > 0) p.impulse(tickSpeed);
@@ -206,7 +205,7 @@ public class playerManager : MonoBehaviour {
 		if(inp.energy > 0) {
 			inp.timer += Time.deltaTime;
 			if (inp.timer > frequency) {
-				p.impulse(tickSpeed);
+				p.impulse(chargeSpeed);
 				audioManager.PLAY_SOUND("Hit", p.transform.position * 5, 15, Random.Range(1.2f, 2.5f));
 				inp.timer = 0;
 				inp.energy--;
