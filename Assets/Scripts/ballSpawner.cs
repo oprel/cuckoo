@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ballSpawner : MonoBehaviour {
-	public GameObject ballPrefab;
+	public static ballSpawner self;
+
+	public GameObject ballPrefab, clockPrefab;
 	public float frequency;
 	public float radius;
 	private float timer, resettimer = 0;
 
-	private Transform house, hinge, fakeBall, drop;
+	private Transform house, hinge, fakeBall, drop, clock;
 	public Transform doorL,doorR;
 	private Vector3 doorLBase, doorRBase, hingeBase, fakeBallBase;
 
@@ -19,11 +21,15 @@ public class ballSpawner : MonoBehaviour {
 	private static int ballAmount;
 	public int maxBalls = 9;
 
+	public bool dropClock = true;
+
 	void Start () {
+		self = this;
 		ballAmount = 2;
 		house = transform.GetChild(0);
 		hinge = house.Find("Hinge");
 		fakeBall = house.Find("FakeBall");
+		clock = house.Find("FakeClock");
 		drop = hinge.Find("DropPoint");
 		doorRBase = doorR.localPosition;
 		doorLBase = doorL.localPosition;
@@ -33,18 +39,20 @@ public class ballSpawner : MonoBehaviour {
 		fakeBall.localScale = new Vector3(0, 0, 0);
 		house.gameObject.SetActive(false);
 		for (int i = 0; i < 4; i++) spawn(true);
-
+		dropClock = Camera.main.GetComponent<Cutscene>().playCutscene;
+		clock.gameObject.SetActive(dropClock);
+		fakeBall.gameObject.SetActive(!dropClock);
 	}
 	
 	void FixedUpdate () {
 		if(resettimer <= 0) timer += Time.deltaTime;
 		
 		//Ball spawning
-		if(timer > frequency && resettimer <= 0 && ballAmount < maxBalls) {
+		if(timer > frequency && resettimer <= 0 && ballAmount < maxBalls && !dropClock) {
 			timer = 0;
 			spawn(Random.value > .8f);
 		}
-		fakeBall.position = drop.position;
+		fakeBall.position = clock.position = drop.position;
 
 		if(resettimer > 0) {
 			resettimer -= Time.deltaTime;
@@ -54,12 +62,27 @@ public class ballSpawner : MonoBehaviour {
 				doorR.localPosition = new Vector3(Mathf.Lerp(doorR.localPosition.x, doorRBase.x, Time.deltaTime * 4), doorR.localPosition.y, doorR.localPosition.z);
 			}
 		}
-		else if(armExtended && doorsOpen) reset();
+		else if(armExtended && doorsOpen && !dropClock) reset();
+	}
+
+	public void ResetClock() {
+		timer = 0;
+		armExtended = doorsOpen = false;
+		house.gameObject.SetActive(false);
+		fakeBall.localScale = new Vector3(0, 0, 0);
+		fakeBall.gameObject.SetActive(true);
+		dropClock = false;
+		clock.gameObject.SetActive(false);
 	}
 
 	public static void decrementBalls() {
 		ballAmount--;
 		if(ballAmount < 0) ballAmount = 0;
+	}
+
+	public void DropClock() {
+		activate();
+		StartCoroutine("openDoors");
 	}
 
 	private void reset() {
@@ -72,11 +95,7 @@ public class ballSpawner : MonoBehaviour {
 
 	private void spawn(bool trash = false) {
 		ballAmount++;
-		if (trash) {
-			//Vector3 pos = new Vector3(Random.Range(-10,10),5,Random.Range(-7,7));
-			//Instantiate(trashPrefab[Random.Range(0,trashPrefab.Length)],pos,Random.rotation);
-			return;
-		}
+		if (trash) return;
 		
 		red = Random.Range(0, 2) == 0? true : false;
 		if(Random.Range(0, 2) == 0) flipped = true;
@@ -104,9 +123,15 @@ public class ballSpawner : MonoBehaviour {
 			}
 			yield return new WaitForSeconds(.02f);
 			if(reachedPoint()) {
-				GameObject ball = Instantiate(ballPrefab, transform.position + pos, transform.rotation);
+				GameObject ball = Instantiate((dropClock)?clockPrefab : ballPrefab, transform.position + pos, transform.rotation);
 				ball.GetComponent<ball>().red = red;
+				if(dropClock) {
+					ball.transform.rotation = Quaternion.Euler(90, 0, 0);
+					ball.GetComponent<ball>().clock = true;
+				}
 				fakeBall.gameObject.SetActive(false);
+				clock.gameObject.SetActive(false);
+				audioManager.PLAY_SOUND("Plop", transform.position, 1, 1f);
 				armExtended = true;
 			}
 		}
@@ -114,6 +139,7 @@ public class ballSpawner : MonoBehaviour {
 		StopCoroutine("openDoors");
 		resettimer = 2;
 	}
+
 	IEnumerator openDoors() {
 		float t=0;
 		doorL.localRotation = Quaternion.identity;

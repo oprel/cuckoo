@@ -14,6 +14,8 @@ public class playerManager : MonoBehaviour {
 
 	private int playerCount;
 
+	private bool cutscene = false;
+
 	public enum Port {
 		COM1,
 		COM2,
@@ -146,10 +148,20 @@ public class playerManager : MonoBehaviour {
 				DebugMode = true;
 				KooKoo.print("Nothing found on Port " + port.ToString() + ", entering Debug mode.", KooKoo.MessageType.WARN);
 			}
-		}
+			cutscene = true;
+		} else cutscene = Camera.main.GetComponent<Cutscene>().playCutscene;
 		self = this;
 		ball[] bs = FindObjectsOfType<ball>();
 		foreach (ball b in bs) if (!b.trash) balls.Add(b.gameObject);
+	}
+
+	public void Ready() {
+		gameManager.self.ballSpawner.GetComponent<ballSpawner>().ResetClock();
+		cutscene = false;
+		StopCoroutine("MovePlayer");
+		StopCoroutine("AnimatePlayer");
+		for(int i = 0; i < leftPlayers.Count; i++) leftPlayers[i].GetComponent<Rigidbody>().isKinematic = false;
+		for(int i = 0; i < rightPlayers.Count; i++) rightPlayers[i].GetComponent<Rigidbody>().isKinematic = false;
 	}
 
 	void Start() {
@@ -157,25 +169,90 @@ public class playerManager : MonoBehaviour {
 			rotations.Add(i, 0);
 			impulses.Add(i, new Impulse());
 		}
+
+		if(cutscene) {
+			for(int i = 0; i < leftPlayers.Count; i++) {
+				leftPlayers[i].transform.position = new Vector3(-15 - i*2, leftPlayers[i].transform.position.y, -10);
+				leftPlayers[i].GetComponent<Rigidbody>().isKinematic = true;
+			}
+			for(int i = 0; i < rightPlayers.Count; i++) {
+				rightPlayers[i].transform.position = new Vector3(15 + i*2, rightPlayers[i].transform.position.y, 10);
+				rightPlayers[i].GetComponent<Rigidbody>().isKinematic = true;
+			}
+		}
+	}
+
+	public void ReleasePlayers() {
+		StartCoroutine("MovePlayer");
+		for(int i = 0; i < 3; i++) audioManager.PLAY_STATIONARY("MachineLong", 0.5f, Random.Range(0.9f, 1.1f));
+	}
+
+	public void AnimatePlayers() {
+		StartCoroutine("AnimatePlayer");
+	}
+
+	private float animTime = 0;
+	IEnumerator AnimatePlayer() {
+		while(animTime < 20) {
+			for(int i = 0; i < leftPlayers.Count; i++) {
+				audioManager.PLAY_SOUND("Tick2", leftPlayers[i].transform.position, 100, Random.Range(0.9f, 1.2f));
+				
+			}
+			for(int i = 0; i < rightPlayers.Count; i++) {
+				audioManager.PLAY_SOUND("Tick2", rightPlayers[i].transform.position, 100, Random.Range(0.9f, 1.2f));
+
+			}
+			animTime += Time.deltaTime;;
+			yield return new WaitForSeconds(.02f);
+		}
+	}
+
+	private float playerTime = 0;
+	IEnumerator MovePlayer() {
+		while(playerTime < 20) {
+			float speed = 3;
+			for(int i = 0; i < leftPlayers.Count; i++) {
+				float targetX = -10 + i * 2;
+				float targetY = 6 / leftPlayers.Count * i;
+				float tar = Mathf.Lerp(leftPlayers[i].transform.position.x, targetX, Time.deltaTime * speed);
+				float tarY = Mathf.Lerp(leftPlayers[i].transform.position.z, targetY, Time.deltaTime * speed);
+				leftPlayers[i].transform.position = new Vector3(tar, leftPlayers[i].transform.position.y, tarY);
+				leftPlayers[i].transform.LookAt(new Vector3(0, 0 ,0));
+			}
+			for(int i = 0; i < rightPlayers.Count; i++) {
+				float targetX = 10 - i * 2;
+				float targetY = 6 / rightPlayers.Count * i;
+				float tar = Mathf.Lerp(rightPlayers[i].transform.position.x, targetX, Time.deltaTime * speed);
+				float tarY = Mathf.Lerp(rightPlayers[i].transform.position.z, targetY, Time.deltaTime * speed);
+				rightPlayers[i].transform.position = new Vector3(tar, rightPlayers[i].transform.position.y, tarY);
+				rightPlayers[i].transform.LookAt(new Vector3(0, 0 ,0));
+			}
+			playerTime += Time.deltaTime;
+			yield return new WaitForSeconds(.02f);
+		}
 	}
 
 	void FixedUpdate() {
-		applyInput();
-
-		for(int i = 0; i < leftPlayers.Count; i++) {
-			player p = leftPlayers[i];
-			Input inp = leftInput[i];
-			if(p) updatePlayer(p,inp);
-		}
-		for (int i = 0; i < rightPlayers.Count; i++) {
-			player p = rightPlayers[i];
-			Input inp = rightInput[i];
-			if(p) updatePlayer(p,inp);
+		if(!cutscene) {
+			applyInput();
+			for(int i = 0; i < leftPlayers.Count; i++) {
+				if(leftInput[i] == null || leftPlayers[i] == null) continue;
+				player p = leftPlayers[i];
+				Input inp = leftInput[i];
+				if(p) updatePlayer(p,inp);
+			}
+			for (int i = 0; i < rightPlayers.Count; i++) {
+				if(rightInput[i] == null || rightPlayers[i] == null) continue;
+				player p = rightPlayers[i];
+				Input inp = rightInput[i];
+				if(p) updatePlayer(p,inp);
+			}
 		}
 	}
 
 	public void tickPlayers() {
 		for(int i = 0; i < leftPlayers.Count; i++) {
+			if(leftPlayers[i] == null || leftInput[i] == null) continue;
 			player p = leftPlayers[i];
 			if(leftInput[i].energy > 0) {
 				p.impulse(tickSpeed);
@@ -183,6 +260,7 @@ public class playerManager : MonoBehaviour {
 			}
 		}
 		for(int i = 0; i < rightPlayers.Count; i++) {
+			if(rightPlayers[i] == null || rightInput[i] == null) continue;
 			player p = rightPlayers[i];
 			if(rightInput[i].energy > 0) {
 				p.impulse(tickSpeed);

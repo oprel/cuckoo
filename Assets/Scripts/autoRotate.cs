@@ -9,6 +9,7 @@ public class autoRotate : MonoBehaviour {
 	private AudioSource src;
 	public bool goal = false;
 	public bool right = false;
+	public bool sound = true;
 
 	void Start () {
 		if (speed == 0) speed = Random.value * 20 - 10;
@@ -34,14 +35,14 @@ public class autoRotate : MonoBehaviour {
 		if(time > 1 / Mathf.Abs(speed) && !goal) {
 			time = 0;
 			src.pitch = Random.Range(0.9f, 1.2f);
-			src.Play();
+			if(sound) src.Play();
 		}
 		if(Mathf.Abs(speed) > 0 && goal) {
 			float val;
 			if(right) val = gameManager.self.scoreRight / 10f + 0.4f;
 			else val = gameManager.self.scoreLeft / 10f + 0.4f;
 			src.pitch = Mathf.Clamp(val, 0, 1.5f);
-			if(!src.isPlaying) src.Play();
+			if(!src.isPlaying && sound) src.Play();
 		}
 		if(Mathf.Abs(speed) == 0) src.Stop();
 	}

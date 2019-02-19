@@ -129,7 +129,7 @@ MonoBehaviour:
   trash: 1
   rotationSpeed: 1
   breakTextures:
-  - {fileID: 2800000, guid: 4fdba4b39f68c9549810afb4c173c2df, type: 3}
-  - {fileID: 2800000, guid: ace989a4cc0341c4f8ac97d38addbd49, type: 3}
-  - {fileID: 2800000, guid: 3fcc1d5907ce6e9479a3c2e8c44b3464, type: 3}
+  - {fileID: 2800000, guid: 4c23f4af7f50af6478c8a7c7c6e28f48, type: 3}
+  - {fileID: 2800000, guid: ab0d4e34af2c7354f955239865f03c37, type: 3}
+  - {fileID: 2800000, guid: 273db70a165af454990eff970e800413, type: 3}
   breakState: -1

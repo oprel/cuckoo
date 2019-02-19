@@ -27,10 +27,13 @@ public class player : MonoBehaviour {
 
 	public float energy;
 
+	public bool disable = false;
+
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
 		rb = GetComponent<Rigidbody>();
 		startPos = transform.position;
+		if(disable) gameObject.SetActive(false);
 	}
 
 	public void Update() {

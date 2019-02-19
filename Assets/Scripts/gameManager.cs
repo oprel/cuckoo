@@ -10,6 +10,7 @@ public class gameManager : MonoBehaviour {
 	public int scoreRight;
 	public GameObject goalLeft;
 	public GameObject goalRight;
+	public GameObject ballSpawner;
 
 	public gamestateVisuals visuals;
 	public Text scoreDisplay;

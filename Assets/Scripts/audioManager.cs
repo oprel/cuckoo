@@ -90,6 +90,17 @@ public class audioManager : MonoBehaviour {
 		PLAY_SOUND(name, Camera.main.transform.position, volume, pitch);
 	}
 
+	public static void PLAY_CAM(string name, float volume = 1, float pitch = 1) {
+		if(instance == null) return;
+		for(int i = 0; i < instance.sounds.Length; i++) {
+			if(name == instance.names[i]) {
+				PlayClipAt(instance.sounds[i], "", volume * instance.masterVolume, pitch);
+				return;
+			}
+		}
+		KooKoo.print("Could not find '" + name + "' sound file!", KooKoo.MessageType.ERR);
+	}
+
 	public static void PLAY_SOUND(string name, Vector3 pos, float volume = 1, float pitch = 1) {
 		if(instance == null) return;
 		for(int i = 0; i < instance.sounds.Length; i++) {
@@ -116,6 +127,18 @@ public class audioManager : MonoBehaviour {
 		aSource.clip = clip;
 		aSource.pitch = pitch;
 		aSource.spatialBlend = 1;
+		aSource.volume = vol;
+		aSource.Play();
+		Destroy(tempGO, clip.length);
+		return aSource;
+	}
+
+	private static AudioSource PlayClipAt(AudioClip clip, string pos, float vol, float pitch) {
+		GameObject tempGO = new GameObject("Sound: " + clip.name);
+		var aSource = tempGO.AddComponent<AudioSource>();
+		aSource.clip = clip;
+		aSource.pitch = pitch;
+		aSource.spatialBlend = 0;
 		aSource.volume = vol;
 		aSource.Play();
 		Destroy(tempGO, clip.length);

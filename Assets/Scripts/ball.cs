@@ -9,9 +9,13 @@ public class ball : MonoBehaviour {
 	private playerManager.Team team;
 	public bool red = false;
 	public bool trash = false;
+	public bool clock = false;
 
 	public float rotationSpeed = 1;
 	private float rotBaseSpeed;
+
+	private float time = 0;
+	private float clockDelay = 0;
 
 	[Header("Break states / Cracks")]
 	public Texture2D[] breakTextures;
@@ -31,6 +35,19 @@ public class ball : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		time += Time.deltaTime;
+
+		if(clockDelay > 0) clockDelay -= Time.deltaTime;
+
+		if(clock) {
+			if(time > 1 && time < 3) {
+				transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Mathf.Sin(Time.time*100)*3, transform.eulerAngles.z);
+				if(clockDelay <= 0) {
+					audioManager.PLAY_STATIONARY("Clock", 0.03f, 1f);
+					clockDelay = 0.08f;
+				}
+			}
+		}
 		if(breakState > breakTextures.Length) breakState = breakTextures.Length;
 		if(breakState != oldBreakState && trash) updateBreakState();
 
@@ -88,14 +105,13 @@ public class ball : MonoBehaviour {
 			destroy(col);
 			return;
 		}
-
 		updateBreakState();
 	}
 
 	private void updateBreakState() {
 		oldBreakState = breakState;
 		MeshRenderer[] m = GetComponentsInChildren<MeshRenderer>();
-		if(m.Length > 0) {
+		if(m.Length > 0 && m != null) {
 			if(breakState >= 0 && breakTextures[breakState] != null)  foreach(MeshRenderer mesh in m) for(int i = 0; i < mesh.materials.Length; i++) mesh.materials[i].mainTexture = breakTextures[breakState];
 			else foreach(MeshRenderer mesh in m) for(int i = 0; i < mesh.materials.Length; i++) mesh.materials[i].mainTexture = null;
 		}
@@ -106,7 +122,7 @@ public class ball : MonoBehaviour {
 		foreach(MeshCollider m in me) {
 			Physics.IgnoreCollision(m, col.collider);
 			m.transform.SetParent(null);
-			m.gameObject.AddComponent<Rigidbody>();
+			if(m.gameObject.GetComponent<Rigidbody>() == null) m.gameObject.AddComponent<Rigidbody>();
 			MeshRenderer mR = m.GetComponent<MeshRenderer>();
 			foreach(Material mat in mR.materials) {
 				mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
