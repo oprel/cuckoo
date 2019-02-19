@@ -3326,6 +3326,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 54367959001172698, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4076294737839648, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.054059237
@@ -3377,11 +3382,6 @@ PrefabInstance:
     - target: {fileID: 1164311805328222, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 54367959001172698, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 23552971822788554, guid: f3fe5fd8e44fd9e4a8e7e90a4cbab425, type: 3}
@@ -10778,7 +10778,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 50c428c8f4c354d4793f1d31e7e43ff3, type: 3}
   - {fileID: 8300000, guid: bb659e522bd79c941b39c5fb87775194, type: 3}
   - {fileID: 8300000, guid: ecb525361dff96f4a890a0c8d90b77b6, type: 3}
-  - {fileID: 8300000, guid: 30c7bf8c768da0347819202036df0a70, type: 3}
+  - {fileID: 8300000, guid: bf81d52da5565f041a1db3eaca14ce75, type: 3}
 --- !u!1 &1905748045
 GameObject:
   m_ObjectHideFlags: 0
@@ -15801,6 +15801,7 @@ MonoBehaviour:
   ballSpawner: {fileID: 1557944666}
   visuals: {fileID: 1998128390}
   scoreDisplay: {fileID: 880907773}
+  planks: []
 --- !u!4 &1998128389
 Transform:
   m_ObjectHideFlags: 0
