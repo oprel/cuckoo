@@ -148,7 +148,7 @@ public class playerManager : MonoBehaviour {
 				DebugMode = true;
 				KooKoo.print("Nothing found on Port " + port.ToString() + ", entering Debug mode.", KooKoo.MessageType.WARN);
 			}
-			cutscene = true;
+			//cutscene = true;
 		} else cutscene = Camera.main.GetComponent<Cutscene>().playCutscene;
 		self = this;
 		ball[] bs = FindObjectsOfType<ball>();

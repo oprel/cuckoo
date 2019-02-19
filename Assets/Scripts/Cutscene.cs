@@ -45,6 +45,8 @@ public class Cutscene : MonoBehaviour {
 
         if(playCutscene) {
             foreach(GameObject g in disableOnStartObjects) g.SetActive(false);
+        }else{
+            //playerManager.self.Ready();
         }
     }
 
