@@ -19,6 +19,26 @@ ModelImporter:
     100026: oldDoor2
     100028: oldDoor3
     100030: ring
+    100032: f
+    100034: newArena
+    100036: pCylinder2
+    100038: transform5
+    100040: transform6
+    100042: pasted__bigClockFront
+    100044: pasted__door1
+    100046: pasted__door2
+    100048: pasted__doorFrame
+    100050: pasted__doorframe1
+    100052: pasted__doorframe2
+    100054: pasted__hand1
+    100056: pasted__hand2
+    100058: pasted__newDoor1
+    100060: pasted__newDoor2
+    100062: pasted__newDoor3
+    100064: pasted__oldDoor1
+    100066: pasted__oldDoor2
+    100068: pasted__oldDoor3
+    100070: pasted__ring
     400000: //RootNode
     400002: doorframe1
     400004: doorframe2
@@ -35,6 +55,26 @@ ModelImporter:
     400026: oldDoor2
     400028: oldDoor3
     400030: ring
+    400032: f
+    400034: newArena
+    400036: pCylinder2
+    400038: transform5
+    400040: transform6
+    400042: pasted__bigClockFront
+    400044: pasted__door1
+    400046: pasted__door2
+    400048: pasted__doorFrame
+    400050: pasted__doorframe1
+    400052: pasted__doorframe2
+    400054: pasted__hand1
+    400056: pasted__hand2
+    400058: pasted__newDoor1
+    400060: pasted__newDoor2
+    400062: pasted__newDoor3
+    400064: pasted__oldDoor1
+    400066: pasted__oldDoor2
+    400068: pasted__oldDoor3
+    400070: pasted__ring
     2100000: floor
     2100002: lambert1
     2100004: falloff
@@ -60,6 +100,18 @@ ModelImporter:
     2100044: clockExterior
     2100046: see_through
     2100048: seethrough
+    2100050: Default_Material
+    2100052: lambert3
+    2100054: pasted__floor
+    2100056: pasted__falloff
+    2100058: pasted__hole
+    2100060: pasted__pasted__pasted__old_knob
+    2100062: pasted__pasted__pasted__olddoor_color
+    2100064: pasted__pasted__pasted__doormodern_mc
+    2100066: pasted__pasted__pasted__modernglass
+    2100068: pasted__pasted__pasted__modern_handle
+    2100070: pasted__clockExterior
+    2100072: pasted__seethrough
     2300000: //RootNode
     2300002: doorframe1
     2300004: doorframe2
@@ -76,6 +128,22 @@ ModelImporter:
     2300026: oldDoor2
     2300028: oldDoor3
     2300030: ring
+    2300032: newArena
+    2300034: pasted__bigClockFront
+    2300036: pasted__door1
+    2300038: pasted__door2
+    2300040: pasted__doorFrame
+    2300042: pasted__doorframe1
+    2300044: pasted__doorframe2
+    2300046: pasted__hand1
+    2300048: pasted__hand2
+    2300050: pasted__newDoor1
+    2300052: pasted__newDoor2
+    2300054: pasted__newDoor3
+    2300056: pasted__oldDoor1
+    2300058: pasted__oldDoor2
+    2300060: pasted__oldDoor3
+    2300062: pasted__ring
     3300000: //RootNode
     3300002: doorframe1
     3300004: doorframe2
@@ -92,6 +160,22 @@ ModelImporter:
     3300026: oldDoor2
     3300028: oldDoor3
     3300030: ring
+    3300032: newArena
+    3300034: pasted__bigClockFront
+    3300036: pasted__door1
+    3300038: pasted__door2
+    3300040: pasted__doorFrame
+    3300042: pasted__doorframe1
+    3300044: pasted__doorframe2
+    3300046: pasted__hand1
+    3300048: pasted__hand2
+    3300050: pasted__newDoor1
+    3300052: pasted__newDoor2
+    3300054: pasted__newDoor3
+    3300056: pasted__oldDoor1
+    3300058: pasted__oldDoor2
+    3300060: pasted__oldDoor3
+    3300062: pasted__ring
     4300000: newArena
     4300002: doorframe2
     4300004: doorframe1
@@ -108,6 +192,22 @@ ModelImporter:
     4300026: doorFrame
     4300028: door2
     4300030: door1
+    4300032: pasted__newArena
+    4300034: pasted__doorframe1
+    4300036: pasted__oldDoor3
+    4300038: pasted__oldDoor2
+    4300040: pasted__oldDoor1
+    4300042: pasted__hand2
+    4300044: pasted__ring
+    4300046: pasted__doorframe2
+    4300048: pasted__newDoor1
+    4300050: pasted__newDoor2
+    4300052: pasted__newDoor3
+    4300054: pasted__hand1
+    4300056: pasted__doorFrame
+    4300058: pasted__door2
+    4300060: pasted__door1
+    4300062: pasted__bigClockFront
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:

@@ -14,6 +14,7 @@ public class gameManager : MonoBehaviour {
 
 	public gamestateVisuals visuals;
 	public Text scoreDisplay;
+	public trashSpawner[] planks;
 
 	private cameraShake camShaker;
 
@@ -36,6 +37,7 @@ public class gameManager : MonoBehaviour {
 		if(self.scoreLeft < 0) self.scoreLeft = 0;
 		audioManager.PLAY_STATIONARY("Collect", 0.1f, 0.5f);
 		self.camShaker.ShakeCamera(0.15f, 0.1f);
+		foreach (trashSpawner p in self.planks) p.scored();
 	}
 
 	public static void addScoreRight(int i) {
@@ -43,5 +45,6 @@ public class gameManager : MonoBehaviour {
 		if(self.scoreRight < 0) self.scoreRight = 0;
 		audioManager.PLAY_STATIONARY("Collect", 0.1f, 0.5f);
 		self.camShaker.ShakeCamera(0.15f, 0.1f);
+		foreach (trashSpawner p in self.planks) p.scored();
 	}
 }
