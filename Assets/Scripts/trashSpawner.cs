@@ -41,7 +41,7 @@ public class trashSpawner : MonoBehaviour {
                 audioManager.PLAY_SOUND("Hit", transform.position, 1200, Random.Range(0.9f, 1.2f));
                 audioManager.PLAY_SOUND("Collide", transform.position, 1200, Random.Range(0.9f, 1.2f));
                 Shake();
-                if(hit >= hitsUntilDrop) DropItem();
+                
             }
         }
     }
@@ -49,6 +49,13 @@ public class trashSpawner : MonoBehaviour {
     private void Shake() {
         shake = 3;
         Camera.main.GetComponent<cameraShake>().ShakeCamera(0.25f, 0.05f);
+        if(hit >= hitsUntilDrop) DropItem();
+    }
+
+    public void scored(){
+        shakeDelay = 5;
+        hit++;
+        if(hit >= hitsUntilDrop) DropItem();
     }
 
     private GameObject SpawnItem() {
@@ -64,9 +71,15 @@ public class trashSpawner : MonoBehaviour {
         if(item == null) return;
         item.transform.SetParent(null);
         item.GetComponent<Rigidbody>().isKinematic = false;
-        item.GetComponent<Rigidbody>().AddForce(0, 0, -200);
+        Vector3 dir = -item.transform.position.normalized * 300;
+        dir.y = 0 ;
+        item.GetComponent<Rigidbody>().AddForce(dir);
         item = null;
         spawnDelay = 10;
         hit = 0;
+    }
+
+    private void OnDrawGizmosSelected(){
+        Gizmos.DrawWireSphere(transform.position,1);
     }
 }
