@@ -172,11 +172,11 @@ public class playerManager : MonoBehaviour {
 
 		if(cutscene) {
 			for(int i = 0; i < leftPlayers.Count; i++) {
-				leftPlayers[i].transform.position = new Vector3(-15 - i*2, leftPlayers[i].transform.position.y, -10);
+				leftPlayers[i].transform.position = new Vector3(-1500 - i*2, leftPlayers[i].transform.position.y, -1000);
 				leftPlayers[i].GetComponent<Rigidbody>().isKinematic = true;
 			}
 			for(int i = 0; i < rightPlayers.Count; i++) {
-				rightPlayers[i].transform.position = new Vector3(15 + i*2, rightPlayers[i].transform.position.y, 10);
+				rightPlayers[i].transform.position = new Vector3(1500 + i*2, rightPlayers[i].transform.position.y, 1000);
 				rightPlayers[i].GetComponent<Rigidbody>().isKinematic = true;
 			}
 		}
