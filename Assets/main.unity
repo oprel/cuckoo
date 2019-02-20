@@ -1159,6 +1159,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: plank1 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 6490901756453721253, guid: 689a654b2b90bf04f9879b5ac93de3bc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6490901756453947525, guid: 689a654b2b90bf04f9879b5ac93de3bc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2250,6 +2255,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1822950974}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &578630198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 1596e3c7d337c1543a3810db6c8785bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 146228711}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &578630202
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578630198}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300068, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
 --- !u!1 &582995184
 GameObject:
   m_ObjectHideFlags: 0
@@ -4232,6 +4257,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: plank1 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6490901756453721253, guid: 689a654b2b90bf04f9879b5ac93de3bc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6490901756453947525, guid: 689a654b2b90bf04f9879b5ac93de3bc,
         type: 3}
@@ -11517,6 +11547,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: plank1 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6490901756453721253, guid: 689a654b2b90bf04f9879b5ac93de3bc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6490901756453947525, guid: 689a654b2b90bf04f9879b5ac93de3bc,
         type: 3}
@@ -21642,6 +21677,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: plank1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6490901756453721253, guid: 689a654b2b90bf04f9879b5ac93de3bc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6490901756453947525, guid: 689a654b2b90bf04f9879b5ac93de3bc,
         type: 3}
