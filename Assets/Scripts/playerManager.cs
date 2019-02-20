@@ -97,10 +97,11 @@ public class playerManager : MonoBehaviour {
 		}
 		try { for(int i = 0; i < playerCount; i++) impulses[i].energy = 0; }
 		catch(KeyNotFoundException) {}
-		
+
 		if(str.Length - 1 < 0) return;
 		string[] players = str.Substring(0, str.Length - 1).Split('|');
 		for(int i = 0; i < players.Length; i++) {
+			if (!impulses.ContainsKey(i)) return;
 			string[] val = players[i].Split(':');
 			int rot = 0;
 			if(!int.TryParse(val[0], out rot)) continue;
