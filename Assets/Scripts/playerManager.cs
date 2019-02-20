@@ -80,6 +80,8 @@ public class playerManager : MonoBehaviour {
 	public static void addPlayer(bool addToLeft, player p) {
 		if(addToLeft) leftPlayers[p.number] = p;
 		else rightPlayers[p.number] = p;
+		self.rotations.Add(self.playerCount, 0);
+		self.impulses.Add(self.playerCount, new Impulse());
 		self.playerCount++;
 	}
 
@@ -90,6 +92,7 @@ public class playerManager : MonoBehaviour {
 	}
 
 	public void applyInput() {
+		if(playerCount <= 0) return;
 		string str = "";
 		if (!DebugMode) {
 			str = readArduinoInputs();
@@ -104,8 +107,7 @@ public class playerManager : MonoBehaviour {
 			string[] val = players[i].Split(':');
 			int rot = 0;
 			if(!int.TryParse(val[0], out rot)) continue;
-			rotations[i] = rot;
-			
+			rotations[i] = rot + ((i > 2)? -90 : 90);
 			int imp = 0;
 			if(!int.TryParse(val[1], out imp)) continue;
 			if(imp != impulses[i].lastImpulse && !impulses[i].shouldImpulse) impulses[i].shouldImpulse = true;
@@ -153,10 +155,6 @@ public class playerManager : MonoBehaviour {
 		self = this;
 		ball[] bs = FindObjectsOfType<ball>();
 		foreach (ball b in bs) if (!b.trash) balls.Add(b.gameObject);
-		for(int i = 0; i < playerCount; i++) {
-			rotations.Add(i, 0);
-			impulses.Add(i, new Impulse());
-		}
 	}
 
 	public void Ready() {
@@ -181,11 +179,11 @@ public class playerManager : MonoBehaviour {
 	void Start() {
 		if(cutscene) {
 			for(int i = 0; i < leftPlayers.Count; i++) {
-				leftPlayers[i].transform.position = new Vector3(-1500 - i*2, leftPlayers[i].transform.position.y, -1000);
+				leftPlayers[i].transform.position = new Vector3(-1500 - i * 2, leftPlayers[i].transform.position.y, -1000);
 				leftPlayers[i].GetComponent<Rigidbody>().isKinematic = true;
 			}
 			for(int i = 0; i < rightPlayers.Count; i++) {
-				rightPlayers[i].transform.position = new Vector3(1500 + i*2, rightPlayers[i].transform.position.y, 1000);
+				rightPlayers[i].transform.position = new Vector3(1500 + i * 2, rightPlayers[i].transform.position.y, 1000);
 				rightPlayers[i].GetComponent<Rigidbody>().isKinematic = true;
 			}
 		}
