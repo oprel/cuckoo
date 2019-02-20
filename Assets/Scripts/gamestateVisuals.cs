@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class gamestateVisuals : MonoBehaviour {
 	public static gamestateVisuals self;
+
 	[Header("Components")]
 	public autoRotate gearLeft;
 	public autoRotate gearRight;
@@ -14,6 +15,8 @@ public class gamestateVisuals : MonoBehaviour {
 
 	private GameObject hand;
 	private GameObject smallHand;
+	private GameObject doorRed, doorBlue;
+	private GameObject[] redDoors, blueDoors;
 
 	public float tickSpeed = 0.1f;
 	private float time = 0, tickTime = 0;
@@ -41,6 +44,18 @@ public class gamestateVisuals : MonoBehaviour {
 		baseIntensity = clockLight.intensity;
 		clockShowTime = clockShowDuration;	
 		clockMinDelay = clockShowDuration;
+
+		doorRed = GameObject.FindGameObjectWithTag("RedDoor");
+		doorBlue = GameObject.FindGameObjectWithTag("BlueDoor");
+	}
+
+	public void OpenDoors() {
+		foreach(Transform door in doorRed.transform) {
+			door.rotation = Quaternion.Euler(0, Mathf.LerpAngle(door.eulerAngles.x, 180, Time.deltaTime * 5), 0);
+		}
+		foreach(Transform door in doorBlue.transform) {
+			door.rotation = Quaternion.Euler(0, Mathf.LerpAngle(door.eulerAngles.x, 180, Time.deltaTime * 5), 0);
+		}
 	}
 	
 	void Update () {
@@ -53,14 +68,12 @@ public class gamestateVisuals : MonoBehaviour {
 		tickTime += Time.deltaTime;
 
 		//Kleine wijzer laat zien wie voor staat 
-		 
 		if(gameManager.self.scoreRight != gameManager.self.scoreLeft && (gameManager.self.scoreRight > 0 || gameManager.self.scoreLeft > 0)) {
 			if(gameManager.self.scoreRight > gameManager.self.scoreLeft) smallHand.transform.localRotation = Quaternion.Euler(smallHand.transform.localEulerAngles.x, smallHand.transform.localEulerAngles.y, Mathf.LerpAngle(smallHand.transform.localEulerAngles.z, 90, Time.deltaTime));
 			else smallHand.transform.localRotation = Quaternion.Euler(smallHand.transform.localEulerAngles.x, smallHand.transform.localEulerAngles.y, Mathf.LerpAngle(smallHand.transform.localEulerAngles.z, -90, Time.deltaTime));
 		}
 		else smallHand.transform.localRotation = Quaternion.Euler(smallHand.transform.localEulerAngles.x, smallHand.transform.localEulerAngles.y, Mathf.LerpAngle(smallHand.transform.localEulerAngles.z, smallHandBaseRot, Time.deltaTime));
 		
-
 		//Giant Clock tick
 		if(clockShowTime > 0) {
 			clockShowTime -= Time.deltaTime;

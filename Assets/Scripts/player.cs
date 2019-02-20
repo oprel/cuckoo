@@ -14,13 +14,9 @@ public class player : MonoBehaviour {
 
 	private GameObject text;
 
-	private float rotationDelay = 0;
-	private float leakDelay = 0;
-
 	[SerializeField]
 	private float speed = 1;
 	private float speedTarget = 1;
-	private GameObject oil;
 	[HideInInspector]
 	public Transform aiTarget;
 
@@ -41,12 +37,6 @@ public class player : MonoBehaviour {
 		
 		//Speed
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
-
-		//Leaking
-		if(leakDelay > 0  && !oil) leakDelay--;
-		rotationDelay += Time.deltaTime;
-		if(rotationDelay > 0.4f) rotationDelay = 0;
-		
 	}
 
 	private void FixedUpdate() {
@@ -65,15 +55,6 @@ public class player : MonoBehaviour {
 		rb.angularVelocity = Vector3.zero;
 		transform.rotation = Quaternion.identity;
 		transform.position = startPos;
-	}
-
-	public void leak() {
-		float startrot = Random.Range(0, 360);
-		for(int i = 1; i <= 3; i++) {
-			oil = Instantiate(playerManager.self.oilPrefab, transform.position, Quaternion.Euler(0, startrot + (90 * (i)), 0));
-			oil.GetComponent<Rigidbody>().AddForce(300 * oil.transform.forward);
-		}
-		leakDelay = 5;
 	}
 
 	public void changeSpeed(float speedup) {
