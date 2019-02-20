@@ -27,7 +27,7 @@ public class gameManager : MonoBehaviour {
 	void FixedUpdate() {
 		scoreDisplay.text = scoreLeft.ToString() + " - " + scoreRight.ToString();
 		if (Input.GetButton("Fire2")) {
-			playerManager.self.stream.Dispose();
+			if(playerManager.self.stream != null) playerManager.self.stream.Dispose();
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 	}

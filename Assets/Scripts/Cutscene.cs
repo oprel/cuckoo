@@ -27,7 +27,7 @@ public class Cutscene : MonoBehaviour {
     public Shot gameShot;
     public Shot[] shots;
     [Space(10)]
-    [Range(-1, 20)]
+    [Range(0, 15)]
     public int currentShot = 0;
     private Shot current;
 
@@ -36,7 +36,6 @@ public class Cutscene : MonoBehaviour {
 
     void Start() {
         mainCam = Camera.main;
-
         countdownText =  countdown.GetComponentsInChildren<Text>();
         countdownPos = countdown.transform.position.y;
 
@@ -45,8 +44,9 @@ public class Cutscene : MonoBehaviour {
 
         if(playCutscene) {
             foreach(GameObject g in disableOnStartObjects) g.SetActive(false);
-        }else{
-            //playerManager.self.Ready();
+        } else {
+            currentShot = -1;
+            EndCutscene();
         }
     }
 

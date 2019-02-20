@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/videoball.unity
-    guid: 243ef55c99c8078439b5e27271d9618d
+    path: Assets/main.unity
+    guid: 0a9634b6ac36944459182edbd8330c42
   m_configObjects: {}

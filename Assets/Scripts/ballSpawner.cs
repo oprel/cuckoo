@@ -68,11 +68,13 @@ public class ballSpawner : MonoBehaviour {
 	public void ResetClock() {
 		timer = 0;
 		armExtended = doorsOpen = false;
-		house.gameObject.SetActive(false);
-		fakeBall.localScale = new Vector3(0, 0, 0);
-		fakeBall.gameObject.SetActive(true);
+		if(house != null) house.gameObject.SetActive(false);
+		if(fakeBall != null) {
+			fakeBall.localScale = new Vector3(0, 0, 0);
+			fakeBall.gameObject.SetActive(true);
+		}
 		dropClock = false;
-		clock.gameObject.SetActive(false);
+		if(clock != null) clock.gameObject.SetActive(false);
 	}
 
 	public static void decrementBalls() {

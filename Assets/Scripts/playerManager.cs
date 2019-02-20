@@ -148,11 +148,15 @@ public class playerManager : MonoBehaviour {
 				DebugMode = true;
 				KooKoo.print("Nothing found on Port " + port.ToString() + ", entering Debug mode.", KooKoo.MessageType.WARN);
 			}
-			//cutscene = true;
+			cutscene = true;
 		} else cutscene = Camera.main.GetComponent<Cutscene>().playCutscene;
 		self = this;
 		ball[] bs = FindObjectsOfType<ball>();
 		foreach (ball b in bs) if (!b.trash) balls.Add(b.gameObject);
+		for(int i = 0; i < playerCount; i++) {
+			rotations.Add(i, 0);
+			impulses.Add(i, new Impulse());
+		}
 	}
 
 	public void Ready() {
@@ -160,16 +164,21 @@ public class playerManager : MonoBehaviour {
 		cutscene = false;
 		StopCoroutine("MovePlayer");
 		StopCoroutine("AnimatePlayer");
-		for(int i = 0; i < leftPlayers.Count; i++) leftPlayers[i].GetComponent<Rigidbody>().isKinematic = false;
-		for(int i = 0; i < rightPlayers.Count; i++) rightPlayers[i].GetComponent<Rigidbody>().isKinematic = false;
+		for(int i = 0; i < leftPlayers.Count; i++) {
+			if(leftPlayers[i] == null) continue;
+			leftPlayers[i].GetComponent<Rigidbody>().isKinematic = false;
+			leftInput[i].direction = leftPlayers[i].transform.eulerAngles.y;
+			leftInput[i].energy = 0;
+		}
+		for(int i = 0; i < rightPlayers.Count; i++) {
+			if(rightPlayers[i] == null) continue;
+			rightPlayers[i].GetComponent<Rigidbody>().isKinematic = false;
+			rightInput[i].direction = rightPlayers[i].transform.eulerAngles.y;
+			rightInput[i].energy = 0;
+		}
 	}
 
 	void Start() {
-		for(int i = 0; i < playerCount; i++) {
-			rotations.Add(i, 0);
-			impulses.Add(i, new Impulse());
-		}
-
 		if(cutscene) {
 			for(int i = 0; i < leftPlayers.Count; i++) {
 				leftPlayers[i].transform.position = new Vector3(-1500 - i*2, leftPlayers[i].transform.position.y, -1000);
@@ -186,7 +195,6 @@ public class playerManager : MonoBehaviour {
 		StartCoroutine("MovePlayer");
 		for(int i = 0; i < 3; i++) audioManager.PLAY_STATIONARY("MachineLong", 0.5f, Random.Range(0.9f, 1.1f));
 	}
-
 	public void AnimatePlayers() {
 		StartCoroutine("AnimatePlayer");
 	}
@@ -237,15 +245,11 @@ public class playerManager : MonoBehaviour {
 			applyInput();
 			for(int i = 0; i < leftPlayers.Count; i++) {
 				if(leftInput[i] == null || leftPlayers[i] == null) continue;
-				player p = leftPlayers[i];
-				Input inp = leftInput[i];
-				if(p) updatePlayer(p,inp);
+				updatePlayer(leftInput[i], leftPlayers[i]);
 			}
 			for (int i = 0; i < rightPlayers.Count; i++) {
 				if(rightInput[i] == null || rightPlayers[i] == null) continue;
-				player p = rightPlayers[i];
-				Input inp = rightInput[i];
-				if(p) updatePlayer(p,inp);
+				updatePlayer(rightInput[i], rightPlayers[i]);
 			}
 		}
 	}
@@ -269,7 +273,7 @@ public class playerManager : MonoBehaviour {
 		}
 	}
 
-	void updatePlayer(player p, Input inp) {
+	void updatePlayer(Input inp, player p) {
 		if (inp.enableAI) {
 			balls.Sort((a, b) => 1 - 2 * Random.Range(0, 1));
 			List<GameObject> bcopy = new List<GameObject>(balls);

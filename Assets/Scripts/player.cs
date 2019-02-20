@@ -11,7 +11,6 @@ public class player : MonoBehaviour {
 	[HideInInspector]
 	public float rotationSpeed;
 	public autoRotate eyeGear;
-	public KeyCode keyT;
 
 	private GameObject text;
 
@@ -39,6 +38,7 @@ public class player : MonoBehaviour {
 	public void Update() {
 		if(transform.position.y < -2) Reset();
 		eyeGear.speed = rotationSpeed;
+		
 		//Speed
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
 
@@ -50,7 +50,9 @@ public class player : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
-		rb.velocity = transform.forward * rb.velocity.magnitude + new Vector3(0,rb.velocity.y,0);
+		Vector3 vel = rb.velocity;
+		vel.y = 0;
+		rb.velocity = transform.forward * vel.magnitude + new Vector3(0, rb.velocity.y, 0);
 	}
 
 	
