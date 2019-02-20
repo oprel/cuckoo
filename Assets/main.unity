@@ -612,6 +612,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Arena
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
+      propertyPath: m_TagString
+      value: RedDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
+      propertyPath: m_TagString
+      value: BlueDoor
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1199,6 +1211,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1822950974}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &257376426 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6490901756453947525, guid: 689a654b2b90bf04f9879b5ac93de3bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 215461515}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &262095350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1671,6 +1689,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408436086}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &413766779 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6490901756453947525, guid: 689a654b2b90bf04f9879b5ac93de3bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1772233058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &445912254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1965,7 +1989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a339d7a309858114abf57e14c971dfa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playCutscene: 0
+  playCutscene: 1
   disableOnStartObjects: []
   countdown: {fileID: 1771884179}
   gameShot:
@@ -2000,7 +2024,18 @@ MonoBehaviour:
     focusOnTarget: 0
     postEvent:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 1994311433}
+          m_MethodName: CapturePlayers
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - name: Rise
@@ -2066,7 +2101,18 @@ MonoBehaviour:
     focusOnTarget: 0
     postEvent:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 1998128390}
+          m_MethodName: OpenDoors
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - name: Release Players
@@ -10646,7 +10692,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1622291296}
     m_Modifications:
     - target: {fileID: 8614323194946474745, guid: 8c3a4a7299151004b84f6d7b563e0143,
         type: 3}
@@ -10791,6 +10837,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c58c0342fa0d94d8270464f7606c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1728832439 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6490901756453947525, guid: 689a654b2b90bf04f9879b5ac93de3bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1189785101}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1741847961
 GameObject:
   m_ObjectHideFlags: 0
@@ -11439,6 +11491,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1905748045}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1931835568 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6490901756453947525, guid: 689a654b2b90bf04f9879b5ac93de3bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 6490901755505513394}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1937825073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16232,6 +16290,12 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!4 &1946384473 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6490901756453947525, guid: 689a654b2b90bf04f9879b5ac93de3bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 911223411}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1973464571
 GameObject:
   m_ObjectHideFlags: 0
@@ -21568,7 +21632,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1622291296}
     m_Modifications:
     - target: {fileID: 409270229986587270, guid: a36efda9fe8067c469021f8ba937d204,
         type: 3}

@@ -8,6 +8,8 @@ TagManager:
   - Hitter
   - Arena
   - Trash
+  - BlueDoor
+  - RedDoor
   layers:
   - Default
   - TransparentFX
