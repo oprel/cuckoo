@@ -99,7 +99,7 @@ public class ballSpawner : MonoBehaviour {
 		ballAmount++;
 		if (trash) return;
 		
-		red = Random.Range(0, 2) == 0? true : false;
+		red = Random.Range(0, 2) == 0 ? true : false;
 		if(Random.Range(0, 2) == 0) flipped = true;
 		else flipped = false;
 
