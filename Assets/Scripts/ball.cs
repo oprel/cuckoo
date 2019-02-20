@@ -86,6 +86,12 @@ public class ball : MonoBehaviour {
 		}
 	}
 
+	public void Destroy(){
+		ballSpawner.decrementBalls();
+		Destroy(gameObject);
+
+	}
+
 	//Boost on beak collision
 	void OnCollisionEnter(Collision col) {
 		if(col.gameObject.tag == "Hitter") {

@@ -71,7 +71,7 @@ public class trashSpawner : MonoBehaviour {
         if(item == null) return;
         item.transform.SetParent(null);
         item.GetComponent<Rigidbody>().isKinematic = false;
-        Vector3 dir = -item.transform.position.normalized * 300;
+        Vector3 dir = -item.transform.position.normalized * Random.Range(100,300);
         dir.y = 0 ;
         item.GetComponent<Rigidbody>().AddForce(dir);
         item = null;
