@@ -39,6 +39,7 @@ ModelImporter:
     100066: pasted__oldDoor2
     100068: pasted__oldDoor3
     100070: pasted__ring
+    100072: frontFrame
     400000: //RootNode
     400002: doorframe1
     400004: doorframe2
@@ -75,6 +76,7 @@ ModelImporter:
     400066: pasted__oldDoor2
     400068: pasted__oldDoor3
     400070: pasted__ring
+    400072: frontFrame
     2100000: floor
     2100002: lambert1
     2100004: falloff
@@ -112,6 +114,8 @@ ModelImporter:
     2100068: pasted__pasted__pasted__modern_handle
     2100070: pasted__clockExterior
     2100072: pasted__seethrough
+    2100074: arenaBase_lambert4SG1
+    2100076: arenaBase_lambert2SG1
     2300000: //RootNode
     2300002: doorframe1
     2300004: doorframe2
@@ -144,6 +148,7 @@ ModelImporter:
     2300058: pasted__oldDoor2
     2300060: pasted__oldDoor3
     2300062: pasted__ring
+    2300064: frontFrame
     3300000: //RootNode
     3300002: doorframe1
     3300004: doorframe2
@@ -176,6 +181,7 @@ ModelImporter:
     3300058: pasted__oldDoor2
     3300060: pasted__oldDoor3
     3300062: pasted__ring
+    3300064: frontFrame
     4300000: newArena
     4300002: doorframe2
     4300004: doorframe1
@@ -208,6 +214,9 @@ ModelImporter:
     4300058: pasted__door2
     4300060: pasted__door1
     4300062: pasted__bigClockFront
+    4300064: frontFrame
+    4300066: arenaBase:newArena
+    4300068: areneBase
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
