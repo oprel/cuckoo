@@ -808,14 +808,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c86859d70a608504eae84d7a8ff11f67, type: 2}
-    - target: {fileID: 2300064, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: f7106b60cf619e049a615b95bf12cc34, type: 3}
-    - target: {fileID: 2300064, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100002, guid: f7106b60cf619e049a615b95bf12cc34, type: 3}
     - target: {fileID: 3300006, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -824,6 +816,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: 23a9d4437ff6c1f459d6fc75e40718f6, type: 3}
+    - target: {fileID: 2300064, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f7106b60cf619e049a615b95bf12cc34, type: 3}
+    - target: {fileID: 2300064, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100002, guid: f7106b60cf619e049a615b95bf12cc34, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1596e3c7d337c1543a3810db6c8785bb, type: 3}
 --- !u!1 &148675799 stripped
@@ -3426,7 +3426,7 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 0.6415094, g: 0.55273664, b: 0.37824848, a: 1}
-  m_Intensity: 10.57
+  m_Intensity: 73.43
   m_Range: 50
   m_SpotAngle: 91
   m_CookieSize: 10
