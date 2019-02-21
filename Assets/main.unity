@@ -921,7 +921,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &162600527
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2665,7 +2665,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &684131188
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3125,7 +3125,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &897751184
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3464,7 +3464,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &1006398224
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3656,7 +3656,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &1077955684
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3750,7 +3750,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &1095335483
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3916,7 +3916,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &1128234105
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10410,7 +10410,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &1580054162
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10677,7 +10677,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &1658374762
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11469,7 +11469,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &1905748049
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16450,7 +16450,7 @@ MonoBehaviour:
   speed: 0
   goal: 0
   right: 1
-  sound: 1
+  sound: 0
 --- !u!23 &1992066665
 MeshRenderer:
   m_ObjectHideFlags: 0
