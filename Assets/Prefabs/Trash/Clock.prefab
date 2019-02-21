@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ab117b84299ecde47b5c818fac3cf1df, type: 3}
+  - {fileID: 2100000, guid: a7f6236bd86475343b249e26bfd98936, type: 2}
   - {fileID: 2100002, guid: ab117b84299ecde47b5c818fac3cf1df, type: 3}
   - {fileID: 2100004, guid: ab117b84299ecde47b5c818fac3cf1df, type: 3}
   - {fileID: 2100006, guid: ab117b84299ecde47b5c818fac3cf1df, type: 3}
@@ -114,6 +114,7 @@ MonoBehaviour:
   beakBoost: 300
   red: 0
   trash: 1
+  clock: 0
   rotationSpeed: 1
   breakTextures:
   - {fileID: 2800000, guid: 4c23f4af7f50af6478c8a7c7c6e28f48, type: 3}
