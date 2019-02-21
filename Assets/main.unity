@@ -2025,7 +2025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a339d7a309858114abf57e14c971dfa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playCutscene: 0
+  playCutscene: 1
   disableOnStartObjects: []
   countdown: {fileID: 1771884179}
   gameShot:
@@ -2041,10 +2041,21 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   shots:
-  - name: Outside the clock
+  - name: Outside the clock1
     duration: 0.4
-    pos: {x: 0, y: -15, z: -100}
-    rotation: {x: -15.11, y: 0, z: 0}
+    pos: {x: 30, y: -30, z: -150}
+    rotation: {x: -15.11, y: -14, z: 0}
+    target: {fileID: 0}
+    focusOnTarget: 0
+    postEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - name: Outside the clock2
+    duration: 1.5
+    pos: {x: 0, y: 3, z: -25}
+    rotation: {x: 0, y: 0, z: 0}
     target: {fileID: 0}
     focusOnTarget: 0
     postEvent:
@@ -2053,9 +2064,9 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - name: Enter
-    duration: 1.5
-    pos: {x: 0, y: 5, z: -5}
-    rotation: {x: -5.5, y: 0, z: 0}
+    duration: 0.41
+    pos: {x: 0, y: 3, z: -5}
+    rotation: {x: 48, y: 0, z: 0}
     target: {fileID: 0}
     focusOnTarget: 0
     postEvent:
@@ -2075,8 +2086,8 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - name: Rise
-    duration: 0.3
-    pos: {x: 0, y: 20, z: 0}
+    duration: 0.5
+    pos: {x: 0, y: 40, z: 0}
     rotation: {x: 90, y: 0, z: 0}
     target: {fileID: 0}
     focusOnTarget: 0
