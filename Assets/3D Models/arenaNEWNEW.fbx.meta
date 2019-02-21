@@ -40,6 +40,8 @@ ModelImporter:
     100068: pasted__oldDoor3
     100070: pasted__ring
     100072: frontFrame
+    100074: areneBase
+    100076: group2
     400000: //RootNode
     400002: doorframe1
     400004: doorframe2
@@ -77,6 +79,8 @@ ModelImporter:
     400068: pasted__oldDoor3
     400070: pasted__ring
     400072: frontFrame
+    400074: areneBase
+    400076: group2
     2100000: floor
     2100002: lambert1
     2100004: falloff
@@ -152,6 +156,7 @@ ModelImporter:
     2300060: pasted__oldDoor3
     2300062: pasted__ring
     2300064: frontFrame
+    2300066: areneBase
     3300000: //RootNode
     3300002: doorframe1
     3300004: doorframe2
@@ -185,6 +190,7 @@ ModelImporter:
     3300060: pasted__oldDoor3
     3300062: pasted__ring
     3300064: frontFrame
+    3300066: areneBase
     4300000: newArena
     4300002: doorframe2
     4300004: doorframe1
