@@ -62,7 +62,12 @@ public class player : MonoBehaviour {
 	public void Animate() {
 		animTime += Time.deltaTime;
 		audioManager.PLAY_SOUND("Chirp_Pos", transform.position, 100, Random.Range(0.9f, 1.2f));
-		beakTop.part.rotation = Quaternion.Euler(beakTop.baseRot.x, Mathf.Sin(animTime*100)*10, beakTop.baseRot.z);
+		beakTop.part.rotation = Quaternion.Euler(beakTop.baseRot.x, Mathf.Sin(animTime*120)*10, beakTop.baseRot.z);
+		
+		//
+		beakBottom.part.rotation = Quaternion.Euler(beakBottom.baseRot.x, Mathf.Sin(animTime*60)*5+5, beakBottom.baseRot.z);
+		
+		transform.rotation = Quaternion.Euler(0, Mathf.Sin(animTime*60), 0);
 	}
 	
 	public void impulse(float force) {
