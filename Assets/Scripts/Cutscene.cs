@@ -141,4 +141,14 @@ public class Cutscene : MonoBehaviour {
         }
         EndCutscene();
     }
+
+    private void OnDrawGizmosSelected() {
+        for (int i = 0; i < shots.Length-1; i++)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(shots[i].pos,shots[i+1].pos);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(shots[i].pos, shots[i].pos+ Quaternion.Euler(shots[i].rotation) * Vector3.forward);
+        }
+    }
 }

@@ -71,7 +71,7 @@ PrefabInstance:
         type: 3}
       propertyPath: eyeGear
       value: 
-      objectReference: {fileID: 306194822339361810}
+      objectReference: {fileID: 8766446585523613176}
     - target: {fileID: 8446873591689314394, guid: f3333f454f0e544489de9e958449a72d,
         type: 3}
       propertyPath: number
@@ -119,9 +119,9 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f39726680d08ad84ba3679a0800e4e51, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3333f454f0e544489de9e958449a72d, type: 3}
---- !u!114 &306194822339361810 stripped
+--- !u!114 &8766446585523613176 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8447459339683229794, guid: f3333f454f0e544489de9e958449a72d,
+  m_CorrespondingSourceObject: {fileID: 624902673972601224, guid: f3333f454f0e544489de9e958449a72d,
     type: 3}
   m_PrefabInstance: {fileID: 8143833118827482224}
   m_PrefabAsset: {fileID: 0}
