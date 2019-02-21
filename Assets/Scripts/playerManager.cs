@@ -183,16 +183,21 @@ public class playerManager : MonoBehaviour {
 		for(int i = 0; i < leftPlayers.Count; i++) {
 			leftPlayers[i].transform.position = new Vector3(-15 - i * 2, leftPlayers[i].transform.position.y, -10);
 			leftPlayers[i].GetComponent<Rigidbody>().isKinematic = true;
+			leftPlayers[i].transform.Find("trail").gameObject.SetActive(false);
 		}
 		for(int i = 0; i < rightPlayers.Count; i++) {
 			rightPlayers[i].transform.position = new Vector3(15 + i * 2, rightPlayers[i].transform.position.y, 10);
 			rightPlayers[i].GetComponent<Rigidbody>().isKinematic = true;
+			rightPlayers[i].transform.Find("trail").gameObject.SetActive(false);
 		}
 	}
 	public void ReleasePlayers() {
 		StartCoroutine("MovePlayer");
+		for(int i = 0; i < leftPlayers.Count; i++) leftPlayers[i].transform.Find("trail").gameObject.SetActive(true);
+		for(int i = 0; i < rightPlayers.Count; i++) rightPlayers[i].transform.Find("trail").gameObject.SetActive(true);
 		for(int i = 0; i < 3; i++) audioManager.PLAY_STATIONARY("MachineLong", 0.5f, Random.Range(0.9f, 1.1f));
 	}
+
 	public void AnimatePlayers() {
 		StartCoroutine("AnimatePlayer");
 	}
@@ -200,16 +205,10 @@ public class playerManager : MonoBehaviour {
 	private float animTime = 0;
 	IEnumerator AnimatePlayer() {
 		while(animTime < 20) {
-			for(int i = 0; i < leftPlayers.Count; i++) {
-				audioManager.PLAY_SOUND("Tick2", leftPlayers[i].transform.position, 100, Random.Range(0.9f, 1.2f));
-				
-			}
-			for(int i = 0; i < rightPlayers.Count; i++) {
-				audioManager.PLAY_SOUND("Tick2", rightPlayers[i].transform.position, 100, Random.Range(0.9f, 1.2f));
-
-			}
-			animTime += Time.deltaTime;;
-			yield return new WaitForSeconds(.02f);
+			//for(int i = 0; i < leftPlayers.Count; i++) leftPlayers[i].Animate();
+			for(int i = 0; i < rightPlayers.Count; i++) rightPlayers[i].Animate();
+			animTime += Time.deltaTime;
+			yield return new WaitForSeconds(.05f);
 		}
 	}
 

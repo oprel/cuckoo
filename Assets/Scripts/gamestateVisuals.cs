@@ -49,15 +49,11 @@ public class gamestateVisuals : MonoBehaviour {
 		doorBlue = GameObject.FindGameObjectWithTag("BlueDoor");
 	}
 
-	public void OpenDoors() {
-		foreach(Transform door in doorRed.transform) {
-			door.rotation = Quaternion.Euler(0, Mathf.LerpAngle(door.eulerAngles.x, 180, Time.deltaTime * 5), 0);
-		}
-		foreach(Transform door in doorBlue.transform) {
-			door.rotation = Quaternion.Euler(0, Mathf.LerpAngle(door.eulerAngles.x, 180, Time.deltaTime * 5), 0);
-		}
+	public void CloseDoors() {
+		for(int i = 0; i < doorRed.transform.childCount; i++) doorRed.transform.GetChild(i).rotation = Quaternion.Euler(0, 0, 0);
+		for(int i = 0; i < doorBlue.transform.childCount; i++) doorBlue.transform.GetChild(i).rotation = Quaternion.Euler(0, 0, 0);
 	}
-	
+
 	void Update () {
 		hand.transform.localScale = new Vector3(handBaseScale + Mathf.Sin(tickTime*4)/20, handBaseScale, hand.transform.localScale.z);
 
