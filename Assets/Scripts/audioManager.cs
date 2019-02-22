@@ -59,7 +59,7 @@ public class audioManager : MonoBehaviour {
 		MELODY = new Voice(mainMelodySrc, 0f);
 		voices = new Voice[]{BASS, DRUMS, MELODY};
 
-		FADE_MUSIC(0.05f, BASS, 0.8f);
+		FADE_MUSIC(0.07f, BASS, 0.8f);
 		FADE_MUSIC(0.03f, DRUMS, 0.5f);
 
 		//Sounds

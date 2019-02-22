@@ -50,8 +50,16 @@ public class gamestateVisuals : MonoBehaviour {
 	}
 
 	public void CloseDoors() {
-		for(int i = 0; i < doorRed.transform.childCount; i++) doorRed.transform.GetChild(i).rotation = Quaternion.Euler(0, 0, 0);
-		for(int i = 0; i < doorBlue.transform.childCount; i++) doorBlue.transform.GetChild(i).rotation = Quaternion.Euler(0, 0, 0);
+		for(int i = 0; i < doorRed.transform.childCount; i++) {
+			//doorRed.transform.GetChild(i).eulerAngles = new Vector3(0, 0, 0);
+			//if(doorRed.transform.GetChild(i).GetComponent<Rigidbody>() != null) doorRed.transform.GetChild(i).GetComponent<Rigidbody>().isKinematic = true;
+			doorRed.transform.GetChild(i).gameObject.SetActive(false);
+		}
+		for(int i = 0; i < doorBlue.transform.childCount; i++) {
+			//doorBlue.transform.GetChild(i).eulerAngles = new Vector3(0, 0, 0);
+			//if(doorBlue.transform.GetChild(i).GetComponent<Rigidbody>() != null) doorBlue.transform.GetChild(i).GetComponent<Rigidbody>().isKinematic = true;
+			doorBlue.transform.GetChild(i).gameObject.SetActive(false);
+		}
 	}
 
 	void Update () {

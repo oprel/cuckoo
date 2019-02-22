@@ -65,7 +65,7 @@ public class ball : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		if (other.gameObject == gameManager.self.goalLeft) {
+		if (other.gameObject == gameManager.self.goalLeft && !trash) {
 			gameManager.addScoreLeft((trash)? -1 : 1);
 			ballSpawner.decrementBalls();
 
@@ -75,7 +75,7 @@ public class ball : MonoBehaviour {
 
 			Destroy(gameObject);
 		}
-		if (other.gameObject == gameManager.self.goalRight) {
+		if (other.gameObject == gameManager.self.goalRight && !trash) {
 			gameManager.addScoreRight((trash)? -1 : 1);
 			ballSpawner.decrementBalls();
 
@@ -104,7 +104,7 @@ public class ball : MonoBehaviour {
 	}
 
 	protected void damage(Collision col) {
-		dmgDelay = 2;
+		dmgDelay = 1;
 		breakState++;
 		audioManager.PLAY_SOUND(breakSounds[Mathf.Clamp(breakState, 0, breakTextures.Length - 1)], transform.position, 40);
 		if(breakState >= breakTextures.Length) {

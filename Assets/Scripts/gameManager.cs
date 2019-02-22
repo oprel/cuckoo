@@ -35,16 +35,16 @@ public class gameManager : MonoBehaviour {
 	public static void addScoreLeft(int i) {
 		self.scoreLeft += i;
 		if(self.scoreLeft < 0) self.scoreLeft = 0;
-		audioManager.PLAY_STATIONARY("Collect", 0.1f, 0.5f);
+		audioManager.PLAY_STATIONARY("Collect", 0.1f, Random.Range(0.4f, 0.6f));
 		self.camShaker.ShakeCamera(0.15f, 0.1f);
-		foreach (trashSpawner p in self.planks) p.scored();
+		foreach (trashSpawner p in self.planks) if(Random.Range(0, 10) < 3) p.scored();
 	}
 
 	public static void addScoreRight(int i) {
 		self.scoreRight += i;
 		if(self.scoreRight < 0) self.scoreRight = 0;
-		audioManager.PLAY_STATIONARY("Collect", 0.1f, 0.5f);
+		audioManager.PLAY_STATIONARY("Collect", 0.1f, Random.Range(0.4f, 0.6f));
 		self.camShaker.ShakeCamera(0.15f, 0.1f);
-		foreach (trashSpawner p in self.planks) p.scored();
+		foreach (trashSpawner p in self.planks) if(Random.Range(0, 10) < 3) p.scored();
 	}
 }

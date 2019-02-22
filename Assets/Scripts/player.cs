@@ -33,8 +33,9 @@ public class player : MonoBehaviour {
 			baseRot = trans.eulerAngles;
 		}
 	}
-	private Bodypart beakBottom, beakTop;
+	private Bodypart beakBottom, beakTop, hairTop, hairBottom;
 	private float animTime = 0;
+	private float kwispelSpeed = 10;
 
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
@@ -44,6 +45,11 @@ public class player : MonoBehaviour {
 
 		beakBottom = new Bodypart(transform.Find("sprites/beakbottom"));
 		beakTop = new Bodypart(transform.Find("sprites/beaktop"));
+		if(leftTeam) hairTop = new Bodypart(transform.Find("sprites/hair"));
+		else {
+			hairTop = new Bodypart(transform.Find("sprites/hairtop"));
+			hairBottom = new Bodypart(transform.Find("sprites/hairbottom"));
+		}
 	}
 
 	public void Update() {
@@ -57,17 +63,39 @@ public class player : MonoBehaviour {
 		Vector3 vel = rb.velocity;
 		vel.y = 0;
 		rb.velocity = transform.forward * vel.magnitude + new Vector3(0, rb.velocity.y, 0);
+	
+		if(hairTop != null) {
+			if(hairBottom != null) {
+				hairTop.part.localEulerAngles = new Vector3(hairTop.part.localEulerAngles.x, Mathf.Sin(Time.time * kwispelSpeed + (number*20)) * 3, hairTop.part.localEulerAngles.z);
+				hairBottom.part.localEulerAngles = new Vector3(hairBottom.part.localEulerAngles.x, Mathf.Cos(Time.time * (kwispelSpeed + 2) + (number*20)) * 2.6f, hairBottom.part.localEulerAngles.z);
+			} else hairTop.part.localEulerAngles = new Vector3(hairTop.part.localEulerAngles.x, Mathf.Sin(Time.time * kwispelSpeed + (number*20)) * 3, hairTop.part.localEulerAngles.z);
+		}
+	}
+
+	public void Deanimate() {
+		kwispelSpeed = 10;
+		if(!leftTeam) {
+			beakTop.part.localEulerAngles = new Vector3(beakTop.part.localEulerAngles.x, 0, beakTop.part.localEulerAngles.z);
+			beakBottom.part.localEulerAngles = new Vector3(beakBottom.part.localEulerAngles.x, 0, beakBottom.part.localEulerAngles.z);
+		}
 	}
 
 	public void Animate() {
 		animTime += Time.deltaTime;
-		audioManager.PLAY_SOUND("Chirp_Pos", transform.position, 100, Random.Range(0.9f, 1.2f));
-		beakTop.part.rotation = Quaternion.Euler(beakTop.baseRot.x, Mathf.Sin(animTime*120)*10, beakTop.baseRot.z);
-		
-		//
-		beakBottom.part.rotation = Quaternion.Euler(beakBottom.baseRot.x, Mathf.Sin(animTime*60)*5+5, beakBottom.baseRot.z);
-		
-		transform.rotation = Quaternion.Euler(0, Mathf.Sin(animTime*60), 0);
+		if(Random.Range(0, 100) < 10) {
+			if(!leftTeam) audioManager.PLAY_SOUND("Chirp_Pos", transform.position, 100, Random.Range(0.9f, 1.2f));
+			else audioManager.PLAY_SOUND("Chirp_Neg", transform.position, 100, Random.Range(0.9f, 1.2f));
+			audioManager.PLAY_SOUND("Hit", transform.position, 0.2f, Random.Range(2.4f, 2.7f));
+		}
+		if(!leftTeam) {
+			kwispelSpeed = 50;
+			beakTop.part.rotation = Quaternion.Euler(beakTop.baseRot.x, Mathf.LerpAngle(beakTop.part.eulerAngles.y, Mathf.Sin(animTime*120 + (number*20))*5-2.5f, animTime * 20), beakTop.part.eulerAngles.z);
+			beakBottom.part.rotation = Quaternion.Euler(beakBottom.part.eulerAngles.x, Mathf.LerpAngle(beakBottom.part.eulerAngles.y, Mathf.Sin(animTime*110 + (number*20))*2.5f-10, animTime * 20), beakBottom.part.eulerAngles.z);
+			transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Mathf.LerpAngle(transform.eulerAngles.y, Mathf.Sin(animTime*110 + (number*20))*4f-90, animTime * 20), transform.eulerAngles.z);
+		} else {
+			kwispelSpeed = 5;
+			transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Mathf.LerpAngle(transform.eulerAngles.y, Mathf.Sin(animTime*20 + (number*20))*2f+90, animTime * 20), transform.eulerAngles.z);
+		}
 	}
 	
 	public void impulse(float force) {

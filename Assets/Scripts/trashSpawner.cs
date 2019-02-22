@@ -52,7 +52,7 @@ public class trashSpawner : MonoBehaviour {
         if(hit >= hitsUntilDrop) DropItem();
     }
 
-    public void scored(){
+    public void scored() {
         shakeDelay = 5;
         hit++;
         if(hit >= hitsUntilDrop) DropItem();

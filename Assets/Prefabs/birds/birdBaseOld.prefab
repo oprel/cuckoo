@@ -155,6 +155,37 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &4193490879792806910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3920264859966823191}
+  m_Layer: 0
+  m_Name: hair
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3920264859966823191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193490879792806910}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8403797443603827482}
+  m_Father: {fileID: 8412303980796134860}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4627074940009056592
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +262,7 @@ Transform:
   - {fileID: 8412226792066682608}
   - {fileID: 8412163753073502950}
   - {fileID: 8403983193573307216}
-  - {fileID: 8403797443603827482}
+  - {fileID: 3920264859966823191}
   m_Father: {fileID: 8403911927277396266}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0.075, y: -73.694, z: -0.266}
@@ -337,12 +368,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8406210555699905140}
-  m_LocalRotation: {x: 0.6802092, y: -0.19429289, z: 0.19435465, w: 0.67955273}
-  m_LocalPosition: {x: -0.755, y: 0.202, z: 0.718}
-  m_LocalScale: {x: 1.0776249, y: 0.83752084, z: 1.1665728}
+  m_LocalRotation: {x: 0.6802093, y: -0.1942929, z: 0.19435461, w: 0.67955273}
+  m_LocalPosition: {x: -0.755, y: 0.202, z: 0.71800005}
+  m_LocalScale: {x: 1.077625, y: 0.8375211, z: 1.1665729}
   m_Children: []
-  m_Father: {fileID: 8412303980796134860}
-  m_RootOrder: 5
+  m_Father: {fileID: 3920264859966823191}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 89.94401, y: 0, z: 31.921001}
 --- !u!33 &8419957840164599648
 MeshFilter:
@@ -482,7 +513,7 @@ MonoBehaviour:
   speed: 20
   goal: 0
   right: 0
-  sound: 1
+  sound: 0
 --- !u!1 &8406725210609827574
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,6 +674,7 @@ GameObject:
   - component: {fileID: 8412163753073502950}
   - component: {fileID: 8419616528460796162}
   - component: {fileID: 8429131489747714982}
+  - component: {fileID: 6958982709205013466}
   m_Layer: 0
   m_Name: eyeball
   m_TagString: Untagged
@@ -709,6 +741,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &6958982709205013466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406757330539505182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbc85e69ee211646ae5637c84af666f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  goal: 0
+  right: 0
+  sound: 0
 --- !u!1 &8406814819203584882
 GameObject:
   m_ObjectHideFlags: 0
@@ -5434,7 +5482,7 @@ ParticleSystem:
 --- !u!199 &8532243617176190714
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

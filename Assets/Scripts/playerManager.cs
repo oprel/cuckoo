@@ -127,12 +127,12 @@ public class playerManager : MonoBehaviour {
 						for(int i = 0; i < leftPlayers.Count; i++) {
 							leftInput[i].direction = rotations[i];
 							leftInput[i].energy += impulses[i].energy;
-							audioManager.PLAY_SOUND("CrankLong", leftPlayers[i].transform.position, impulses[i].energy);
+							//audioManager.PLAY_SOUND("CrankLong", leftPlayers[i].transform.position, impulses[i].energy);
 						}
 						for(int i = 0; i < rightPlayers.Count; i++) {
 							rightInput[i].direction = rotations[i + 3];
 							rightInput[i].energy += impulses[i + 3].energy;
-							audioManager.PLAY_SOUND("CrankLong", rightPlayers[i].transform.position, impulses[i + 3].energy);
+							//audioManager.PLAY_SOUND("CrankLong", rightPlayers[i].transform.position, impulses[i + 3].energy);
 						}
 					}
 					catch(KeyNotFoundException) {}
@@ -165,6 +165,7 @@ public class playerManager : MonoBehaviour {
 		cutscene = false;
 		StopCoroutine("MovePlayer");
 		StopCoroutine("AnimatePlayer");
+		DeanimatePlayers();
 		for(int i = 0; i < leftPlayers.Count; i++) {
 			if(leftPlayers[i] == null) continue;
 			leftPlayers[i].GetComponent<Rigidbody>().isKinematic = false;
@@ -199,13 +200,19 @@ public class playerManager : MonoBehaviour {
 	}
 
 	public void AnimatePlayers() {
+		StopCoroutine("MovePlayer");
 		StartCoroutine("AnimatePlayer");
+	}
+
+	private void DeanimatePlayers() {
+		for(int i = 0; i < rightPlayers.Count; i++) rightPlayers[i].Deanimate();
+		for(int i = 0; i < leftPlayers.Count; i++) leftPlayers[i].Deanimate();
 	}
 
 	private float animTime = 0;
 	IEnumerator AnimatePlayer() {
 		while(animTime < 20) {
-			//for(int i = 0; i < leftPlayers.Count; i++) leftPlayers[i].Animate();
+			for(int i = 0; i < leftPlayers.Count; i++) leftPlayers[i].Animate();
 			for(int i = 0; i < rightPlayers.Count; i++) rightPlayers[i].Animate();
 			animTime += Time.deltaTime;
 			yield return new WaitForSeconds(.05f);
