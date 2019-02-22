@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1263347363824973280}
   - component: {fileID: 6085480974686319346}
   - component: {fileID: 2338177207078477324}
+  - component: {fileID: 5130496923018151639}
   m_Layer: 0
   m_Name: Clock
   m_TagString: Untagged
@@ -117,9 +118,9 @@ MonoBehaviour:
   clock: 0
   rotationSpeed: 1
   breakTextures:
-  - {fileID: 2800000, guid: 4c23f4af7f50af6478c8a7c7c6e28f48, type: 3}
-  - {fileID: 2800000, guid: ab0d4e34af2c7354f955239865f03c37, type: 3}
-  - {fileID: 2800000, guid: 273db70a165af454990eff970e800413, type: 3}
+  - {fileID: 2800000, guid: 7630c286229f6bf4abef89615ac091c4, type: 3}
+  - {fileID: 2800000, guid: f9cade8b91e253849ac1ed565eec2de1, type: 3}
+  - {fileID: 2800000, guid: 7549c661a1e420b41ae7284c533c705a, type: 3}
   breakState: -1
 --- !u!64 &2338177207078477324
 MeshCollider:
@@ -135,3 +136,15 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: ab117b84299ecde47b5c818fac3cf1df, type: 3}
+--- !u!114 &5130496923018151639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545655659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 583e68501b8687045b72c1d091a3684a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

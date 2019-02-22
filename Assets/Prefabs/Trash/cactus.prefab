@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 93088615}
   - component: {fileID: 93088607}
   - component: {fileID: 93088608}
+  - component: {fileID: 2665553427340774149}
   m_Layer: 0
   m_Name: cactus
   m_TagString: Trash
@@ -65,12 +66,25 @@ MonoBehaviour:
   beakBoost: 300
   red: 0
   trash: 1
+  clock: 0
   rotationSpeed: 1
   breakTextures:
-  - {fileID: 2800000, guid: 4c23f4af7f50af6478c8a7c7c6e28f48, type: 3}
-  - {fileID: 2800000, guid: ab0d4e34af2c7354f955239865f03c37, type: 3}
-  - {fileID: 2800000, guid: 273db70a165af454990eff970e800413, type: 3}
+  - {fileID: 2800000, guid: 7630c286229f6bf4abef89615ac091c4, type: 3}
+  - {fileID: 2800000, guid: f9cade8b91e253849ac1ed565eec2de1, type: 3}
+  - {fileID: 2800000, guid: 7549c661a1e420b41ae7284c533c705a, type: 3}
   breakState: -1
+--- !u!114 &2665553427340774149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93088602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 583e68501b8687045b72c1d091a3684a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &93088604
 GameObject:
   m_ObjectHideFlags: 0

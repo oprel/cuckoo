@@ -21,21 +21,35 @@ public class player : MonoBehaviour {
 	public Transform aiTarget;
 
 	public float energy;
-
 	public bool disable = false;
+
+	private class Bodypart {
+		public Transform part;
+		public Vector3 basePos, baseRot;
+		
+		public Bodypart(Transform trans) {
+			part = trans;
+			basePos = trans.position;
+			baseRot = trans.eulerAngles;
+		}
+	}
+	private Bodypart beakBottom, beakTop;
+	private float animTime = 0;
 
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
 		rb = GetComponent<Rigidbody>();
 		startPos = transform.position;
 		if(disable) gameObject.SetActive(false);
+
+		beakBottom = new Bodypart(transform.Find("sprites/beakbottom"));
+		beakTop = new Bodypart(transform.Find("sprites/beaktop"));
 	}
 
 	public void Update() {
 		if(transform.position.y < -2) Reset();
 		eyeGear.speed = rotationSpeed;
 		
-		//Speed
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
 	}
 
@@ -45,6 +59,16 @@ public class player : MonoBehaviour {
 		rb.velocity = transform.forward * vel.magnitude + new Vector3(0, rb.velocity.y, 0);
 	}
 
+	public void Animate() {
+		animTime += Time.deltaTime;
+		audioManager.PLAY_SOUND("Chirp_Pos", transform.position, 100, Random.Range(0.9f, 1.2f));
+		beakTop.part.rotation = Quaternion.Euler(beakTop.baseRot.x, Mathf.Sin(animTime*120)*10, beakTop.baseRot.z);
+		
+		//
+		beakBottom.part.rotation = Quaternion.Euler(beakBottom.baseRot.x, Mathf.Sin(animTime*60)*5+5, beakBottom.baseRot.z);
+		
+		transform.rotation = Quaternion.Euler(0, Mathf.Sin(animTime*60), 0);
+	}
 	
 	public void impulse(float force) {
 		rb.AddForce(transform.forward * force * speed);

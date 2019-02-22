@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//[RequireComponent(typeof(Collider))]
 public class antiStack : MonoBehaviour
 {
     private float minHeightDifference = .1f;
@@ -13,8 +12,7 @@ public class antiStack : MonoBehaviour
         if (dir.y<minHeightDifference) return;
         Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
         if (rb && rb.GetComponent<antiStack>()){
-            Debug.Log("pushed bitch");
-            dir.y=0;
+            dir.y = 0;
             rb.AddForce(dir.normalized * pushForce);
         }
     }
