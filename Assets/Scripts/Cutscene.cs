@@ -149,6 +149,7 @@ public class Cutscene : MonoBehaviour {
             Gizmos.DrawLine(shots[i].pos,shots[i+1].pos);
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(shots[i].pos, shots[i].pos+ Quaternion.Euler(shots[i].rotation) * Vector3.forward);
+            Gizmos.DrawLine(shots[i+1].pos, shots[i+1].pos+ Quaternion.Euler(shots[i+1].rotation) * Vector3.forward); //redundant but easy
         }
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class gameManager : MonoBehaviour {
 	public static gameManager self;
+	public float gameTime;
 	public int scoreLeft;
 	public int scoreRight;
 	public GameObject goalLeft;
@@ -13,23 +14,30 @@ public class gameManager : MonoBehaviour {
 	public GameObject ballSpawner;
 
 	public gamestateVisuals visuals;
-	public Text scoreDisplay;
+	public Text scoreDisplay, timeDisplay;
 	public trashSpawner[] planks;
+	public Cutscene endingCutscene;
 
 	private cameraShake camShaker;
+	private static float gameTimer;
+	private bool gamePaused;
 
 	private void Awake() {
 		self = this;
 		visuals = GetComponent<gamestateVisuals>();
 		camShaker = Camera.main.GetComponent<cameraShake>();
+		gameTimer = self.gameTime;
 	}
 	
 	void FixedUpdate() {
+		gameTimer-=Time.deltaTime;
+		timeDisplay.text = "time: " + (int)gameTimer + "/" + gameTime;
 		scoreDisplay.text = scoreLeft.ToString() + " - " + scoreRight.ToString();
 		if (Input.GetButton("Fire2")) {
 			if(playerManager.self.stream != null) playerManager.self.stream.Dispose();
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
+		if (gameTimer<=0) endingManager.endGame();
 	}
 
 	public static void addScoreLeft(int i) {
@@ -47,4 +55,6 @@ public class gameManager : MonoBehaviour {
 		self.camShaker.ShakeCamera(0.15f, 0.1f);
 		foreach (trashSpawner p in self.planks) p.scored();
 	}
+
+
 }
