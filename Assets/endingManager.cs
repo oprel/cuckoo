@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class endingManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class endingManager : MonoBehaviour
     public static endingManager self;
     public Cutscene endingCutscene;
     public GameObject endDoorLeft, endDoorRight, hand;
+    public Text winnerDisplay;
 
 
     // Start is called before the first frame update
@@ -16,9 +18,16 @@ public class endingManager : MonoBehaviour
     }
 
 
-	public static void endGame(){
-		self.StartCoroutine(self.slowDown());
+	public static void endGame(bool leftWins){
+		//self.StartCoroutine(self.slowDown());
+        self.winnerDisplay.enabled = true;
+        if (leftWins){
+            self.winnerDisplay.text = "OLD WINS";
+        }else{
+            self.winnerDisplay.text = "YOUNG WINS";
+        }
 	}
+    
 
 	private IEnumerator slowDown(){
 		while (Time.timeScale>.1f){
