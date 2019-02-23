@@ -22,4 +22,13 @@ public class KooKoo
                 break;
         }
     }
+
+    public static GameObject FindParentWithTag(GameObject child, string tag) {
+        Transform t = child.transform;
+        while(t.parent != null) {
+            if(t.parent.tag == tag) return t.parent.gameObject;
+            t = t.parent.transform;
+        }
+        return null;
+    }
 }

@@ -50,6 +50,7 @@ public class playerManager : MonoBehaviour {
 	public bool DebugMode;
 	public float frequency;
 	public float tickSpeed, chargeSpeed;
+	public float beakBoostOnPlayers = 300f;
 	[Space(5)]
 	[Header("Inputs")]
 	public Input[] leftInput;
@@ -203,7 +204,6 @@ public class playerManager : MonoBehaviour {
 		StopCoroutine("MovePlayer");
 		StartCoroutine("AnimatePlayer");
 	}
-
 	private void DeanimatePlayers() {
 		for(int i = 0; i < rightPlayers.Count; i++) rightPlayers[i].Deanimate();
 		for(int i = 0; i < leftPlayers.Count; i++) leftPlayers[i].Deanimate();
@@ -249,11 +249,11 @@ public class playerManager : MonoBehaviour {
 			applyInput();
 			for(int i = 0; i < leftPlayers.Count; i++) {
 				if(leftInput[i] == null || leftPlayers[i] == null) continue;
-				updatePlayer(leftInput[i], leftPlayers[i]);
+				if(!leftPlayers[i].isStunned()) updatePlayer(leftInput[i], leftPlayers[i]);
 			}
 			for (int i = 0; i < rightPlayers.Count; i++) {
 				if(rightInput[i] == null || rightPlayers[i] == null) continue;
-				updatePlayer(rightInput[i], rightPlayers[i]);
+				if(!rightPlayers[i].isStunned()) updatePlayer(rightInput[i], rightPlayers[i]);
 			}
 		}
 	}

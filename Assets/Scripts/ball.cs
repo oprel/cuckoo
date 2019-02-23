@@ -89,7 +89,6 @@ public class ball : MonoBehaviour {
 	public void Destroy(){
 		ballSpawner.decrementBalls();
 		Destroy(gameObject);
-
 	}
 
 	//Boost on beak collision

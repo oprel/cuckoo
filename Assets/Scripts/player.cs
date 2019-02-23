@@ -37,6 +37,11 @@ public class player : MonoBehaviour {
 	private float animTime = 0;
 	private float kwispelSpeed = 10;
 
+	private Transform eyeBall;
+
+	//Stun
+	private float stunTime = 0, stunDelay = 5, stunRot;
+
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
 		rb = GetComponent<Rigidbody>();
@@ -50,6 +55,7 @@ public class player : MonoBehaviour {
 			hairTop = new Bodypart(transform.Find("sprites/hairtop"));
 			hairBottom = new Bodypart(transform.Find("sprites/hairbottom"));
 		}
+		eyeBall = transform.Find("sprites/eyeball");
 	}
 
 	public void Update() {
@@ -60,6 +66,13 @@ public class player : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
+		//Dazed
+		if(stunTime > 0) {
+			stunTime -= Time.deltaTime;
+			eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, stunTime * 720, eyeBall.eulerAngles.z);
+			transform.rotation = Quaternion.Euler(transform.eulerAngles.x, stunRot + Mathf.Sin(Time.time*12)*7, transform.eulerAngles.z);
+		} else eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, Mathf.LerpAngle(eyeBall.eulerAngles.y, 0, Time.deltaTime * 2), eyeBall.eulerAngles.z);
+
 		Vector3 vel = rb.velocity;
 		vel.y = 0;
 		rb.velocity = transform.forward * vel.magnitude + new Vector3(0, rb.velocity.y, 0);
@@ -79,7 +92,6 @@ public class player : MonoBehaviour {
 			beakBottom.part.localEulerAngles = new Vector3(beakBottom.part.localEulerAngles.x, 0, beakBottom.part.localEulerAngles.z);
 		}
 	}
-
 	public void Animate() {
 		animTime += Time.deltaTime;
 		if(Random.Range(0, 100) < 10) {
@@ -111,5 +123,21 @@ public class player : MonoBehaviour {
 
 	public void changeSpeed(float speedup) {
 		speedTarget = speedup;
+	}
+
+	void OnCollisionEnter(Collision col) {
+		if(col.gameObject.tag == "Hitter" && !isStunned()) {
+			GameObject t = KooKoo.FindParentWithTag(col.transform.parent.gameObject, "Player");
+			if(t.GetComponent<player>().energy < 4) return;
+			GetComponent<Rigidbody>().AddForceAtPosition(transform.forward * playerManager.self.beakBoostOnPlayers, t.transform.position);
+			Instantiate(gamestateVisuals.self.beakboostvisual, transform.position, Quaternion.identity);
+			gamestateVisuals.hitStun();
+			stunTime = stunDelay;
+			stunRot = transform.eulerAngles.y;
+		}
+	}
+
+	public bool isStunned() {
+		return stunTime > 0;
 	}
 }
