@@ -23,6 +23,8 @@ public class player : MonoBehaviour {
 	public float energy;
 	public bool disable = false;
 
+	private Vector3 lookPos;
+
 	private class Bodypart {
 		public Transform part;
 		public Vector3 basePos, baseRot;
@@ -65,11 +67,21 @@ public class player : MonoBehaviour {
 		eyeGear.speed = rotationSpeed;
 		
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
+		if(!isStunned() && !playerManager.self.isCutscenePlaying()) {
+			eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, Vector3.RotateTowards(eyeBall.position, lookPos, 180, 0).y, eyeBall.eulerAngles.z);
+		}
+	}
+
+	public void setEyeRotation(float rot) {
+		eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, rot, eyeBall.eulerAngles.z);
+	}
+	private void lookAt(Vector3 pos) {
+		lookPos = pos;
 	}
 
 	private void FixedUpdate() {
 		//Dazed
-		if(stunTime > 0) {
+		if(isStunned()) {
 			stunTime -= Time.deltaTime;
 			eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, stunTime * 720, eyeBall.eulerAngles.z);
 			transform.rotation = Quaternion.Euler(transform.eulerAngles.x, stunRot + Mathf.Sin(Time.time*12)*7, transform.eulerAngles.z);
@@ -135,11 +147,14 @@ public class player : MonoBehaviour {
 			Instantiate(gamestateVisuals.self.beakboostvisual, transform.position, Quaternion.identity);
 			gamestateVisuals.hitStun();
 			stunTime = stunDelay;
+			audioManager.PLAY_SOUND("Hit", transform.position, 10f, 1f);
+			audioManager.PLAY_SOUND("BeakStun", transform.position, 10f, Random.Range(0.9f, 1.2f));
 			stunRot = transform.eulerAngles.y;
 			StartCoroutine(playStunParticles());
 		}
+		lookAt(col.transform.position);
 	}
-	private IEnumerator playStunParticles(){
+	private IEnumerator playStunParticles() {
 		stunParticles.Play();
 		yield return new WaitForSeconds(stunDelay);
 		stunParticles.Stop();

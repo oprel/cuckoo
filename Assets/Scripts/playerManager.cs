@@ -195,7 +195,10 @@ public class playerManager : MonoBehaviour {
 	}
 	public void ReleasePlayers() {
 		StartCoroutine("MovePlayer");
-		for(int i = 0; i < leftPlayers.Count; i++) leftPlayers[i].transform.Find("trail").gameObject.SetActive(true);
+		for(int i = 0; i < leftPlayers.Count; i++) {
+			leftPlayers[i].transform.Find("trail").gameObject.SetActive(true);
+			leftPlayers[i].setEyeRotation(180);
+		}
 		for(int i = 0; i < rightPlayers.Count; i++) rightPlayers[i].transform.Find("trail").gameObject.SetActive(true);
 		for(int i = 0; i < 3; i++) audioManager.PLAY_STATIONARY("MachineLong", 0.5f, Random.Range(0.9f, 1.1f));
 	}
@@ -242,6 +245,10 @@ public class playerManager : MonoBehaviour {
 			playerTime += Time.deltaTime;
 			yield return new WaitForSeconds(.02f);
 		}
+	}
+
+	public bool isCutscenePlaying() {
+		return cutscene;
 	}
 
 	void FixedUpdate() {
