@@ -10,12 +10,9 @@ public class endingManager : MonoBehaviour
     public Cutscene endingCutscene;
     public GameObject endDoorLeft, endDoorRight, hand;
     public Text winnerDisplay;
-    private static GameObject playerWinner;
-    private static GameObject playerLoser;
+    private static List<Transform> winners = new List<Transform>();
+    private static List<Transform> losers = new List<Transform>();
     private static bool leftWins;
-
-    private static List<Cutscene.Shot> focusShots = new List<Cutscene.Shot>();
-
 
     // Start is called before the first frame update
     private void Awake() {
@@ -33,14 +30,17 @@ public class endingManager : MonoBehaviour
 
 	public static void endGame(bool didLeftWin){
         leftWins = didLeftWin;
-		if (leftWins){
-            playerWinner = playerManager.leftPlayers[1].gameObject;
-            playerLoser = playerManager.rightPlayers[1].gameObject;
-        }else{
-            playerLoser = playerManager.leftPlayers[1].gameObject;
-            playerWinner = playerManager.rightPlayers[1].gameObject;
+        for (int i = 0; i < playerManager.leftPlayers.Count; i++){
+            Transform t = playerManager.leftPlayers[i].transform;
+            if (leftWins){ winners.Add(t);}
+            else{losers.Add(t);}
         }
-        
+        for (int i = 0; i < playerManager.rightPlayers.Count; i++){
+            Transform t = playerManager.rightPlayers[i].transform;
+            if (!leftWins){ winners.Add(t);}
+            else{losers.Add(t);}
+        }
+
         self.StartCoroutine(self.slowDown());
 
       
@@ -48,36 +48,28 @@ public class endingManager : MonoBehaviour
     
 
 	private IEnumerator slowDown(){
-        /*
-		while (Time.timeScale>.1f){
-			Time.timeScale = Mathf.Lerp(Time.timeScale,0,.01f);
+        for (float i = 0f; i < 1f; i+= 1f/80f){
+            Time.timeScale = Mathf.SmoothStep(1,0,i);
             yield return null;
-		}
-		Time.timeScale=1;*/
-		yield return new WaitForSeconds(2f);
-
-        
-		self.StartCoroutine(EndCutscene());
+        }
+		Time.timeScale=1;    
+		EndCutscene();
 	}
 
-	private IEnumerator EndCutscene(){
-        focusShots.Clear();
-        /*foreach (Cutscene.Shot shot in endingCutscene.shots){
-            if (shot.focusOnTarget) focusShots.Add(shot);
-        }*/
+	private void EndCutscene(){
         for (int i = 0; i < endingCutscene.shots.Length; i++)
         {
-            endingCutscene.shots[i].target = playerWinner;
+            endingCutscene.shots[i].target = winners[1].gameObject;
         }
         playerManager.self.enabled=false;
 		Camera.main.gameObject.SetActive(false);
 		endingCutscene.gameObject.SetActive(true);
         endingCutscene.GetComponent<Camera>().enabled = true;
-        Debug.Log("ending START");
-		yield return null;
-        self.StartCoroutine(shameDoors());
         
 	}
+    public void outside(){
+        StartCoroutine(shameDoors());
+    }
 
     private IEnumerator shameDoors(){
         for (float i = 0f; i < 1f; i+= 1f/80f)
@@ -97,9 +89,8 @@ public class endingManager : MonoBehaviour
     }
     public float radius;
     private IEnumerator shamePlayers(){
-         for (int i = 0; i < playerManager.leftPlayers.Count; i++)
+         foreach (Transform t in losers)
         {
-            Transform t = playerManager.leftPlayers[i].transform;
              t.Find("trail").gameObject.SetActive(false);
             t.rotation = Quaternion.Euler(new Vector3(Random.value*360,90,-90));
             Vector3 pos = Random.insideUnitSphere * radius;
@@ -120,10 +111,9 @@ public class endingManager : MonoBehaviour
 
     public Vector3 winnerLocation;
     private IEnumerator celebratePlayers(){
-        for (int i = 0; i < playerManager.rightPlayers.Count; i++)
+        foreach (Transform t in winners)
         {
-            Transform t = playerManager.rightPlayers[i].transform;
-             t.Find("trail").gameObject.SetActive(false);
+            t.Find("trail").gameObject.SetActive(false);
             t.rotation = Quaternion.Euler(new Vector3(Random.value*360,90,-90));
             Vector3 pos = new Vector3(Random.value*radius,0,0);
             for (float j = 0f; j < 1f; j+= 1f/80f){
