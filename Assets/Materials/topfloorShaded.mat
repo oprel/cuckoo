@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: topfloor
-  m_Shader: {fileID: 4800000, guid: d7d8c77617d8b564a9aa300d3fac96ec, type: 3}
+  m_Name: topfloorShaded
+  m_Shader: {fileID: 4800000, guid: 692edad1b168cdd40b4510a439536b15, type: 3}
   m_ShaderKeywords: _ALPHABLEND_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -24,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CutTex:
-        m_Texture: {fileID: 2800000, guid: 4fdba4b39f68c9549810afb4c173c2df, type: 3}
+        m_Texture: {fileID: 2800000, guid: d1be5728c7d40ac4daa69bdfd1596eaf, type: 3}
         m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d1be5728c7d40ac4daa69bdfd1596eaf, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 50, y: 30}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -62,7 +62,7 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _CutOff: 0.7
-    - _Cutoff: 0.645
+    - _Cutoff: 0.725
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _GlossMapScale: 0.16
@@ -78,5 +78,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.7169812, g: 0.57225204, b: 0.38892847, a: 0.44705883}
+    - _Color: {r: 0.4811321, g: 0.37816745, b: 0.24737452, a: 0.44705883}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

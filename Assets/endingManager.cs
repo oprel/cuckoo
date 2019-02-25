@@ -20,7 +20,7 @@ public class endingManager : MonoBehaviour
 
 	public static void endGame(bool leftWins){
 		//self.StartCoroutine(self.slowDown());
-        self.winnerDisplay.enabled = true;
+        self.winnerDisplay.gameObject.SetActive(true);
         if (leftWins){
             self.winnerDisplay.text = "OLD WINS";
         }else{

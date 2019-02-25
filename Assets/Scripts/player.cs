@@ -40,7 +40,9 @@ public class player : MonoBehaviour {
 	private Transform eyeBall;
 
 	//Stun
-	private float stunTime = 0, stunDelay = 5, stunRot;
+	public float stunDelay = 5;
+	private float stunTime, stunRot;
+	public ParticleSystem stunParticles;
 
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
@@ -134,7 +136,13 @@ public class player : MonoBehaviour {
 			gamestateVisuals.hitStun();
 			stunTime = stunDelay;
 			stunRot = transform.eulerAngles.y;
+			StartCoroutine(playStunParticles());
 		}
+	}
+	private IEnumerator playStunParticles(){
+		stunParticles.Play();
+		yield return new WaitForSeconds(stunDelay);
+		stunParticles.Stop();
 	}
 
 	public bool isStunned() {
