@@ -51,6 +51,7 @@ public class playerManager : MonoBehaviour {
 	public float frequency;
 	public float tickSpeed, chargeSpeed;
 	public float beakBoostOnPlayers = 300f;
+	public float stunTime;
 	[Space(5)]
 	[Header("Inputs")]
 	public Input[] leftInput;
