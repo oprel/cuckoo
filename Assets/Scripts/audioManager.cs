@@ -42,7 +42,6 @@ public class audioManager : MonoBehaviour {
 	void Start () {
 		instance = this;
 
-
 		//Music
 		mainBassSrc = gameObject.AddComponent<AudioSource>();
 		mainDrumsSrc = gameObject.AddComponent<AudioSource>();
@@ -63,11 +62,9 @@ public class audioManager : MonoBehaviour {
 		FADE_MUSIC(0.07f, BASS, 0.8f);
 		FADE_MUSIC(0.03f, DRUMS, 0.5f);
 
-
 		//Sounds
 		names = new string[sounds.Length];
 		for(int i = 0; i < sounds.Length; i++) names[i] = sounds[i].name;
-
 	}
 
 	void FixedUpdate() {

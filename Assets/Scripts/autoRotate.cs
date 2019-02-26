@@ -46,4 +46,9 @@ public class autoRotate : MonoBehaviour {
 		}
 		if(Mathf.Abs(speed) == 0) src.Stop();
 	}
+
+	public void StopAudio() {
+		src.Stop();
+		sound = false;
+	}
 }

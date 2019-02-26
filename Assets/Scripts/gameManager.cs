@@ -12,6 +12,7 @@ public class gameManager : MonoBehaviour {
 	public GameObject goalLeft;
 	public GameObject goalRight;
 	public GameObject ballSpawner;
+	public GameObject gears;
 
 	public gamestateVisuals visuals;
 	public Text scoreDisplay, timeDisplay;
@@ -26,6 +27,11 @@ public class gameManager : MonoBehaviour {
 		visuals = GetComponent<gamestateVisuals>();
 		camShaker = Camera.main.GetComponent<cameraShake>();
 		gameTimer = self.gameTime;
+	}
+
+	public void DisableGameSounds() {
+		autoRotate[] sounds = gears.transform.GetComponentsInChildren<autoRotate>();
+		foreach(var i in sounds) i.StopAudio();
 	}
 	
 	void FixedUpdate() {
