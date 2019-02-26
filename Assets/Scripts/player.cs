@@ -45,6 +45,8 @@ public class player : MonoBehaviour {
 	private float stunTime, stunRot;
 	public ParticleSystem stunParticles;
 
+	private bool moveForward;
+
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
 		rb = GetComponent<Rigidbody>();
@@ -88,7 +90,7 @@ public class player : MonoBehaviour {
 
 		Vector3 vel = rb.velocity;
 		vel.y = 0;
-		rb.velocity = transform.forward * vel.magnitude + new Vector3(0, rb.velocity.y, 0);
+		if(!isStunned() && moveForward) rb.velocity = transform.forward * vel.magnitude + new Vector3(0, rb.velocity.y, 0);
 	
 		if(hairTop != null) {
 			if(hairBottom != null) {
@@ -163,5 +165,11 @@ public class player : MonoBehaviour {
 
 	public bool isStunned() {
 		return stunTime > 0;
+	}
+
+	public IEnumerator suspendForwardMovement(float length){
+		moveForward = false;
+		yield return new WaitForSeconds(length);
+		moveForward = true;
 	}
 }

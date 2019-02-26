@@ -10,6 +10,7 @@ TagManager:
   - Trash
   - BlueDoor
   - RedDoor
+  - Plank
   layers:
   - Default
   - TransparentFX
