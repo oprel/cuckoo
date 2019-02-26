@@ -113,7 +113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beakBoost: 300
-  red: 0
   trash: 1
   clock: 0
   rotationSpeed: 1
