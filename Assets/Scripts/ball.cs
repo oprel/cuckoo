@@ -34,7 +34,7 @@ public class ball : MonoBehaviour {
 
 		if(clock) {
 			if(time > 1 && time < 3) {
-				transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Mathf.Sin(Time.time*100)*3, transform.eulerAngles.z);
+				transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Mathf.Sin(Time.time * 100) * 3, transform.eulerAngles.z);
 				if(clockDelay <= 0) {
 					audioManager.PLAY_STATIONARY("Clock", 0.03f, 1f);
 					clockDelay = 0.08f;
@@ -59,7 +59,7 @@ public class ball : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other) {
 		if (other.gameObject == gameManager.self.goalLeft && !trash) {
-			gameManager.addScoreLeft((trash)? -1 : 1);
+			gameManager.addScoreLeft((trash) ? -1 : 1);
 			ballSpawner.decrementBalls();
 
 			//speed UI
