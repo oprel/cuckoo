@@ -44,7 +44,7 @@ public class trashSpawner : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
-        if(other.tag == "Hitter" && item != null && shakeDelay <= 0 && trashAmount < maxTrash) {
+        if(other.tag == "Hitter" && item != null && shakeDelay <= 0) {
             if(other.GetComponentInParent<player>().energy > energyUntilHit && Mathf.Abs(other.transform.localEulerAngles.y) < 45) {
                 hit++;
                 shakeDelay = 5;
