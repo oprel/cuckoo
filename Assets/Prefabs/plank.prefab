@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 6490901756641352205}
   - component: {fileID: 6490901756641352307}
   m_Layer: 0
-  m_Name: plank1
+  m_Name: plank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,5 +111,9 @@ MonoBehaviour:
   - {fileID: 1153836910651580, guid: 75588441c97878b43bc220530a334dc3, type: 3}
   - {fileID: 1789218493002264, guid: 51a68853288584d4296fb0bb6dc7e1d9, type: 3}
   - {fileID: 1625451645695072, guid: 4bf00b0ffb927434fb584b1358f2b39a, type: 3}
+  - {fileID: 1366031681, guid: 319bd48df671a2c4f85de986df67377b, type: 3}
+  - {fileID: 1263213971, guid: ba36cb86a35ae864981b61ada8a5cfef, type: 3}
+  - {fileID: 1497205816, guid: b0f87010afe10ce45929d0ac83cb6168, type: 3}
+  maxTrash: 3
   energyUntilHit: 3
   hitsUntilDrop: 2

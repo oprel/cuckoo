@@ -5,7 +5,8 @@ using UnityEngine;
 public class trashSpawner : MonoBehaviour {
     public GameObject[] trashPrefab;
 
-    public static int MAX_TRASH_COUNT = 2;
+	private static int trashAmount;
+    public int maxTrash = 3;
 
     public float energyUntilHit = 2;
     public int hitsUntilDrop = 2;
@@ -20,12 +21,21 @@ public class trashSpawner : MonoBehaviour {
 
     void Start() {
         dropPoint = transform.Find("Drop").gameObject;
+        trashAmount = CountTrash();
+    }
+
+    private int CountTrash() {
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Trash");
+		int num = 0;
+		foreach(GameObject ball in balls) num++;
+		return num;
     }
 
     void FixedUpdate() {
+        trashAmount = CountTrash();
         if(shakeDelay > 0) shakeDelay -= Time.deltaTime;
         if(spawnDelay > 0) spawnDelay -= Time.deltaTime;
-        if(item == null && spawnDelay <= 0) item = SpawnItem();
+        if(item == null && spawnDelay <= 0 && trashAmount < maxTrash) item = SpawnItem();
         if(shake > 0) {
             shake -= Time.deltaTime;
             transform.rotation = Quaternion.Euler(Mathf.Sin(shake*shake), Mathf.Cos(shake*shake*5)*2, Mathf.Sin(shake*shake));
@@ -41,7 +51,6 @@ public class trashSpawner : MonoBehaviour {
                 audioManager.PLAY_SOUND("Hit", transform.position, 1200, Random.Range(0.9f, 1.2f));
                 audioManager.PLAY_SOUND("Collide", transform.position, 1200, Random.Range(0.9f, 1.2f));
                 Shake();
-                
             }
         }
     }
