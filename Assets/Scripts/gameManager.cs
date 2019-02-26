@@ -17,7 +17,6 @@ public class gameManager : MonoBehaviour {
 	public Text scoreDisplay, timeDisplay;
 	public trashSpawner[] planks;
 
-
 	private cameraShake camShaker;
 	private static float gameTimer;
 	private bool gamePaused;
@@ -37,8 +36,8 @@ public class gameManager : MonoBehaviour {
 			if(playerManager.self.stream != null) playerManager.self.stream.Dispose();
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
-		if (gameTimer<=0 && scoreLeft!=scoreRight){
-			endingManager.endGame(scoreLeft<scoreRight);
+		if (gameTimer <= 0 && scoreLeft != scoreRight) {
+			endingManager.endGame(scoreLeft < scoreRight);
 			gameTimer = Mathf.Infinity;
 		} 
 	}
@@ -58,7 +57,4 @@ public class gameManager : MonoBehaviour {
 		self.camShaker.ShakeCamera(0.15f, 0.1f);
 		foreach (trashSpawner p in self.planks) if(Random.Range(0, 10) < 3) p.scored();
 	}
-	
-
-
 }

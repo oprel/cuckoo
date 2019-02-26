@@ -23,6 +23,8 @@ public class player : MonoBehaviour {
 	public float energy;
 	public bool disable = false;
 
+	private Vector3 lookPos;
+
 	private class Bodypart {
 		public Transform part;
 		public Vector3 basePos, baseRot;
@@ -40,7 +42,6 @@ public class player : MonoBehaviour {
 	private Transform eyeBall;
 
 	//Stun
-	public float stunDelay = 5;
 	private float stunTime, stunRot;
 	public ParticleSystem stunParticles;
 
@@ -61,19 +62,29 @@ public class player : MonoBehaviour {
 	}
 
 	public void Update() {
-		if(transform.position.y < -2) Reset();
+		if(transform.position.y < -20) Reset();
 		eyeGear.speed = rotationSpeed;
 		
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
+		if(!isStunned() && !playerManager.self.isCutscenePlaying()) {
+			eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, Vector3.RotateTowards(eyeBall.position, lookPos, 180, 0).y, eyeBall.eulerAngles.z);
+		}
+	}
+
+	public void setEyeRotation(float rot) {
+		eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, rot, eyeBall.eulerAngles.z);
+	}
+	private void lookAt(Vector3 pos) {
+		lookPos = pos;
 	}
 
 	private void FixedUpdate() {
 		//Dazed
-		if(stunTime > 0) {
+		if(isStunned()) {
 			stunTime -= Time.deltaTime;
 			eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, stunTime * 720, eyeBall.eulerAngles.z);
 			transform.rotation = Quaternion.Euler(transform.eulerAngles.x, stunRot + Mathf.Sin(Time.time*12)*7, transform.eulerAngles.z);
-		} else eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, Mathf.LerpAngle(eyeBall.eulerAngles.y, 0, Time.deltaTime * 2), eyeBall.eulerAngles.z);
+		} else eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, 0, eyeBall.eulerAngles.z);
 
 		Vector3 vel = rb.velocity;
 		vel.y = 0;
@@ -113,6 +124,7 @@ public class player : MonoBehaviour {
 	}
 	
 	public void impulse(float force) {
+		if(isStunned()) return;
 		rb.AddForce(transform.forward * force * speed);
 	}
 
@@ -130,18 +142,22 @@ public class player : MonoBehaviour {
 	void OnCollisionEnter(Collision col) {
 		if(col.gameObject.tag == "Hitter" && !isStunned()) {
 			GameObject t = KooKoo.FindParentWithTag(col.transform.parent.gameObject, "Player");
-			if(t.GetComponent<player>().energy < 4) return;
+			player other = t.GetComponent<player>();
+			if(other.energy < 4|| other.leftTeam == leftTeam) return;
 			GetComponent<Rigidbody>().AddForceAtPosition(transform.forward * playerManager.self.beakBoostOnPlayers, t.transform.position);
 			Instantiate(gamestateVisuals.self.beakboostvisual, transform.position, Quaternion.identity);
 			gamestateVisuals.hitStun();
-			stunTime = stunDelay;
+			stunTime = playerManager.self.stunTime;
+			audioManager.PLAY_SOUND("Hit", transform.position, 10f, 1f);
+			audioManager.PLAY_SOUND("BeakStun", transform.position, 10f, Random.Range(0.9f, 1.2f));
 			stunRot = transform.eulerAngles.y;
 			StartCoroutine(playStunParticles());
 		}
+		lookAt(col.transform.position);
 	}
-	private IEnumerator playStunParticles(){
+	private IEnumerator playStunParticles() {
 		stunParticles.Play();
-		yield return new WaitForSeconds(stunDelay);
+		yield return new WaitForSeconds(playerManager.self.stunTime);
 		stunParticles.Stop();
 	}
 

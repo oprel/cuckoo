@@ -92,7 +92,7 @@ public class Cutscene : MonoBehaviour {
             float x = Mathf.Lerp(mainCam.transform.position.x, shot.pos.x, Time.deltaTime * speed), 
                     y = Mathf.Lerp(mainCam.transform.position.y, shot.pos.y, Time.deltaTime * speed),
                     z = Mathf.Lerp(mainCam.transform.position.z, shot.pos.z, Time.deltaTime * speed);
-            mainCam.transform.position = new Vector3(x + Mathf.Sin(Time.time) / 100, y, z);
+            mainCam.transform.position = new Vector3(x /*+ Mathf.Sin(Time.time) / 100*/, y, z);
 
             float rX = Mathf.LerpAngle(mainCam.transform.localEulerAngles.x, shot.rotation.x, Time.deltaTime * speed), 
                     rY = Mathf.LerpAngle(mainCam.transform.localEulerAngles.y, shot.rotation.y, Time.deltaTime * speed),

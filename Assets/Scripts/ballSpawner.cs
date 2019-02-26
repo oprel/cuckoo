@@ -8,6 +8,7 @@ public class ballSpawner : MonoBehaviour {
 	public GameObject ballPrefab, clockPrefab;
 	public float frequency;
 	public float radius;
+	private float rand;
 	private float timer, resettimer = 0;
 
 	private Transform house, hinge, fakeBall, drop, clock;
@@ -16,7 +17,6 @@ public class ballSpawner : MonoBehaviour {
 
 	private bool doorsOpen = false, armExtended = false;
 	private Vector3 pos;
-	private bool flipped = false, red = false;
 
 	private static int ballAmount;
 	public int maxBalls = 9;
@@ -25,7 +25,7 @@ public class ballSpawner : MonoBehaviour {
 
 	void Start () {
 		self = this;
-		ballAmount = 2;
+		ballAmount = CountBalls();
 		house = transform.GetChild(0);
 		hinge = house.Find("Hinge");
 		fakeBall = house.Find("FakeBall");
@@ -38,19 +38,26 @@ public class ballSpawner : MonoBehaviour {
 		fakeBallBase = fakeBall.localScale;
 		fakeBall.localScale = new Vector3(0, 0, 0);
 		house.gameObject.SetActive(false);
-		for (int i = 0; i < 4; i++) spawn(true);
 		dropClock = Camera.main.GetComponent<Cutscene>().playCutscene;
 		clock.gameObject.SetActive(dropClock);
 		fakeBall.gameObject.SetActive(!dropClock);
 	}
+
+	private int CountBalls() {
+		GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
+		int num = 0;
+		foreach(GameObject ball in balls) if(!ball.GetComponent<ball>().trash) num++;
+		return num;
+	}
 	
 	void FixedUpdate () {
 		if(resettimer <= 0) timer += Time.deltaTime;
-		
+		ballAmount = CountBalls();
+
 		//Ball spawning
-		if(timer > frequency && resettimer <= 0 && ballAmount < maxBalls && !dropClock) {
+		if(timer > frequency + rand && resettimer <= 0 && ballAmount < maxBalls && !dropClock) {
 			timer = 0;
-			spawn(Random.value > .8f);
+			spawn();
 		}
 		fakeBall.position = clock.position = drop.position;
 
@@ -89,23 +96,16 @@ public class ballSpawner : MonoBehaviour {
 
 	private void reset() {
 		timer = 0;
+		rand = Random.Range(0f, 1.5f);
 		armExtended = doorsOpen = false;
 		house.gameObject.SetActive(false);
 		fakeBall.localScale = new Vector3(0, 0, 0);
 		fakeBall.gameObject.SetActive(true);
 	}
 
-	private void spawn(bool trash = false) {
+	private void spawn() {
 		ballAmount++;
-		if (trash) return;
-		
-		red = Random.Range(0, 2) == 0 ? true : false;
-		if(Random.Range(0, 2) == 0) flipped = true;
-		else flipped = false;
-
-		if(flipped) transform.localRotation = Quaternion.Euler(0, 180, 0);
-		else transform.localRotation = Quaternion.Euler(0, 0, 0);
-
+		transform.localRotation = Quaternion.Euler(0, 0, 0);
 		pos = Random.insideUnitSphere * radius;
 		pos.y = 0;
 		activate();
@@ -125,8 +125,7 @@ public class ballSpawner : MonoBehaviour {
 			}
 			yield return new WaitForSeconds(.02f);
 			if(reachedPoint()) {
-				GameObject ball = Instantiate((dropClock)?clockPrefab : ballPrefab, transform.position + pos, transform.rotation);
-				ball.GetComponent<ball>().red = red;
+				GameObject ball = Instantiate((dropClock) ? clockPrefab : ballPrefab, transform.position + pos, transform.rotation);
 				if(dropClock) {
 					ball.transform.rotation = Quaternion.Euler(90, 0, 0);
 					ball.GetComponent<ball>().clock = true;
@@ -134,6 +133,7 @@ public class ballSpawner : MonoBehaviour {
 				fakeBall.gameObject.SetActive(false);
 				clock.gameObject.SetActive(false);
 				audioManager.PLAY_SOUND("Plop", transform.position, 1, 1f);
+				StartCoroutine("closeDoors");
 				armExtended = true;
 			}
 		}
@@ -142,15 +142,32 @@ public class ballSpawner : MonoBehaviour {
 		resettimer = 2;
 	}
 
+	IEnumerator closeDoors() {
+		float t = 0;
+		while(doorsOpen) {
+			t += Time.deltaTime * 2;
+			float open = Mathf.Lerp(doorL.localEulerAngles.y, 0, t);
+			doorL.localRotation = Quaternion.Euler(0, -open, 0);
+			doorR.localRotation = Quaternion.Euler(0, open, 0);
+			if(open < 5) {
+				doorsOpen = false;
+				yield return new WaitForSeconds(0.5f);
+				StopCoroutine("closeDoors");
+				reset();
+			}
+			yield return null;
+		}
+	}
+
 	IEnumerator openDoors() {
-		float t=0;
+		float t = 0;
 		doorL.localRotation = Quaternion.identity;
 		doorR.localRotation = Quaternion.identity;
 		while(!doorsOpen) {
 			t += Time.deltaTime * 4;
 			float open = Mathf.Lerp(doorL.localRotation.y, 180, t);
-			doorL.localRotation= Quaternion.Euler(0, -open, 0);
-			doorR.localRotation= Quaternion.Euler(0, open, 0);
+			doorL.localRotation = Quaternion.Euler(0, -open, 0);
+			doorR.localRotation = Quaternion.Euler(0, open, 0);
 			yield return null;
 		if(open > 160) {
 				StartCoroutine("extendArm");
@@ -160,7 +177,7 @@ public class ballSpawner : MonoBehaviour {
 	}
 
 	private bool reachedPoint() {
-		return drop.position.z * ((flipped)? -1 : 1) <= pos.z * ((flipped)? -1 : 1);
+		return drop.position.z <= pos.z;
 	}
 
 	private void OnDrawGizmosSelected() {

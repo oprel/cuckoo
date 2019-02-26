@@ -6,8 +6,6 @@ public class ball : MonoBehaviour {
 	public float beakBoost = 300f;
 
 	public static float spawnAnimSpeed = 5;
-	private playerManager.Team team;
-	public bool red = false;
 	public bool trash = false;
 	public bool clock = false;
 
@@ -25,11 +23,6 @@ public class ball : MonoBehaviour {
 	private float dmgDelay = 0;
 
 	void Start() {
-		if(red) team = playerManager.self.GetTeam("RED"); 
-		else {
-			team = playerManager.self.GetTeam("BLUE");
-			rotationSpeed *= -1;
-		}
 		rotBaseSpeed = rotationSpeed;
 		playerManager.self.balls.Add(gameObject);
 	}
@@ -145,9 +138,5 @@ public class ball : MonoBehaviour {
 
 	public void resetRotation() {
 		rotationSpeed = rotBaseSpeed;
-	}
-
-	public playerManager.Team GetTeam() {
-		return team;
 	}
 }

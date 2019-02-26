@@ -43,6 +43,16 @@ ModelImporter:
     100074: areneBase
     100076: group2
     100078: underlay
+    100080: pillar1
+    100082: pillar2
+    100084: pillar3
+    100086: pillar4
+    100088: pillar5
+    100090: group
+    100092: group1
+    100094: pasted__group
+    100096: transform1
+    100098: transform2
     400000: //RootNode
     400002: doorframe1
     400004: doorframe2
@@ -83,6 +93,16 @@ ModelImporter:
     400074: areneBase
     400076: group2
     400078: underlay
+    400080: pillar1
+    400082: pillar2
+    400084: pillar3
+    400086: pillar4
+    400088: pillar5
+    400090: group
+    400092: group1
+    400094: pasted__group
+    400096: transform1
+    400098: transform2
     2100000: floor
     2100002: lambert1
     2100004: falloff
@@ -125,6 +145,7 @@ ModelImporter:
     2100078: wall2
     2100080: wall
     2100082: neutral
+    2100084: plint
     2300000: //RootNode
     2300002: doorframe1
     2300004: doorframe2
@@ -160,6 +181,11 @@ ModelImporter:
     2300064: frontFrame
     2300066: areneBase
     2300068: underlay
+    2300070: pillar1
+    2300072: pillar2
+    2300074: pillar3
+    2300076: pillar4
+    2300078: pillar5
     3300000: //RootNode
     3300002: doorframe1
     3300004: doorframe2
@@ -195,6 +221,11 @@ ModelImporter:
     3300064: frontFrame
     3300066: areneBase
     3300068: underlay
+    3300070: pillar1
+    3300072: pillar2
+    3300074: pillar3
+    3300076: pillar4
+    3300078: pillar5
     4300000: newArena
     4300002: doorframe2
     4300004: doorframe1
@@ -231,6 +262,11 @@ ModelImporter:
     4300066: arenaBase:newArena
     4300068: areneBase
     4300070: underlay
+    4300072: pillar1
+    4300074: pillar2
+    4300076: pillar3
+    4300078: pillar4
+    4300080: pillar5
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:

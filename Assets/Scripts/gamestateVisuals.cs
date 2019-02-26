@@ -17,10 +17,12 @@ public class gamestateVisuals : MonoBehaviour {
 	private GameObject smallHand;
 	private GameObject doorRed, doorBlue;
 	private GameObject[] redDoors, blueDoors;
+	private steamController steamLeft, steamRight;
 
-	public float tickSpeed = 0.1f;
+	public float tickSpeed = 0.1f, steamAmount = 2;
 	private float time = 0, tickTime = 0;
 	private bool alternate = false;
+	private int scoreLeft, scoreRight;
 
 	//Giant clock
 	private Light clockLight;
@@ -47,33 +49,35 @@ public class gamestateVisuals : MonoBehaviour {
 
 		doorRed = GameObject.FindGameObjectWithTag("RedDoor");
 		doorBlue = GameObject.FindGameObjectWithTag("BlueDoor");
+
+		steamLeft = gearLeft.GetComponentInChildren<steamController>();
+		steamRight = gearRight.GetComponentInChildren<steamController>();
+
 	}
 
+
 	public void CloseDoors() {
-		for(int i = 0; i < doorRed.transform.childCount; i++) {
-			//doorRed.transform.GetChild(i).eulerAngles = new Vector3(0, 0, 0);
-			//if(doorRed.transform.GetChild(i).GetComponent<Rigidbody>() != null) doorRed.transform.GetChild(i).GetComponent<Rigidbody>().isKinematic = true;
-			doorRed.transform.GetChild(i).gameObject.SetActive(false);
-		}
-		for(int i = 0; i < doorBlue.transform.childCount; i++) {
-			//doorBlue.transform.GetChild(i).eulerAngles = new Vector3(0, 0, 0);
-			//if(doorBlue.transform.GetChild(i).GetComponent<Rigidbody>() != null) doorBlue.transform.GetChild(i).GetComponent<Rigidbody>().isKinematic = true;
-			doorBlue.transform.GetChild(i).gameObject.SetActive(false);
-		}
+		for(int i = 0; i < doorRed.transform.childCount; i++) doorRed.transform.GetChild(i).gameObject.SetActive(false);
+		for(int i = 0; i < doorBlue.transform.childCount; i++) doorBlue.transform.GetChild(i).gameObject.SetActive(false);
 	}
 
 	void Update () {
 		hand.transform.localScale = new Vector3(handBaseScale + Mathf.Sin(tickTime*4)/20, handBaseScale, hand.transform.localScale.z);
 
-		gearLeft.speed = gameManager.self.scoreLeft * -40;
-		gearRight.speed = gameManager.self.scoreRight * 40;
+		scoreLeft = gameManager.self.scoreLeft;
+		scoreRight = gameManager.self.scoreRight;
+		
+		gearLeft.speed = scoreLeft * -40;
+		steamLeft.setRate(scoreLeft *steamAmount);
+		gearRight.speed = scoreRight * 40;
+		steamRight.setRate(scoreRight *steamAmount);
 	
 		time += Time.deltaTime;
 		tickTime += Time.deltaTime;
 
 		//Kleine wijzer laat zien wie voor staat 
-		if(gameManager.self.scoreRight != gameManager.self.scoreLeft && (gameManager.self.scoreRight > 0 || gameManager.self.scoreLeft > 0)) {
-			if(gameManager.self.scoreRight > gameManager.self.scoreLeft) smallHand.transform.localRotation = Quaternion.Euler(smallHand.transform.localEulerAngles.x, smallHand.transform.localEulerAngles.y, Mathf.LerpAngle(smallHand.transform.localEulerAngles.z, 90, Time.deltaTime));
+		if(scoreRight != scoreLeft && (scoreRight > 0 || scoreLeft > 0)) {
+			if(scoreRight > scoreLeft) smallHand.transform.localRotation = Quaternion.Euler(smallHand.transform.localEulerAngles.x, smallHand.transform.localEulerAngles.y, Mathf.LerpAngle(smallHand.transform.localEulerAngles.z, 90, Time.deltaTime));
 			else smallHand.transform.localRotation = Quaternion.Euler(smallHand.transform.localEulerAngles.x, smallHand.transform.localEulerAngles.y, Mathf.LerpAngle(smallHand.transform.localEulerAngles.z, -90, Time.deltaTime));
 		}
 		else smallHand.transform.localRotation = Quaternion.Euler(smallHand.transform.localEulerAngles.x, smallHand.transform.localEulerAngles.y, Mathf.LerpAngle(smallHand.transform.localEulerAngles.z, smallHandBaseRot, Time.deltaTime));
