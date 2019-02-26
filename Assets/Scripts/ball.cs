@@ -7,8 +7,13 @@ public class ball : MonoBehaviour {
 
 	public static float spawnAnimSpeed = 5;
 	public bool trash = false;
-	public bool clock = false;
 
+	[Header("Clock Settings")]
+	public bool clock = false;
+	public int ballSpawnCount = 2;
+	public GameObject destroyParticles;
+
+	[Space(10)]
 	public float rotationSpeed = 1;
 	private float rotBaseSpeed;
 
@@ -47,7 +52,7 @@ public class ball : MonoBehaviour {
 		if (!trash) transform.Rotate(0, rotationSpeed, 0);
 
 		if(transform.position.y < -10) {
-			ballSpawner.decrementBalls();
+			if(!trash) ballSpawner.decrementBalls();
 			Destroy(gameObject);
 		}
 
@@ -134,6 +139,17 @@ public class ball : MonoBehaviour {
 				mat.color = new Color(mat.color.r * 0.8f - 0.25f, mat.color.g * 0.8f - 0.25f, mat.color.b * 0.8f - 0.25f);
 			}
 			m.gameObject.AddComponent<Fader>();
+		}
+		//Clock destroy
+		if(clock) {
+			audioManager.PLAY_SOUND("Collect", transform.position, 50, Random.Range(1.3f, 1.6f));
+			for(int i = 0; i < ballSpawnCount; i++) {
+				GameObject ball = Instantiate(ballSpawner.self.ballPrefab, transform.position, Quaternion.identity);
+				ball.transform.position = new Vector3(ball.transform.position.x, 1, ball.transform.position.z);
+				audioManager.PLAY_SOUND("Plop", ball.transform.position, 15, Random.Range(0.8f, 1.2f));
+				
+				for(int j = 0; j < 4; j++) Instantiate(destroyParticles, transform.position + new Vector3(Random.Range(-j, j), 1, Random.Range(-j, j)), Quaternion.identity);
+			}
 		}
 	}
 
