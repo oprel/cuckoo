@@ -108,6 +108,7 @@ public class ball : MonoBehaviour {
 
 	private void updateBreakState() {
 		oldBreakState = breakState;
+		if(breakState >= breakTextures.Length) return;
 		MeshRenderer[] m = GetComponentsInChildren<MeshRenderer>();
 		if(m.Length > 0 && m != null) {
 			if(breakState >= 0 && breakTextures[breakState] != null)  foreach(MeshRenderer mesh in m) for(int i = 0; i < mesh.materials.Length; i++) mesh.materials[i].mainTexture = breakTextures[breakState];

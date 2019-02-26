@@ -134,4 +134,4 @@ MonoBehaviour:
   breakTextures:
   - {fileID: 2800000, guid: 7630c286229f6bf4abef89615ac091c4, type: 3}
   - {fileID: 2800000, guid: 7549c661a1e420b41ae7284c533c705a, type: 3}
-  breakState: 0
+  breakState: -1
