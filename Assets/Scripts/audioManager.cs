@@ -38,6 +38,7 @@ public class audioManager : MonoBehaviour {
 	private string[] names;
 
 	private float steamDelay = 0;
+	private bool boostMusic = false;
 
 	void Start () {
 		instance = this;
@@ -67,11 +68,18 @@ public class audioManager : MonoBehaviour {
 		for(int i = 0; i < sounds.Length; i++) names[i] = sounds[i].name;
 	}
 
+	public void BoostMusic() {
+		boostMusic = true;
+		muteMusic = false;
+		mainBassSrc.volume = mainDrumsSrc.volume = 2;
+		mainMelodySrc.volume = 3;
+	}
+
 	void FixedUpdate() {
-		mainBassSrc.mute = mainDrumsSrc.mute = mainMelodySrc.mute = muteMusic;
+		if(!boostMusic) mainBassSrc.mute = mainDrumsSrc.mute = mainMelodySrc.mute = muteMusic;
 		mainBassSrc.timeSamples = mainMelodySrc.timeSamples = mainDrumsSrc.timeSamples;
 
-		foreach(Voice v in voices) v.Update();
+		if(!boostMusic) foreach(Voice v in voices) v.Update();
 
 		//Ambient level sounds
 		if(steamDelay > 0) steamDelay -= Time.deltaTime;

@@ -24,7 +24,6 @@ public class endingManager : MonoBehaviour {
     }
 
 	public static void endGame(bool didLeftWin) {
-        gameManager.self.DisableGameSounds();
         leftWins = didLeftWin;
         for (int i = 0; i < playerManager.leftPlayers.Count; i++) {
             Transform t = playerManager.leftPlayers[i].transform;

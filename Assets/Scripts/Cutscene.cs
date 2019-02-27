@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Cutscene : MonoBehaviour {
     public bool playCutscene = true;
 
+    public UnityEngine.Events.UnityEvent startEvent;
+
     public GameObject[] disableOnStartObjects;
     public GameObject countdown;
     private Text[] countdownText;
@@ -48,6 +50,11 @@ public class Cutscene : MonoBehaviour {
             currentShot = -1;
             EndCutscene();
         }
+        OnStart();
+    }
+
+    protected void OnStart() {
+        startEvent.Invoke();
     }
 
     void FixedUpdate() {

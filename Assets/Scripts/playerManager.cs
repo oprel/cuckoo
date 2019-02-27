@@ -116,6 +116,8 @@ public class playerManager : MonoBehaviour {
 		try { for(int i = 0; i < playerCount; i++) impulses[i].energy = 0; }
 		catch(KeyNotFoundException) {}
 
+		if(cutscene) return;
+
 		if(str.Length - 1 < 0) return;
 		string[] players = str.Substring(0, str.Length - 1).Split('|');
 		for(int i = 0; i < players.Length; i++) {
@@ -180,6 +182,10 @@ public class playerManager : MonoBehaviour {
 			}
 			cutscene = true;
 		} else cutscene = Camera.main.GetComponent<Cutscene>().playCutscene;
+	}
+
+	public void SetIgnoreControls(bool i) {
+		cutscene = !i;
 	}
 
 	public void Ready() {
@@ -273,8 +279,8 @@ public class playerManager : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		applyInput();
 		if(!cutscene) {
-			applyInput();
 			for(int i = 0; i < leftPlayers.Count; i++) {
 				if(leftInput[i] == null || leftPlayers[i] == null) continue;
 				if(!leftPlayers[i].isStunned()) updatePlayer(leftInput[i], leftPlayers[i]);

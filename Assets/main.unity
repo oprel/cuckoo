@@ -17011,6 +17011,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playCutscene: 0
+  startEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   disableOnStartObjects:
   - {fileID: 1741847961}
   - {fileID: 181100166}
@@ -23856,6 +23861,7 @@ GameObject:
   - component: {fileID: 1081398068}
   - component: {fileID: 1081398067}
   - component: {fileID: 1081398066}
+  - component: {fileID: 1081398069}
   m_Layer: 5
   m_Name: winner
   m_TagString: Untagged
@@ -23877,10 +23883,10 @@ RectTransform:
   m_Father: {fileID: 1245502904}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 100}
-  m_SizeDelta: {x: 1112, y: 625}
+  m_SizeDelta: {x: 0, y: 625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1081398066
 MonoBehaviour:
@@ -23919,7 +23925,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 58f398f087f63fe45a8419ea0ad281be, type: 3}
-    m_FontSize: 160
+    m_FontSize: 130
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
@@ -23939,6 +23945,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081398064}
   m_CullTransparentMesh: 0
+--- !u!114 &1081398069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081398064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de455e2e78fd184438f261cdc7af3960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotSpeed: 10
+  posSpeed: 5
+  posDir: {x: 0, y: 1, z: 0}
+  rotDir: {x: 15, y: 0, z: 0}
 --- !u!1 &1095335480
 GameObject:
   m_ObjectHideFlags: 0
@@ -34738,6 +34760,66 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playCutscene: 1
+  startEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1998128388}
+        m_MethodName: DisableGameSounds
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 880907772}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2092714161}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1878312785}
+        m_MethodName: BoostMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1994311433}
+        m_MethodName: SetIgnoreControls
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   disableOnStartObjects:
   - {fileID: 181100166}
   - {fileID: 1557944666}
@@ -35116,6 +35198,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: oldBlue (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8511763167427980373, guid: ff1f53458406967489f1dbf0ed6ff762,
+        type: 3}
+      propertyPath: number
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8612633017090886949, guid: ff1f53458406967489f1dbf0ed6ff762,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -35170,11 +35257,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8511763167427980373, guid: ff1f53458406967489f1dbf0ed6ff762,
-        type: 3}
-      propertyPath: number
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff1f53458406967489f1dbf0ed6ff762, type: 3}
@@ -51832,6 +51914,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: oldBlue (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8511763167427980373, guid: ff1f53458406967489f1dbf0ed6ff762,
+        type: 3}
+      propertyPath: number
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8612633017090886949, guid: ff1f53458406967489f1dbf0ed6ff762,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -51886,11 +51973,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8511763167427980373, guid: ff1f53458406967489f1dbf0ed6ff762,
-        type: 3}
-      propertyPath: number
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff1f53458406967489f1dbf0ed6ff762, type: 3}
@@ -52510,8 +52592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b193a4c927dfa34a8153d4926277d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTime: 120
-  scoreLeft: 0
+  gameTime: 2
+  scoreLeft: 1
   scoreRight: 0
   goalLeft: {fileID: 7457867036168510452}
   goalRight: {fileID: 7457867036158493856}
