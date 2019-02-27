@@ -72,7 +72,7 @@ public class audioManager : MonoBehaviour {
 		boostMusic = true;
 		muteMusic = false;
 		mainBassSrc.volume = mainDrumsSrc.volume = 2;
-		mainMelodySrc.volume = 3;
+		mainMelodySrc.volume = 4;
 	}
 
 	void FixedUpdate() {

@@ -13,6 +13,7 @@ public class gameManager : MonoBehaviour {
 	public GameObject goalRight;
 	public GameObject ballSpawner;
 	public GameObject gears;
+	public Text oldPoints, youngPoints;
 
 	public gamestateVisuals visuals;
 	public Text scoreDisplay, timeDisplay;
@@ -46,6 +47,11 @@ public class gameManager : MonoBehaviour {
 			endingManager.endGame(scoreLeft < scoreRight);
 			gameTimer = Mathf.Infinity;
 		} 
+	}
+
+	public void SetFinalScore() {
+		oldPoints.text = "Old: " + scoreLeft;
+		youngPoints.text = "Young: " + scoreRight;
 	}
 
 	public static void addScoreLeft(int i) {

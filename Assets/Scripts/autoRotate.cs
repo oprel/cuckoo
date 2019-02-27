@@ -26,7 +26,7 @@ public class autoRotate : MonoBehaviour {
 			src.loop = true;
 		}
 	}
-	
+
 	void Update () {
 		if(src.clip == null && goal) src.clip = audioManager.GET_AUDIO("Turn");
 		transform.Rotate(Vector3.forward, speed * ((goal)? 0.4f : 1) * Time.deltaTime);
