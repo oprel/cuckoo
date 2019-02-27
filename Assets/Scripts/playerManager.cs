@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using System.IO.Ports;
+using UnityEngine.SceneManagement;
 
 public class playerManager : MonoBehaviour {
 	public static Dictionary<int, player> leftPlayers = new Dictionary<int, player>();
@@ -30,6 +30,7 @@ public class playerManager : MonoBehaviour {
 		COM10,
 		COM11
 	}
+	[HideInInspector]
 	public Port port;
 
 	[System.Serializable]
@@ -92,9 +93,19 @@ public class playerManager : MonoBehaviour {
 
 	public string readArduinoInputs(int timeout = 1) {
 		stream.ReadTimeout = timeout;
-		try { return stream.ReadLine(); }
-		catch(System.TimeoutException) { return null; }
+		try { return stream.ReadLine();}
+		catch(System.TimeoutException) {return null;}
+		catch(System.IO.IOException) {
+			KooKoo.print("Connection lost!", KooKoo.MessageType.ERR);
+			return null;
+		}
+		catch(System.UnauthorizedAccessException) {
+			KooKoo.print("Connection lost!", KooKoo.MessageType.ERR); 
+			return null;
+		}
+		catch(System.InvalidOperationException) {return null;}
 	}
+
 	public void applyInput() {
 		if(playerCount <= 0) return;
 		string str = "";
@@ -129,12 +140,10 @@ public class playerManager : MonoBehaviour {
 						for(int i = 0; i < leftPlayers.Count; i++) {
 							leftInput[i].direction = rotations[i];
 							leftInput[i].energy += impulses[i].energy;
-							//audioManager.PLAY_SOUND("CrankLong", leftPlayers[i].transform.position, impulses[i].energy);
 						}
 						for(int i = 0; i < rightPlayers.Count; i++) {
 							rightInput[i].direction = rotations[i + 3];
 							rightInput[i].energy += impulses[i + 3].energy;
-							//audioManager.PLAY_SOUND("CrankLong", rightPlayers[i].transform.position, impulses[i + 3].energy);
 						}
 					}
 					catch(KeyNotFoundException) {}
@@ -143,23 +152,34 @@ public class playerManager : MonoBehaviour {
 	}
 
 	void Awake() {
-		int baudRate = 250000;
-		if (!DebugMode) {
-            string[] portNums = System.Text.RegularExpressions.Regex.Split(port.ToString(), @"\D+");
-            stream = (int.Parse(portNums[1]) >= 10) ? new SerialPort("\\\\.\\" + port.ToString(), baudRate, Parity.None, 8, StopBits.One) :
-                                                      new SerialPort(port.ToString(), baudRate, Parity.None, 8, StopBits.One);
-			try {
-				stream.Open();
-				stream.ReadTimeout = 1;
-			} catch(System.IO.IOException) { 
-				DebugMode = true;
-				KooKoo.print("Nothing found on Port " + port.ToString() + ", entering Debug mode.", KooKoo.MessageType.WARN);
-			}
-			cutscene = true;
-		} else cutscene = Camera.main.GetComponent<Cutscene>().playCutscene;
+		ConnectInput();
 		self = this;
 		ball[] bs = FindObjectsOfType<ball>();
 		foreach (ball b in bs) if (!b.trash) balls.Add(b.gameObject);
+	}
+	private void ConnectInput() {
+		int baudRate = 250000;
+		if (!DebugMode) {
+			string[] ports = System.Enum.GetNames(typeof(Port));
+           	for(int i = 0; i < ports.Length; i++) {
+				string port = ports[i];
+				string[] portNums = System.Text.RegularExpressions.Regex.Split(port, @"\D+");
+				stream = (int.Parse(portNums[1]) >= 10) ? new SerialPort("\\\\.\\" + port, baudRate, Parity.None, 8, StopBits.One) :
+														new SerialPort(port.ToString(), baudRate, Parity.None, 8, StopBits.One);
+				try {
+					stream.Open();
+					stream.ReadTimeout = 1;
+					KooKoo.print("Inputs found on Port " + port, KooKoo.MessageType.WARN);
+					break;
+				} catch(System.IO.IOException) { 
+					if(i >= ports.Length - 1) {
+						KooKoo.print("Nothing found on any ports, entering debug mode.", KooKoo.MessageType.WARN);
+						DebugMode = true;
+					}
+				}
+			}
+			cutscene = true;
+		} else cutscene = Camera.main.GetComponent<Cutscene>().playCutscene;
 	}
 
 	public void Ready() {
