@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class gamestateVisuals : MonoBehaviour {
 	public static gamestateVisuals self;
@@ -12,6 +14,9 @@ public class gamestateVisuals : MonoBehaviour {
 	public speedChangeDisplay msgright;
 	public cameraShake cameraShake;
 	public GameObject beakboostvisual;
+	public TextMeshProUGUI scoreDisplay;
+	public float particleOffset;
+	public GameObject scoreParticles, falloutParticles;
 
 	private GameObject hand;
 	private GameObject smallHand;
@@ -52,6 +57,7 @@ public class gamestateVisuals : MonoBehaviour {
 
 		steamLeft = gearLeft.GetComponentInChildren<steamController>();
 		steamRight = gearRight.GetComponentInChildren<steamController>();
+		displayScore();
 
 	}
 
@@ -119,5 +125,31 @@ public class gamestateVisuals : MonoBehaviour {
 		Time.timeScale = 0;
 		for (int i = 0; i < t; i++) yield return new WaitForEndOfFrame();
 		Time.timeScale = s;
+	}
+
+	public static void displayScore(){
+		string txt = gameManager.self.scoreLeft.ToString() + "−" + gameManager.self.scoreRight.ToString();
+		self.scoreDisplay.text = txt.Replace("0","O");
+	}
+
+	public static void scoreFeedback(bool leftGoal, int change){
+		hitStun();
+		displayScore();
+		if (leftGoal){
+			self.msgleft.speedChange(change>0);
+			Instantiate(self.scoreParticles, particlePos(self.gearLeft.transform.position), self.scoreParticles.transform.rotation);
+		}else{
+			self.msgright.speedChange(change>0);
+			Instantiate(self.scoreParticles, particlePos(self.gearRight.transform.position), self.scoreParticles.transform.rotation);
+		}
+	}
+
+	public static Vector3 particlePos(Vector3 pos){
+		pos.y=1;
+		return pos - pos.normalized * self.particleOffset;
+	}
+
+	public static void fallOut(Vector3 pos){
+		Instantiate(self.falloutParticles, particlePos(pos), self.falloutParticles.transform.rotation);
 	}
 }

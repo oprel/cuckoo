@@ -66,20 +66,11 @@ public class ball : MonoBehaviour {
 		if (other.gameObject == gameManager.self.goalLeft && !trash) {
 			gameManager.addScoreLeft((trash) ? -1 : 1);
 			ballSpawner.decrementBalls();
-
-			//speed UI
-			gamestateVisuals.self.msgleft.speedChange(!trash);
-			gamestateVisuals.hitStun();
-
 			Destroy(gameObject);
 		}
 		if (other.gameObject == gameManager.self.goalRight && !trash) {
 			gameManager.addScoreRight((trash)? -1 : 1);
 			ballSpawner.decrementBalls();
-
-			//speed UI
-			gamestateVisuals.self.msgright.speedChange(!trash);
-			gamestateVisuals.hitStun();
 			Destroy(gameObject);
 		}
 	}
