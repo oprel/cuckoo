@@ -127,13 +127,16 @@ public class playerManager : MonoBehaviour {
 			if(!int.TryParse(val[0], out rot)) continue;
 			rotations[i] = rot + ((i > 2)? -90 : 90);
 			int imp = 0;
-			if(!int.TryParse(val[1], out imp)) continue;
-			if(imp != impulses[i].lastImpulse && !impulses[i].shouldImpulse) impulses[i].shouldImpulse = true;
-			if(imp == impulses[i].lastImpulse && impulses[i].shouldImpulse) {	
-				impulses[i].shouldImpulse = false;
-				impulses[i].energy += 0.5f;
-				continue;
-			}
+			try {
+				if(!int.TryParse(val[1], out imp)) continue;
+				if(imp != impulses[i].lastImpulse && !impulses[i].shouldImpulse) impulses[i].shouldImpulse = true;
+				if(imp == impulses[i].lastImpulse && impulses[i].shouldImpulse) {	
+					impulses[i].shouldImpulse = false;
+					impulses[i].energy += 0.5f;
+					if(impulses[i].energy > 10) impulses[i].energy = 10;
+					continue;
+				}
+			} catch(System.IndexOutOfRangeException) {}
 			impulses[i].lastImpulse = imp;
 		}
 		if (!DebugMode) {
@@ -141,11 +144,11 @@ public class playerManager : MonoBehaviour {
 					try {
 						for(int i = 0; i < leftPlayers.Count; i++) {
 							leftInput[i].direction = rotations[i];
-							leftInput[i].energy += impulses[i].energy;
+							if(!leftPlayers[i].isStunned()) leftInput[i].energy += impulses[i].energy;
 						}
 						for(int i = 0; i < rightPlayers.Count; i++) {
 							rightInput[i].direction = rotations[i + 3];
-							rightInput[i].energy += impulses[i + 3].energy;
+							if(!rightPlayers[i].isStunned()) rightInput[i].energy += impulses[i + 3].energy;
 						}
 					}
 					catch(KeyNotFoundException) {}
@@ -299,6 +302,7 @@ public class playerManager : MonoBehaviour {
 			if(leftInput[i].energy > 0) {
 				p.impulse(tickSpeed);
 				leftInput[i].energy -= frequency;
+				if(leftPlayers[i].isStunned()) leftInput[i].energy = 0;
 			}
 		}
 		for(int i = 0; i < rightPlayers.Count; i++) {
@@ -307,6 +311,7 @@ public class playerManager : MonoBehaviour {
 			if(rightInput[i].energy > 0) {
 				p.impulse(tickSpeed);
 				rightInput[i].energy -= frequency;
+				if(rightPlayers[i].isStunned()) rightInput[i].energy = 0;
 			}
 		}
 	}

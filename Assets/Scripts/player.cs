@@ -45,7 +45,7 @@ public class player : MonoBehaviour {
 	private float stunTime, stunRot;
 	public ParticleSystem stunParticles;
 
-	private bool moveForward;
+	private bool moveForward = true;
 
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
@@ -90,7 +90,8 @@ public class player : MonoBehaviour {
 
 		Vector3 vel = rb.velocity;
 		vel.y = 0;
-		if(!isStunned() && moveForward) rb.velocity = transform.forward * vel.magnitude + new Vector3(0, rb.velocity.y, 0);
+		if( moveForward && !isStunned()) 
+		rb.velocity = transform.forward * vel.magnitude + new Vector3(0, rb.velocity.y, 0);
 	
 		if(hairTop != null) {
 			if(hairBottom != null) {

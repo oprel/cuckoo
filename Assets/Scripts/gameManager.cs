@@ -44,7 +44,7 @@ public class gameManager : MonoBehaviour {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 		if (gameTimer <= 0 && scoreLeft != scoreRight) {
-			endingManager.endGame(scoreLeft < scoreRight);
+			endingManager.endGame(scoreLeft >scoreRight);
 			gameTimer = Mathf.Infinity;
 		} 
 	}
