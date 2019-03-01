@@ -24,6 +24,7 @@ public class player : MonoBehaviour {
 	public bool disable = false;
 
 	private Vector3 lookPos;
+	private bool fallingOut;
 
 	private class Bodypart {
 		public Transform part;
@@ -64,7 +65,7 @@ public class player : MonoBehaviour {
 	}
 
 	public void Update() {
-		if(transform.position.y < -20) Reset();
+		if(transform.position.y < -5 && !fallingOut) StartCoroutine(fallout());
 		eyeGear.speed = rotationSpeed;
 		
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
@@ -172,5 +173,13 @@ public class player : MonoBehaviour {
 		moveForward = false;
 		yield return new WaitForSeconds(length);
 		moveForward = true;
+	}
+
+	private IEnumerator fallout(){
+		fallingOut = true;
+		gamestateVisuals.fallOut(transform.position);
+		yield return new WaitForSeconds(2f);
+		Reset();
+		fallingOut = false;
 	}
 }
