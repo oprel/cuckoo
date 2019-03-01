@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class edgePusher : MonoBehaviour
-{
+public class edgePusher : MonoBehaviour {
     public float force = 5;
-    private SphereCollider collider;
+    private SphereCollider coll;
 
     private void Awake() {
-        collider = GetComponent<SphereCollider>();
+        coll = GetComponent<SphereCollider>();
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -25,10 +24,9 @@ public class edgePusher : MonoBehaviour
     }
 
     private IEnumerator recoil(){
-        for (float i = 0; i < 1; i+=1/50f)
-        {
-            collider.enabled = i>.2f;
-            collider.radius = i;
+        for (float i = 0; i < 1; i += 1 / 50f) {
+            coll.enabled = i>.2f;
+            coll.radius = i;
             yield return null;
         }
     }

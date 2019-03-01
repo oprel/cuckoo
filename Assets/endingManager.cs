@@ -7,10 +7,10 @@ using TMPro;
 public class endingManager : MonoBehaviour {
     public static endingManager self;
     public Cutscene endingCutscene;
-    public GameObject endDoorLeft, endDoorRight, hand;
+    public GameObject endDoorLeft, endDoorRight;
     public TextMeshProUGUI winnerDisplay;
-    private static List<Transform> winners = new List<Transform>();
-    private static List<Transform> losers = new List<Transform>();
+    private List<Transform> winners = new List<Transform>();
+    private List<Transform> losers = new List<Transform>();
     private static bool leftWins;
 
     private void Awake() {
@@ -28,16 +28,16 @@ public class endingManager : MonoBehaviour {
         leftWins = didLeftWin;
         for (int i = 0; i < playerManager.leftPlayers.Count; i++) {
             Transform t = playerManager.leftPlayers[i].transform;
-            if (leftWins) winners.Add(t);
-            else losers.Add(t);
+            if (leftWins) self.winners.Add(t);
+            else self.losers.Add(t);
         }
         for (int i = 0; i < playerManager.rightPlayers.Count; i++) {
             Transform t = playerManager.rightPlayers[i].transform;
-            if (!leftWins) winners.Add(t);
-            else losers.Add(t);
+            if (!leftWins) self.winners.Add(t);
+            else self.losers.Add(t);
         }
         self.StartCoroutine(self.slowDown());
-	}
+    }
     
 	private IEnumerator slowDown() {
         for (float i = 0f; i < 1f; i+= 1f / 80f) {

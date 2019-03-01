@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ClockShine : MonoBehaviour
 {
-    private Vector3 basePos;
+    //private Vector3 basePos;
 
     void Start() {
-        basePos = transform.localPosition;
+      //  basePos = transform.localPosition;
     }
 
     void FixedUpdate() {
