@@ -154,7 +154,7 @@ public class player : MonoBehaviour {
 			gamestateVisuals.hitStun();
 			stunTime = playerManager.self.stunTime;
 			audioManager.PLAY_SOUND("Hit", transform.position, 10f, 1f);
-			audioManager.PLAY_SOUND("BeakStun", transform.position, 10f, Random.Range(0.9f, 1.2f));
+			audioManager.PLAY_SOUND("BeakStun", transform.position, 30f, Random.Range(0.9f, 1.2f));
 			stunRot = transform.eulerAngles.y;
 			StartCoroutine(playStunParticles());
 		}
