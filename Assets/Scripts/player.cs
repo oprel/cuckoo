@@ -12,6 +12,7 @@ public class player : MonoBehaviour {
 	public float rotationSpeed;
 	public autoRotate eyeGear;
 
+
 	private GameObject text;
 
 	[SerializeField]
@@ -160,6 +161,7 @@ public class player : MonoBehaviour {
 		lookAt(col.transform.position);
 	}
 	private IEnumerator playStunParticles() {
+		gamestateVisuals.Stunned(transform.position);
 		stunParticles.Play();
 		yield return new WaitForSeconds(playerManager.self.stunTime);
 		stunParticles.Stop();

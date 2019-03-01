@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class gameManager : MonoBehaviour {
 	public static gameManager self;
@@ -13,7 +14,7 @@ public class gameManager : MonoBehaviour {
 	public GameObject goalRight;
 	public GameObject ballSpawner;
 	public GameObject gears;
-	public Text oldPoints, youngPoints;
+	public TextMeshProUGUI oldPoints, youngPoints;
 
 	public gamestateVisuals visuals;
 	public Text timeDisplay;
@@ -56,8 +57,8 @@ public class gameManager : MonoBehaviour {
 	}
 
 	public void SetFinalScore() {
-		oldPoints.text = "Blue: " + scoreLeft;
-		youngPoints.text = "Red: " + scoreRight;
+		oldPoints.text = "blue: " + scoreLeft.ToString().Replace("0","O");
+		youngPoints.text = "red: " + scoreRight.ToString().Replace("0","O");
 	}
 
 	public static void addScoreLeft(int i) {

@@ -16,7 +16,7 @@ public class gamestateVisuals : MonoBehaviour {
 	public GameObject beakboostvisual;
 	public TextMeshProUGUI scoreDisplay;
 	public float particleOffset;
-	public GameObject scoreParticles, falloutParticles;
+	public GameObject scoreParticles, falloutParticles, stunnedParticles;
 
 	private GameObject hand;
 	private GameObject smallHand;
@@ -150,6 +150,10 @@ public class gamestateVisuals : MonoBehaviour {
 	}
 
 	public static void fallOut(Vector3 pos){
-		Instantiate(self.falloutParticles, particlePos(pos), self.falloutParticles.transform.rotation);
+		Instantiate(self.falloutParticles, particlePos(pos*.8f), self.falloutParticles.transform.rotation);
+	}
+
+	public static void Stunned(Vector3 pos){
+		Instantiate(self.stunnedParticles, pos, self.stunnedParticles.transform.rotation);
 	}
 }
