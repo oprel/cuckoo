@@ -68,7 +68,7 @@ public class gamestateVisuals : MonoBehaviour {
 	}
 
 	void Update () {
-		hand.transform.localScale = new Vector3(handBaseScale + Mathf.Sin(tickTime*4)/20, handBaseScale, hand.transform.localScale.z);
+		hand.transform.localScale = new Vector3(handBaseScale + Mathf.Sin(tickTime*4) / 20, handBaseScale, hand.transform.localScale.z);
 
 		scoreLeft = gameManager.self.scoreLeft;
 		scoreRight = gameManager.self.scoreRight;

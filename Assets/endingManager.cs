@@ -74,8 +74,8 @@ public class endingManager : MonoBehaviour {
     }
 
     public float radius;
-    private IEnumerator shamePlayers() {
-         foreach (Transform t in losers) {
+    private IEnumerator celebratePlayers() {
+         foreach (Transform t in winners) {
              t.Find("trail").gameObject.SetActive(false);
             t.rotation = Quaternion.Euler(new Vector3(Random.value * 360, 90, -90));
             Vector3 pos = Random.insideUnitSphere * radius;
@@ -91,17 +91,17 @@ public class endingManager : MonoBehaviour {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(transform.position,radius);
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(winnerLocation,radius);
+        Gizmos.DrawSphere(loserLocation,radius);
     }
 
-    public Vector3 winnerLocation;
-    private IEnumerator celebratePlayers() {
-        foreach (Transform t in winners) {
+    public Vector3 loserLocation;
+    private IEnumerator shamePlayers() {
+        foreach (Transform t in losers) {
             t.Find("trail").gameObject.SetActive(false);
             t.rotation = Quaternion.Euler(new Vector3(Random.value * 360, 90, -90));
             Vector3 pos = new Vector3(Random.value * radius, 0, 0);
             for (float j = 0f; j < 1f; j+= 1f / 80f) {
-                t.position = Vector3.Lerp(t.position, winnerLocation + pos, j);
+                t.position = Vector3.Lerp(t.position, loserLocation + pos, j);
                 yield return null;
             } 
         }   

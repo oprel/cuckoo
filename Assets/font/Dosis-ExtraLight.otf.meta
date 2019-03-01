@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 05dc0730085ec9f42a709bd12d05df0a
+guid: 3fdeb3571a70f804593ac5b7645a8406
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -11,7 +11,8 @@ TrueTypeFontImporter:
   fontName: Dosis
   fontNames:
   - Dosis
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3ee1eb989486ea3459df8bba2e64ac99, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
