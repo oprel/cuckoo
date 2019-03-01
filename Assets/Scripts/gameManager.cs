@@ -22,13 +22,13 @@ public class gameManager : MonoBehaviour {
 	private cameraShake camShaker;
 	private static float gameTimer;
 	private bool gamePaused;
+	private bool ended = false;
 
 	private void Awake() {
 		self = this;
 		visuals = GetComponent<gamestateVisuals>();
 		camShaker = Camera.main.GetComponent<cameraShake>();
 		gameTimer = self.gameTime;
-
 	}
 
 	public void DisableGameSounds() {
@@ -37,21 +37,27 @@ public class gameManager : MonoBehaviour {
 	}
 	
 	void FixedUpdate() {
-		gameTimer-=Time.deltaTime;
+		if(Input.GetKeyDown(KeyCode.P)) {
+			scoreRight += 20;
+			gameTimer = gameTime = 1;
+			gamestateVisuals.displayScore();
+		}
+
+		gameTimer -=Time.deltaTime;
 		timeDisplay.text = "time: " + (int)gameTimer + "/" + gameTime;
 		if (Input.GetButton("Fire2")) {
 			if(playerManager.self.stream != null) playerManager.self.stream.Dispose();
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
-		if (gameTimer <= 0 && scoreLeft != scoreRight) {
-			endingManager.endGame(scoreLeft >scoreRight);
-			gameTimer = Mathf.Infinity;
+		if (gameTimer <= 0 && scoreLeft != scoreRight && !ended) {
+			endingManager.endGame(scoreLeft > scoreRight);
+			ended = true;
 		} 
 	}
 
 	public void SetFinalScore() {
-		oldPoints.text = "Old: " + scoreLeft;
-		youngPoints.text = "Young: " + scoreRight;
+		oldPoints.text = "Blue: " + scoreLeft;
+		youngPoints.text = "Red: " + scoreRight;
 	}
 
 	public static void addScoreLeft(int i) {
