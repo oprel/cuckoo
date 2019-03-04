@@ -70,7 +70,8 @@ public class endingManager : MonoBehaviour {
         StartCoroutine(celebratePlayers());
         while (true) {
             StartCoroutine(shamePlayers());
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(80);
+            gameManager.self.ResetGame();
         }
     }
 

@@ -12,61 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: stunnedParticles
       objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.9528302
-      objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.9061842
-      objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.06741722
-      objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: InitialModule.startColor.minColor.r
-      value: 0.10986183
-      objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: InitialModule.startColor.minColor.g
-      value: 0.0699537
-      objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: InitialModule.startColor.minColor.b
-      value: 0.11320752
-      objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: ClampVelocityModule.dampen
-      value: 0.82
-      objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: ClampVelocityModule.magnitude.scalar
-      value: 1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: lengthInSec
-      value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
-        type: 3}
-      propertyPath: EmissionModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8828442778492819971, guid: b83bf0a6b8b1f2841b7405519b8907e4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -121,6 +66,66 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232414, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9528302
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.9061842
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.06741722
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: InitialModule.startColor.minColor.r
+      value: 0.10986183
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 0.0699537
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 0.11320752
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: ClampVelocityModule.dampen
+      value: 0.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: ClampVelocityModule.magnitude.scalar
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657774165790232413, guid: b83bf0a6b8b1f2841b7405519b8907e4,
+        type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8168102113572723954, guid: b83bf0a6b8b1f2841b7405519b8907e4,
         type: 3}
@@ -177,7 +182,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_renderer
       value: 
-      objectReference: {fileID: 7744321409276516065}
+      objectReference: {fileID: 3617585793518345535}
     - target: {fileID: 7101796686124004519, guid: b83bf0a6b8b1f2841b7405519b8907e4,
         type: 3}
       propertyPath: m_fontSize
@@ -227,7 +232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b83bf0a6b8b1f2841b7405519b8907e4, type: 3}
---- !u!23 &7744321409276516065 stripped
+--- !u!23 &3617585793518345535 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6434909765885233793, guid: b83bf0a6b8b1f2841b7405519b8907e4,
     type: 3}

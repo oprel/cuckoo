@@ -14,10 +14,9 @@ public class gameManager : MonoBehaviour {
 	public GameObject goalRight;
 	public GameObject ballSpawner;
 	public GameObject gears;
-	public TextMeshProUGUI oldPoints, youngPoints;
+	public TextMeshProUGUI oldPoints, youngPoints, timeDisplay;
 
 	public gamestateVisuals visuals;
-	public Text timeDisplay;
 	public trashSpawner[] planks;
 
 	private cameraShake camShaker;
@@ -46,16 +45,19 @@ public class gameManager : MonoBehaviour {
 
 		gameTimer -=Time.deltaTime;
 		timeDisplay.text = "time: " + (int)gameTimer + "/" + gameTime;
-		if (Input.GetButton("Fire2")) {
-			if(playerManager.self.stream != null) playerManager.self.stream.Dispose();
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		}
+		if(gameTimer<0) timeDisplay.gameObject.SetActive(false);
+		if (Input.GetButton("Fire2")) ResetGame();
 		if (gameTimer <= 0 && scoreLeft != scoreRight && !ended) {
 			endingManager.endGame(scoreLeft > scoreRight);
 			ended = true;
 		} 
 	}
 
+	public void ResetGame(){
+		if(playerManager.self.stream != null) playerManager.self.stream.Dispose();
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+	}
 	public void SetFinalScore() {
 		oldPoints.text = "blue: " + scoreLeft.ToString().Replace("0","O");
 		youngPoints.text = "red: " + scoreRight.ToString().Replace("0","O");
