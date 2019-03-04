@@ -7949,7 +7949,6 @@ MonoBehaviour:
   balls: []
   textPrefab: {fileID: 1509766394478592, guid: afe51685f8edd4d47b3f21cf1cccafb2, type: 3}
   oilPrefab: {fileID: 1288687965388610, guid: 630d754af2dff2f40a083b45e12b7517, type: 3}
-  port: 5
   teams:
   - name: RED
     texture: {fileID: 0}
@@ -7995,6 +7994,7 @@ MonoBehaviour:
     prevEnergy: 0
     direction: 0
     enableAI: 0
+  playerInput: {fileID: 0}
 --- !u!4 &1994311434
 Transform:
   m_ObjectHideFlags: 0

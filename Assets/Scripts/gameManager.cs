@@ -43,7 +43,7 @@ public class gameManager : MonoBehaviour {
 			gamestateVisuals.displayScore();
 		}
 
-		gameTimer -=Time.deltaTime;
+		gameTimer -= Time.deltaTime;
 		timeDisplay.text = "time: " + (int)gameTimer + "/" + gameTime;
 		if(gameTimer<0) timeDisplay.gameObject.SetActive(false);
 		if (Input.GetButton("Fire2")) ResetGame();
@@ -54,9 +54,8 @@ public class gameManager : MonoBehaviour {
 	}
 
 	public void ResetGame(){
-		if(playerManager.self.stream != null) playerManager.self.stream.Dispose();
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
+		if(playerManager.self.getStream() != null) playerManager.self.getStream().Dispose();
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 	public void SetFinalScore() {
 		oldPoints.text = "blue: " + scoreLeft.ToString().Replace("0","O");

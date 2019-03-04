@@ -17,6 +17,7 @@ public class playerManager : MonoBehaviour {
 	private int playerCount;
 	private bool cutscene = false;
 
+	/* 
 	public enum Port {
 		COM1,
 		COM2,
@@ -32,6 +33,7 @@ public class playerManager : MonoBehaviour {
 	}
 	[HideInInspector]
 	public Port port;
+	*/
 
 	[System.Serializable]
 	public class Team {
@@ -58,7 +60,7 @@ public class playerManager : MonoBehaviour {
 	public Input[] leftInput;
 	public Input[] rightInput;
 
-	public SerialPort stream;
+	//public SerialPort stream;
 
 	private Dictionary<int, float> rotations = new Dictionary<int, float>();
 	private Dictionary<int, Impulse> impulses = new Dictionary<int, Impulse>();
@@ -91,6 +93,7 @@ public class playerManager : MonoBehaviour {
 		self.playerCount++;
 	}
 
+	/*
 	public string readArduinoInputs(int timeout = 1) {
 		stream.ReadTimeout = timeout;
 		try { return stream.ReadLine();}
@@ -104,21 +107,28 @@ public class playerManager : MonoBehaviour {
 			return null;
 		}
 		catch(System.InvalidOperationException) {return null;}
-	}
+	} */
 
 	public void applyInput() {
 		if(playerCount <= 0) return;
 		string str = "";
 		if (!DebugMode) {
-			str = readArduinoInputs();
+			str = PlayerInput.readArduinoInputs();
 			if(str == null) return;
 		}
 		try { for(int i = 0; i < playerCount; i++) impulses[i].energy = 0; }
 		catch(KeyNotFoundException) {}
 
 		if(cutscene) return;
-
 		if(str.Length - 1 < 0) return;
+		string[] data = str.Split('=');
+		str = data[0];
+
+		//Reset buttons
+		Debug.Log(data[1] + " | " + data[2]);
+		if(int.Parse(data[1]) == 1) Reboot();
+		if(int.Parse(data[2]) == 1) Reset();
+
 		string[] players = str.Substring(0, str.Length - 1).Split('|');
 		for(int i = 0; i < players.Length; i++) {
 			if (!impulses.ContainsKey(i)) return;
@@ -156,12 +166,29 @@ public class playerManager : MonoBehaviour {
 		}
 	}
 
+	public void Reboot() {
+		//if(stream != null) stream.Dispose();
+		//SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		//Camera.main.GetComponent<Cutscene>().enabled = true;
+		KooKoo.print("System reboot!");
+	}
+
+	public void Reset() {
+		KooKoo.print("Game reset!");
+	}
+
+	public SerialPort getStream() {
+		return PlayerInput.stream;
+	}
+
 	void Awake() {
-		ConnectInput();
+		//ConnectInput();
 		self = this;
+		cutscene = PlayerInput.cutscene;
 		ball[] bs = FindObjectsOfType<ball>();
 		foreach (ball b in bs) if (!b.trash) balls.Add(b.gameObject);
 	}
+	/* 
 	private void ConnectInput() {
 		int baudRate = 250000;
 		if (!DebugMode) {
@@ -185,7 +212,7 @@ public class playerManager : MonoBehaviour {
 			}
 			cutscene = true;
 		} else cutscene = Camera.main.GetComponent<Cutscene>().playCutscene;
-	}
+	}*/
 
 	public void SetIgnoreControls(bool i) {
 		cutscene = !i;
