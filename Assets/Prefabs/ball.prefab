@@ -269,6 +269,8 @@ MonoBehaviour:
   beakBoost: 300
   trash: 0
   clock: 0
+  ballSpawnCount: 2
+  destroyParticles: {fileID: 0}
   rotationSpeed: 1
   breakTextures: []
   breakState: -1
@@ -358,7 +360,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fc0e7b86399051f43b48ef438e092096, type: 3}
-  - {fileID: 2100000, guid: 416275eea681b4d45a77b9df38e77717, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

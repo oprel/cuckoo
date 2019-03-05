@@ -135,7 +135,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fc0e7b86399051f43b48ef438e092096, type: 3}
-  - {fileID: 2100000, guid: 416275eea681b4d45a77b9df38e77717, type: 3}
+  - {fileID: 2100000, guid: fc0e7b86399051f43b48ef438e092096, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10202,6 +10202,7 @@ MonoBehaviour:
   number: 0
   rotationSpeed: 0
   eyeGear: {fileID: 7689585637912462041}
+  activityTimer: 0
   speed: 1
   aiTarget: {fileID: 0}
   energy: 0
