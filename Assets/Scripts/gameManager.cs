@@ -31,10 +31,6 @@ public class gameManager : MonoBehaviour {
 		gameTimer = self.gameTime;
 	}
 
-	void Start() {
-		Debug.Log(SceneManager.sceneCount);
-	}
-
 	public void DisableGameSounds() {
 		autoRotate[] sounds = gears.transform.GetComponentsInChildren<autoRotate>();
 		foreach(var i in sounds) i.StopAudio();

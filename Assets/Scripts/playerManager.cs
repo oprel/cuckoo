@@ -84,14 +84,14 @@ public class playerManager : MonoBehaviour {
 		try { for(int i = 0; i < playerCount; i++) impulses[i].energy = 0; }
 		catch(KeyNotFoundException) {}
 
-		if(cutscene) return;
 		if(str.Length - 1 < 0) return;
 		string[] data = str.Split('=');
 		str = data[0];
-
 		//Reset buttons
 		if(int.Parse(data[1]) == 1) Reboot();
 		if(int.Parse(data[2]) == 1) Reset();
+
+		if(cutscene) return;
 
 		string[] players = str.Substring(0, str.Length - 1).Split('|');
 		for(int i = 0; i < players.Length; i++) {
@@ -132,11 +132,13 @@ public class playerManager : MonoBehaviour {
 
 	public void Reboot() {
 		if(getStream() != null) getStream().Dispose();
-		SceneManager.LoadScene("main_cutscene");
+		if(GameObject.FindObjectOfType<PlayerInput>() != null) Destroy(GameObject.FindObjectOfType<PlayerInput>().gameObject);
+		SceneManager.LoadScene(0);
 		KooKoo.print("System reboot!");
 	}
 
 	public void Reset() {
+		SceneManager.LoadScene(2);
 		KooKoo.print("Game reset!");
 	}
 
