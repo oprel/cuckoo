@@ -84,12 +84,14 @@ public class playerManager : MonoBehaviour {
 		try { for(int i = 0; i < playerCount; i++) impulses[i].energy = 0; }
 		catch(KeyNotFoundException) {}
 
+		//Reset buttons
 		if(str.Length - 1 < 0) return;
 		string[] data = str.Split('=');
 		str = data[0];
-		//Reset buttons
-		if(int.Parse(data[1]) == 1) Reboot();
-		if(int.Parse(data[2]) == 1) Reset();
+		if(data != null && data.Length > 2 && data[1] != null && data[2] != null) {
+			if(int.Parse(data[1]) == 1) Reboot();
+			if(int.Parse(data[2]) == 1) Reset();
+		}
 
 		if(cutscene) return;
 
@@ -148,7 +150,6 @@ public class playerManager : MonoBehaviour {
 
 	void Awake() {
 		self = this;
-		cutscene = PlayerInput.cutscene;
 		ball[] bs = FindObjectsOfType<ball>();
 		foreach (ball b in bs) if (!b.trash) balls.Add(b.gameObject);
 	}
@@ -241,6 +242,10 @@ public class playerManager : MonoBehaviour {
 			playerTime += Time.deltaTime;
 			yield return new WaitForSeconds(.02f);
 		}
+	}
+
+	public void SetCutsceneFlag(bool i) {
+		cutscene = i;
 	}
 
 	public bool isCutscenePlaying() {

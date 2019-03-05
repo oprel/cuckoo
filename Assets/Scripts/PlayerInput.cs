@@ -23,18 +23,16 @@ public class PlayerInput : MonoBehaviour {
 
 	public static SerialPort stream;
 
-	[HideInInspector]
-	public static bool cutscene;
-
     void Start() {
 		DontDestroyOnLoad(gameObject);
-		ConnectInput();
+		StartCoroutine("ConnectInput");
 		SceneManager.LoadScene("main_cutscene");
     }
 
-    private static void ConnectInput() {
+    IEnumerator ConnectInput() {
 		int baudRate = 250000;
-		if (playerManager.self == null || !playerManager.self.DebugMode) {
+		if(playerManager.self == null) yield return new WaitForSeconds(1);
+		if (!playerManager.self.DebugMode) {
 			string[] ports = System.Enum.GetNames(typeof(Port));
            	for(int i = 0; i < ports.Length; i++) {
 				string port = ports[i];
@@ -53,8 +51,8 @@ public class PlayerInput : MonoBehaviour {
 					}
 				}
 			}
-			cutscene = true;
-		} else cutscene = Camera.main.GetComponent<Cutscene>().playCutscene;
+			playerManager.self.SetCutsceneFlag(true);
+		} else playerManager.self.SetCutsceneFlag(Camera.main.GetComponent<Cutscene>().playCutscene);
 	}
 
 	public static PlayerInput Connect() {

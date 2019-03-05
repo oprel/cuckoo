@@ -172,7 +172,7 @@ public class player : MonoBehaviour {
 	private IEnumerator playStunParticles() {
 		gamestateVisuals.Stunned(transform.position);
 		stunParticles.Play();
-		yield return new WaitForSeconds(playerManager.self.stunTimeMultiplier);
+		yield return new WaitForSeconds(playerManager.self.stunTimeMultiplier); //
 		stunParticles.Stop();
 	}
 
