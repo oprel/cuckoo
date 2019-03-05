@@ -7961,7 +7961,7 @@ MonoBehaviour:
   tickSpeed: 300
   chargeSpeed: 100
   beakBoostOnPlayers: 300
-  stunTimeMultiplier: 0
+  stunTimeMultiplier: 3
   leftInput:
   - name: Left 1
     energy: 0
