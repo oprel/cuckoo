@@ -8,6 +8,7 @@ using TMPro;
 public class gameManager : MonoBehaviour {
 	public static gameManager self;
 	public float gameTime;
+	
 	public int scoreLeft;
 	public int scoreRight;
 	public GameObject goalLeft;
@@ -45,12 +46,16 @@ public class gameManager : MonoBehaviour {
 
 		gameTimer -= Time.deltaTime;
 		timeDisplay.text = "time: " + (int)gameTimer + "/" + gameTime;
-		if(gameTimer<0) timeDisplay.gameObject.SetActive(false);
+		if(gameTimer < 0) timeDisplay.gameObject.SetActive(false);
 		if (Input.GetButton("Fire2")) ResetGame();
 		if (gameTimer <= 0 && scoreLeft != scoreRight && !ended) {
 			endingManager.endGame(scoreLeft > scoreRight);
 			ended = true;
 		} 
+	}
+
+	public static int GetCurrentGameTime() {
+		return (int)gameTimer;
 	}
 
 	public void ResetGame(){

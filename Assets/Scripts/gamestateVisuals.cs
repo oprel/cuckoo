@@ -17,6 +17,7 @@ public class gamestateVisuals : MonoBehaviour {
 	public TextMeshProUGUI scoreDisplay;
 	public float particleOffset;
 	public GameObject scoreParticles, falloutParticles, stunnedParticles;
+	public Light areaLight;
 
 	private GameObject hand;
 	private GameObject smallHand;
@@ -32,11 +33,13 @@ public class gamestateVisuals : MonoBehaviour {
 	//Giant clock
 	private Light clockLight;
 	private float clockShowTime = 0;
-	private float baseIntensity;
 	public float clockShowDuration = 10;
 	private float clockMinDelay = 0;
 	private float handBaseScale;
 	private float smallHandBaseRot;
+
+	public float darknessOnClockShow = 0.5f;
+	private float baseDarkness;
 
 	void Awake() {
 		self = this;
@@ -47,8 +50,9 @@ public class gamestateVisuals : MonoBehaviour {
 		handBaseScale = hand.transform.localScale.x;
 		smallHandBaseRot = smallHand.transform.localEulerAngles.z;
 
+		baseDarkness = areaLight.intensity;
+
 		clockLight = GameObject.Find("Lighting/Clock Light").GetComponent<Light>();
-		baseIntensity = clockLight.intensity;
 		clockShowTime = clockShowDuration;	
 		clockMinDelay = clockShowDuration;
 
@@ -58,9 +62,7 @@ public class gamestateVisuals : MonoBehaviour {
 		steamLeft = gearLeft.GetComponentInChildren<steamController>();
 		steamRight = gearRight.GetComponentInChildren<steamController>();
 		displayScore();
-
 	}
-
 
 	public void CloseDoors() {
 		for(int i = 0; i < doorRed.transform.childCount; i++) doorRed.transform.GetChild(i).gameObject.SetActive(false);
@@ -68,7 +70,7 @@ public class gamestateVisuals : MonoBehaviour {
 	}
 
 	void Update () {
-		hand.transform.localScale = new Vector3(handBaseScale + Mathf.Sin(tickTime*4) / 20, handBaseScale, hand.transform.localScale.z);
+		//hand.transform.localScale = new Vector3(handBaseScale + Mathf.Sin(tickTime * 7) / 40, handBaseScale, hand.transform.localScale.z);
 
 		scoreLeft = gameManager.self.scoreLeft;
 		scoreRight = gameManager.self.scoreRight;
@@ -81,30 +83,30 @@ public class gamestateVisuals : MonoBehaviour {
 		time += Time.deltaTime;
 		tickTime += Time.deltaTime;
 
-		//Kleine wijzer laat zien wie voor staat 
-		if(scoreRight != scoreLeft && (scoreRight > 0 || scoreLeft > 0)) {
-			if(scoreRight > scoreLeft) smallHand.transform.localRotation = Quaternion.Euler(smallHand.transform.localEulerAngles.x, smallHand.transform.localEulerAngles.y, Mathf.LerpAngle(smallHand.transform.localEulerAngles.z, 90, Time.deltaTime));
-			else smallHand.transform.localRotation = Quaternion.Euler(smallHand.transform.localEulerAngles.x, smallHand.transform.localEulerAngles.y, Mathf.LerpAngle(smallHand.transform.localEulerAngles.z, -90, Time.deltaTime));
-		}
-		else smallHand.transform.localRotation = Quaternion.Euler(smallHand.transform.localEulerAngles.x, smallHand.transform.localEulerAngles.y, Mathf.LerpAngle(smallHand.transform.localEulerAngles.z, smallHandBaseRot, Time.deltaTime));
+		//Kleine wijzer
+		smallHand.transform.localRotation = Quaternion.Euler(0, 0, smallHand.transform.localEulerAngles.z - (tickSpeed * 360 / (gameManager.self.gameTime)) / (gameManager.self.gameTime / 2));
 		
 		//Giant Clock tick
 		if(clockShowTime > 0) {
 			clockShowTime -= Time.deltaTime;
-			clockLight.intensity = Mathf.Lerp(clockLight.intensity, baseIntensity, Time.deltaTime);
+			areaLight.intensity = Mathf.Lerp(areaLight.intensity, darknessOnClockShow, Time.deltaTime);
 		} else {
 			if(clockMinDelay > 0) clockMinDelay -= Time.deltaTime;
-			clockLight.intensity = Mathf.Lerp(clockLight.intensity, 0, Time.deltaTime * 2);
-			if(Random.Range(0, 500) < 2 && clockMinDelay <= 0) {
+			areaLight.intensity = Mathf.Lerp(areaLight.intensity, baseDarkness, Time.deltaTime * 1);
+			
+			if((gameManager.GetCurrentGameTime() % 30 == 0 || gameManager.GetCurrentGameTime() < 15) && clockMinDelay <= 0) {
 				clockMinDelay = clockShowDuration;
 				clockShowTime = clockShowDuration;
 			}
 		}
+		clockLight.transform.position = new Vector3(Mathf.Lerp(10, -10, (tickTime / gameManager.self.gameTime)), clockLight.transform.position.y, clockLight.transform.position.z);
+
+		hand.transform.rotation = Quaternion.Euler(0, 0, (hand.transform.eulerAngles.z + Mathf.Sin((1f - time) * 30) * (1f - time) / 3));
 
 		//Ticking of master clock
 		if(time > 1) {
 			alternate = !alternate;
-			hand.transform.rotation = Quaternion.Euler(0, 0, hand.transform.eulerAngles.z - tickSpeed);
+			hand.transform.rotation = Quaternion.Euler(0, 0, hand.transform.eulerAngles.z - tickSpeed * ((720 + 10) / (gameManager.self.gameTime)));
 			playerManager.self.tickPlayers();
 			if(alternate) audioManager.PLAY_STATIONARY("Tick1", clockShowTime / 50, 0.8f);
 			else audioManager.PLAY_STATIONARY("Tick2", clockShowTime / 50, 0.8f);

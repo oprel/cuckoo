@@ -71,9 +71,7 @@ public class player : MonoBehaviour {
 		eyeGear.speed = rotationSpeed;
 		
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
-		if(!isStunned() && !playerManager.self.isCutscenePlaying()) {
-			eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, Vector3.RotateTowards(eyeBall.position, lookPos, 180, 0).y, eyeBall.eulerAngles.z);
-		}
+		if(!isStunned() && playerManager.self != null && !playerManager.self.isCutscenePlaying()) eyeBall.rotation = Quaternion.Euler(eyeBall.eulerAngles.x, Vector3.RotateTowards(eyeBall.position, lookPos, 180, 0).y, eyeBall.eulerAngles.z);
 	}
 
 	public void setEyeRotation(float rot) {
