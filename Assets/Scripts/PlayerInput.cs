@@ -29,7 +29,7 @@ public class PlayerInput : MonoBehaviour {
     void Start() {
 		DontDestroyOnLoad(gameObject);
 		ConnectInput();
-		SceneManager.LoadScene("main");
+		SceneManager.LoadScene("main_cutscene");
     }
 
     private static void ConnectInput() {

@@ -17,24 +17,6 @@ public class playerManager : MonoBehaviour {
 	private int playerCount;
 	private bool cutscene = false;
 
-	/* 
-	public enum Port {
-		COM1,
-		COM2,
-		COM3,
-		COM4,
-		COM5,
-		COM6,
-		COM7,
-		COM8,
-		COM9,
-		COM10,
-		COM11
-	}
-	[HideInInspector]
-	public Port port;
-	*/
-
 	[System.Serializable]
 	public class Team {
 		public string name;
@@ -54,13 +36,11 @@ public class playerManager : MonoBehaviour {
 	public float frequency;
 	public float tickSpeed, chargeSpeed;
 	public float beakBoostOnPlayers = 300f;
-	public float stunTime;
+	public float stunTimeMultiplier;
 	[Space(5)]
 	[Header("Inputs")]
 	public Input[] leftInput;
 	public Input[] rightInput;
-
-	//public SerialPort stream;
 
 	private Dictionary<int, float> rotations = new Dictionary<int, float>();
 	private Dictionary<int, Impulse> impulses = new Dictionary<int, Impulse>();
@@ -82,6 +62,7 @@ public class playerManager : MonoBehaviour {
 
 		[Range(-360, 360)]
 		public float direction = 0;
+		public float lastDirection = 0;
 		public bool enableAI;
 	};
 
@@ -92,22 +73,6 @@ public class playerManager : MonoBehaviour {
 		self.impulses.Add(self.playerCount, new Impulse());
 		self.playerCount++;
 	}
-
-	/*
-	public string readArduinoInputs(int timeout = 1) {
-		stream.ReadTimeout = timeout;
-		try { return stream.ReadLine();}
-		catch(System.TimeoutException) {return null;}
-		catch(System.IO.IOException) {
-			KooKoo.print("Connection lost!", KooKoo.MessageType.ERR);
-			return null;
-		}
-		catch(System.UnauthorizedAccessException) {
-			KooKoo.print("Connection lost!", KooKoo.MessageType.ERR); 
-			return null;
-		}
-		catch(System.InvalidOperationException) {return null;}
-	} */
 
 	public void applyInput() {
 		if(playerCount <= 0) return;
@@ -125,7 +90,6 @@ public class playerManager : MonoBehaviour {
 		str = data[0];
 
 		//Reset buttons
-		Debug.Log(data[1] + " | " + data[2]);
 		if(int.Parse(data[1]) == 1) Reboot();
 		if(int.Parse(data[2]) == 1) Reset();
 
@@ -167,9 +131,8 @@ public class playerManager : MonoBehaviour {
 	}
 
 	public void Reboot() {
-		//if(stream != null) stream.Dispose();
-		//SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		//Camera.main.GetComponent<Cutscene>().enabled = true;
+		if(getStream() != null) getStream().Dispose();
+		SceneManager.LoadScene("main_cutscene");
 		KooKoo.print("System reboot!");
 	}
 
@@ -182,37 +145,11 @@ public class playerManager : MonoBehaviour {
 	}
 
 	void Awake() {
-		//ConnectInput();
 		self = this;
 		cutscene = PlayerInput.cutscene;
 		ball[] bs = FindObjectsOfType<ball>();
 		foreach (ball b in bs) if (!b.trash) balls.Add(b.gameObject);
 	}
-	/* 
-	private void ConnectInput() {
-		int baudRate = 250000;
-		if (!DebugMode) {
-			string[] ports = System.Enum.GetNames(typeof(Port));
-           	for(int i = 0; i < ports.Length; i++) {
-				string port = ports[i];
-				string[] portNums = System.Text.RegularExpressions.Regex.Split(port, @"\D+");
-				stream = (int.Parse(portNums[1]) >= 10) ? new SerialPort("\\\\.\\" + port, baudRate, Parity.None, 8, StopBits.One) :
-														new SerialPort(port.ToString(), baudRate, Parity.None, 8, StopBits.One);
-				try {
-					stream.Open();
-					stream.ReadTimeout = 1;
-					KooKoo.print("Inputs found on Port " + port, KooKoo.MessageType.WARN);
-					break;
-				} catch(System.IO.IOException) { 
-					if(i >= ports.Length - 1) {
-						KooKoo.print("Nothing found on any ports, entering debug mode.", KooKoo.MessageType.WARN);
-						DebugMode = true;
-					}
-				}
-			}
-			cutscene = true;
-		} else cutscene = Camera.main.GetComponent<Cutscene>().playCutscene;
-	}*/
 
 	public void SetIgnoreControls(bool i) {
 		cutscene = !i;
@@ -362,6 +299,11 @@ public class playerManager : MonoBehaviour {
 		p.energy = inp.energy;
 		p.rotationSpeed = inp.energy * 50;
 		if (p.leftTeam) p.rotationSpeed *= -1;
+
+		if(inp.lastDirection != inp.direction) {
+			p.ResetActivityDelay();
+			inp.lastDirection = inp.direction;
+		}
 
 		//Charge
 		if(inp.energy > inp.prevEnergy) {

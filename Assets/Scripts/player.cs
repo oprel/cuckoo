@@ -12,6 +12,7 @@ public class player : MonoBehaviour {
 	public float rotationSpeed;
 	public autoRotate eyeGear;
 
+	public float activityTimer = 0;
 
 	private GameObject text;
 
@@ -83,6 +84,8 @@ public class player : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
+		activityTimer += Time.deltaTime;
+
 		//Dazed
 		if(isStunned()) {
 			stunTime -= Time.deltaTime;
@@ -127,10 +130,15 @@ public class player : MonoBehaviour {
 			transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Mathf.LerpAngle(transform.eulerAngles.y, Mathf.Sin(animTime*20 + (number*20))*2f+90, animTime * 20), transform.eulerAngles.z);
 		}
 	}
+
+	public void ResetActivityDelay() {
+		activityTimer = 0;
+	}
 	
 	public void impulse(float force) {
 		if(isStunned()) return;
 		rb.AddForce(transform.forward * force * speed);
+		ResetActivityDelay();
 	}
 
 	public void Reset() {
@@ -138,13 +146,14 @@ public class player : MonoBehaviour {
 		rb.angularVelocity = Vector3.zero;
 		transform.rotation = Quaternion.identity;
 		transform.position = startPos;
+		ResetActivityDelay();
 	}
 
 	public void changeSpeed(float speedup) {
 		speedTarget = speedup;
 	}
 
-	void OnCollisionEnter(Collision col) {
+	void OnCollisionEnter(Collision col) { //Stun
 		if(col.gameObject.tag == "Hitter" && !isStunned()) {
 			GameObject t = KooKoo.FindParentWithTag(col.transform.parent.gameObject, "Player");
 			player other = t.GetComponent<player>();
@@ -152,7 +161,7 @@ public class player : MonoBehaviour {
 			GetComponent<Rigidbody>().AddForceAtPosition(transform.forward * playerManager.self.beakBoostOnPlayers, t.transform.position);
 			Instantiate(gamestateVisuals.self.beakboostvisual, transform.position, Quaternion.identity);
 			gamestateVisuals.hitStun();
-			stunTime = playerManager.self.stunTime;
+			stunTime = Mathf.Clamp(activityTimer * playerManager.self.stunTimeMultiplier, 3, 10);
 			audioManager.PLAY_SOUND("Hit", transform.position, 10f, 1f);
 			audioManager.PLAY_SOUND("BeakStun", transform.position, 30f, Random.Range(0.9f, 1.2f));
 			stunRot = transform.eulerAngles.y;
@@ -163,7 +172,7 @@ public class player : MonoBehaviour {
 	private IEnumerator playStunParticles() {
 		gamestateVisuals.Stunned(transform.position);
 		stunParticles.Play();
-		yield return new WaitForSeconds(playerManager.self.stunTime);
+		yield return new WaitForSeconds(playerManager.self.stunTimeMultiplier);
 		stunParticles.Stop();
 	}
 

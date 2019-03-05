@@ -7961,40 +7961,45 @@ MonoBehaviour:
   tickSpeed: 300
   chargeSpeed: 100
   beakBoostOnPlayers: 300
-  stunTime: 5
+  stunTimeMultiplier: 0
   leftInput:
   - name: Left 1
     energy: 0
     prevEnergy: 0
     direction: 0
+    lastDirection: 0
     enableAI: 0
   - name: Left 2
     energy: 0
     prevEnergy: 0
     direction: 0
+    lastDirection: 0
     enableAI: 0
   - name: Left 3
     energy: 0
     prevEnergy: 0
     direction: 0
+    lastDirection: 0
     enableAI: 0
   rightInput:
   - name: Right 1
     energy: 0
     prevEnergy: 0
     direction: 0
+    lastDirection: 0
     enableAI: 0
   - name: Right 2
     energy: 0
     prevEnergy: 0
     direction: 0
+    lastDirection: 0
     enableAI: 0
   - name: Right 3
     energy: 0
     prevEnergy: 0
     direction: 0
+    lastDirection: 0
     enableAI: 0
-  playerInput: {fileID: 0}
 --- !u!4 &1994311434
 Transform:
   m_ObjectHideFlags: 0
