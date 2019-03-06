@@ -48,7 +48,7 @@ public class Cutscene : MonoBehaviour {
             foreach(GameObject g in disableOnStartObjects) g.SetActive(false);
         } else {
             currentShot = -1;
-            EndCutscene();
+            QueueCountdownTXT();
         }
         OnStart();
     }
@@ -119,6 +119,7 @@ public class Cutscene : MonoBehaviour {
 
     public void QueueCountdownTXT() {
         countdown.SetActive(true);
+        playerManager.self.SetCutsceneFlag(true);
         StartCoroutine("StartCountdown");
     }
 
@@ -126,6 +127,7 @@ public class Cutscene : MonoBehaviour {
         countdown.SetActive(false);
         playerManager.self.Ready();
         playCutscene = false;
+        gameManager.resetTime();
         StopCoroutine("StartCountdown");
     }
 

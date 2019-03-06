@@ -30,6 +30,11 @@ public class gameManager : MonoBehaviour {
 		visuals = GetComponent<gamestateVisuals>();
 		camShaker = Camera.main.GetComponent<cameraShake>();
 		gameTimer = self.gameTime;
+		
+	}
+
+	private void Start() {
+		if (!GameObject.Find("Input")) ResetGame();
 	}
 
 	public void DisableGameSounds() {
@@ -60,11 +65,16 @@ public class gameManager : MonoBehaviour {
 
 	public void ResetGame(){
 		if(playerManager.self.getStream() != null) playerManager.self.getStream().Dispose();
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		Debug.Log("reset game");
+		SceneManager.LoadScene("Inputs");
 	}
 	public void SetFinalScore() {
 		oldPoints.text = "blue: " + scoreLeft.ToString().Replace("0","O");
 		youngPoints.text = "red: " + scoreRight.ToString().Replace("0","O");
+	}
+
+	public static void resetTime(){
+		gameTimer = self.gameTime;
 	}
 
 	public static void addScoreLeft(int i) {
