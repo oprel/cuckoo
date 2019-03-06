@@ -14,7 +14,7 @@ public class gamestateVisuals : MonoBehaviour {
 	public speedChangeDisplay msgright;
 	public cameraShake cameraShake;
 	public GameObject beakboostvisual;
-	public TextMeshProUGUI scoreDisplay;
+	public TextMeshProUGUI scoreDisplay, timeDisplay, suddenDeath;
 	public float particleOffset;
 	public GameObject scoreParticles, falloutParticles, stunnedParticles;
 	public Light areaLight;
@@ -53,8 +53,10 @@ public class gamestateVisuals : MonoBehaviour {
 		baseDarkness = areaLight.intensity;
 
 		clockLight = GameObject.Find("Lighting/Clock Light").GetComponent<Light>();
-		clockShowTime = clockShowDuration;	
-		clockMinDelay = clockShowDuration;
+		
+		//start dark
+		//clockShowTime = clockShowDuration;	
+		//clockMinDelay = clockShowDuration;
 
 		doorRed = GameObject.FindGameObjectWithTag("RedDoor");
 		doorBlue = GameObject.FindGameObjectWithTag("BlueDoor");
@@ -84,22 +86,10 @@ public class gamestateVisuals : MonoBehaviour {
 		tickTime += Time.deltaTime;
 
 		//Kleine wijzer
+		
 		smallHand.transform.localRotation = Quaternion.Euler(0, 0, smallHand.transform.localEulerAngles.z - (tickSpeed * 360 / (gameManager.self.gameTime)) / (gameManager.self.gameTime / 2));
 		
 		//Giant Clock tick
-		if(clockShowTime > 0) {
-			clockShowTime -= Time.deltaTime;
-			areaLight.intensity = Mathf.Lerp(areaLight.intensity, darknessOnClockShow, Time.deltaTime);
-		} else {
-			if(clockMinDelay > 0) clockMinDelay -= Time.deltaTime;
-			areaLight.intensity = Mathf.Lerp(areaLight.intensity, baseDarkness, Time.deltaTime * 1);
-			
-			if((gameManager.GetCurrentGameTime() % 30 == 0 || gameManager.GetCurrentGameTime() < 15) && clockMinDelay <= 0) {
-				clockMinDelay = clockShowDuration;
-				clockShowTime = clockShowDuration;
-			}
-		}
-		clockLight.transform.position = new Vector3(Mathf.Lerp(10, -10, (tickTime / gameManager.self.gameTime)), clockLight.transform.position.y, clockLight.transform.position.z);
 
 		hand.transform.rotation = Quaternion.Euler(0, 0, (hand.transform.eulerAngles.z + Mathf.Sin((1f - time) * 30) * (1f - time) / 3));
 
@@ -113,6 +103,48 @@ public class gamestateVisuals : MonoBehaviour {
 			audioManager.PLAY_STATIONARY("Ride", 0.1f, 0.5f);
 			time = 0;
 		}
+		if(gameManager.GetCurrentGameTime()<0) suddenDeath.gameObject.SetActive(true);
+
+		//Lighting
+		clockLight.transform.position = new Vector3(Mathf.Lerp(10, -10, (tickTime / gameManager.self.gameTime)), clockLight.transform.position.y, clockLight.transform.position.z);
+		if (gameManager.GetCurrentGameTime()<15-clockShowTime/2){
+			return;
+		}
+		if(clockShowTime > 0) {
+			clockShowTime -= Time.deltaTime;
+			areaLight.intensity = Mathf.Lerp(areaLight.intensity, darknessOnClockShow, Time.deltaTime);
+		} else {
+			if(clockMinDelay > 0) clockMinDelay -= Time.deltaTime;
+			areaLight.intensity = Mathf.Lerp(areaLight.intensity, baseDarkness, Time.deltaTime * 1);
+			
+			if((gameManager.GetCurrentGameTime() % 30 == 0 || gameManager.GetCurrentGameTime() <= 15) && 
+				clockMinDelay <= 0 && gameManager.GetCurrentGameTime()>0) {
+				clockMinDelay = clockShowDuration;
+				clockShowTime = clockShowDuration;
+				StartCoroutine(showRemainingTime());
+			}
+		}
+	
+	}
+
+	private IEnumerator showRemainingTime(){
+		timeDisplay.gameObject.SetActive(true);
+		string time = gameManager.GetCurrentGameTime().ToString().Replace("0","O");
+		timeDisplay.text = time + " SECONDS LEFT";
+		timeDisplay.canvasRenderer.SetAlpha(0.01f);
+		timeDisplay.CrossFadeAlpha(1f,clockShowDuration/4,false);
+		float i = 1;
+		while(i>.25f){
+			i = clockShowTime/(clockShowDuration);
+			timeDisplay.characterSpacing = Mathf.SmoothStep(30f,20f,i);
+			yield return null;
+			if (gameManager.GetCurrentGameTime()<10) break;
+
+		}
+		timeDisplay.canvasRenderer.SetAlpha(1f);
+		timeDisplay.CrossFadeAlpha(0f,clockShowDuration/4,false);
+		displayScore();
+
 	}
 
 	public static void screenShake() {
@@ -130,6 +162,7 @@ public class gamestateVisuals : MonoBehaviour {
 	}
 
 	public static void displayScore(){
+		
 		string txt = gameManager.self.scoreLeft.ToString() + "−" + gameManager.self.scoreRight.ToString();
 		self.scoreDisplay.text = txt.Replace("0","O");
 	}
