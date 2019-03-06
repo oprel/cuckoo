@@ -89,8 +89,8 @@ public class playerManager : MonoBehaviour {
 		string[] data = str.Split('=');
 		str = data[0];
 		if(data != null && data.Length > 2 && data[1] != null && data[2] != null) {
-			if(int.Parse(data[1]) == 1) Reboot();
-			if(int.Parse(data[2]) == 1) Reset();
+			if(int.Parse(data[1]) == 1) PlayerInput.loadScene(false);
+			if(int.Parse(data[2]) == 1) PlayerInput.loadScene(true);
 		}
 
 		if(cutscene) return;
@@ -131,18 +131,6 @@ public class playerManager : MonoBehaviour {
 				} catch(System.IndexOutOfRangeException) {}
 		}
 	}
-
-	public void Reboot() {
-		//if(getStream() != null) getStream().Dispose();
-		PlayerInput.loadScene(true);
-		KooKoo.print("System reboot!");
-	}
-
-	public void Reset() {
-		PlayerInput.loadScene(false);
-		KooKoo.print("Game reset!");
-	}
-
 	public SerialPort getStream() {
 		return PlayerInput.stream;
 	}
@@ -204,6 +192,7 @@ public class playerManager : MonoBehaviour {
 		StartCoroutine("AnimatePlayer");
 	}
 	private void DeanimatePlayers() {
+		 if( rightPlayers[0]  == null ) return;
 		for(int i = 0; i < rightPlayers.Count; i++) rightPlayers[i].Deanimate();
 		for(int i = 0; i < leftPlayers.Count; i++) leftPlayers[i].Deanimate();
 	}
