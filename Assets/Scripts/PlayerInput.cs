@@ -20,13 +20,15 @@ public class PlayerInput : MonoBehaviour {
 	}
 	[HideInInspector]
 	public static Port port;
+	public static PlayerInput self;
 
 	public static SerialPort stream;
 
     void Start() {
+		self = this;
 		DontDestroyOnLoad(gameObject);
 		StartCoroutine("ConnectInput");
-		SceneManager.LoadScene("main_cutscene");
+		loadScene(true);
     }
 
     IEnumerator ConnectInput() {
@@ -74,4 +76,17 @@ public class PlayerInput : MonoBehaviour {
 		}
 		catch(System.InvalidOperationException) {return null;}
 	}
+
+    public static void loadScene(bool cutscene){
+        self.StartCoroutine(loadSceneRoutine(cutscene));
+    }
+    // Start is called before the first frame update
+    public static IEnumerator loadSceneRoutine(bool cutscene){
+        Scene main = SceneManager.GetSceneByName("main");
+        if (main.isLoaded) SceneManager.UnloadSceneAsync(main);
+        var loadedLevel = SceneManager.LoadSceneAsync("main");
+        yield return loadedLevel;
+        Camera.main.GetComponent<Cutscene>().playCutscene=cutscene;
+        Camera.main.GetComponent<Cutscene>().Start();
+    }
 }

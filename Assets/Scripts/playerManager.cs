@@ -133,14 +133,13 @@ public class playerManager : MonoBehaviour {
 	}
 
 	public void Reboot() {
-		if(getStream() != null) getStream().Dispose();
-		if(GameObject.FindObjectOfType<PlayerInput>() != null) Destroy(GameObject.FindObjectOfType<PlayerInput>().gameObject);
-		SceneManager.LoadScene(0);
+		//if(getStream() != null) getStream().Dispose();
+		PlayerInput.loadScene(true);
 		KooKoo.print("System reboot!");
 	}
 
 	public void Reset() {
-		SceneManager.LoadScene(2);
+		PlayerInput.loadScene(false);
 		KooKoo.print("Game reset!");
 	}
 

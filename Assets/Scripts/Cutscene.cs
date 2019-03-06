@@ -36,7 +36,7 @@ public class Cutscene : MonoBehaviour {
     private Camera mainCam;
     private float time = 0;
 
-    void Start() {
+    public void Start() {
         mainCam = Camera.main;
         countdownText =  countdown.GetComponentsInChildren<Text>();
         countdownPos = countdown.transform.position.y;

@@ -8,7 +8,7 @@ public class steamController : MonoBehaviour
     private ParticleSystem[] systems;
     private ParticleSystem.EmissionModule[] emissions;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         systems = GetComponentsInChildren<ParticleSystem>();
         emissions = new ParticleSystem.EmissionModule[systems.Length];
