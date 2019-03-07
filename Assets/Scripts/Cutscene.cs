@@ -40,7 +40,7 @@ public class Cutscene : MonoBehaviour {
         mainCam = Camera.main;
         countdownText =  countdown.GetComponentsInChildren<Text>();
         countdownPos = countdown.transform.position.y;
-
+        playerManager.self.SetCutsceneFlag(true);
         if(!playCutscene || currentShot < 0) forceApplyShot(gameShot);
         else forceApplyShot(shots[currentShot]);
 

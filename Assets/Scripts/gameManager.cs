@@ -23,7 +23,7 @@ public class gameManager : MonoBehaviour {
 	private cameraShake camShaker;
 	private static float gameTimer;
 	private bool gamePaused;
-	private bool ended = false;
+	public static bool ended = false;
 
 	private void Awake() {
 		self = this;

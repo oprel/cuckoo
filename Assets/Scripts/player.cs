@@ -67,7 +67,7 @@ public class player : MonoBehaviour {
 	}
 
 	public void Update() {
-		if(transform.position.y < -5 && !fallingOut) StartCoroutine(fallout());
+		if(transform.position.y < -1 && !fallingOut) StartCoroutine(fallout());
 		eyeGear.speed = rotationSpeed;
 		
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);

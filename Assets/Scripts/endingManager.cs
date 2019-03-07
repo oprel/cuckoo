@@ -62,7 +62,7 @@ public class endingManager : MonoBehaviour {
 
     private IEnumerator shameDoors() {
         for (float i = 0f; i < 1f; i+= 1f / 80f) {
-            endDoorLeft.transform.rotation = Quaternion.Euler(0, Mathf.SmoothStep(0, 180, i), 0);
+            endDoorLeft.transform.rotation = Quaternion.Euler(0, Mathf.SmoothStep(-180, 0, i), 0);
             endDoorRight.transform.rotation = Quaternion.Euler(0, Mathf.SmoothStep(0, -180, i), 0);
             yield return null;
         }
@@ -70,7 +70,7 @@ public class endingManager : MonoBehaviour {
         StartCoroutine(celebratePlayers());
         while (true) {
             StartCoroutine(shamePlayers());
-            yield return new WaitForSeconds(80);
+            yield return new WaitForSeconds(600);
             gameManager.self.ResetGame();
         }
     }

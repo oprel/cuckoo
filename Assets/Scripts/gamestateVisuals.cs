@@ -73,7 +73,12 @@ public class gamestateVisuals : MonoBehaviour {
 
 	void Update () {
 		//hand.transform.localScale = new Vector3(handBaseScale + Mathf.Sin(tickTime * 7) / 40, handBaseScale, hand.transform.localScale.z);
+		if (gameManager.ended){
+			areaLight.intensity = Mathf.Lerp(areaLight.intensity, baseDarkness, Time.deltaTime * 1);
+			clockLight.intensity = Mathf.Lerp(clockLight.intensity, 0, Time.deltaTime * 1);
 
+		} 
+		if (playerManager.self.isCutscenePlaying()) return;
 		scoreLeft = gameManager.self.scoreLeft;
 		scoreRight = gameManager.self.scoreRight;
 		
@@ -92,7 +97,7 @@ public class gamestateVisuals : MonoBehaviour {
 		//Giant Clock tick
 
 		hand.transform.rotation = Quaternion.Euler(0, 0, (hand.transform.eulerAngles.z + Mathf.Sin((1f - time) * 30) * (1f - time) / 3));
-
+		
 		//Ticking of master clock
 		if(time > 1) {
 			alternate = !alternate;
@@ -103,7 +108,7 @@ public class gamestateVisuals : MonoBehaviour {
 			audioManager.PLAY_STATIONARY("Ride", 0.1f, 0.5f);
 			time = 0;
 		}
-		if(gameManager.GetCurrentGameTime()<0) suddenDeath.gameObject.SetActive(true);
+		if(gameManager.GetCurrentGameTime()<0 && gameManager.self.scoreLeft == gameManager.self.scoreRight) suddenDeath.gameObject.SetActive(true);
 
 		//Lighting
 		clockLight.transform.position = new Vector3(Mathf.Lerp(10, -10, (tickTime / gameManager.self.gameTime)), clockLight.transform.position.y, clockLight.transform.position.z);
@@ -116,9 +121,9 @@ public class gamestateVisuals : MonoBehaviour {
 		} else {
 			if(clockMinDelay > 0) clockMinDelay -= Time.deltaTime;
 			areaLight.intensity = Mathf.Lerp(areaLight.intensity, baseDarkness, Time.deltaTime * 1);
-			
-			if((gameManager.GetCurrentGameTime() % 30 == 0 || gameManager.GetCurrentGameTime() <= 15) && 
-				clockMinDelay <= 0 && gameManager.GetCurrentGameTime()>0) {
+			int t = gameManager.GetCurrentGameTime();
+			if((t % 30 == 0 || t<= 15) && 
+				clockMinDelay <= 0 && t>0 && t!= (int)gameManager.self.gameTime) {
 				clockMinDelay = clockShowDuration;
 				clockShowTime = clockShowDuration;
 				StartCoroutine(showRemainingTime());
@@ -185,6 +190,7 @@ public class gamestateVisuals : MonoBehaviour {
 	}
 
 	public static void fallOut(Vector3 pos){
+		if (gameManager.ended) return;
 		Instantiate(self.falloutParticles, particlePos(pos*.8f), self.falloutParticles.transform.rotation);
 	}
 
