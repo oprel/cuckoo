@@ -18,7 +18,6 @@ public class gamestateVisuals : MonoBehaviour {
 	public float particleOffset;
 	public GameObject scoreParticles, falloutParticles, stunnedParticles;
 	public Light areaLight;
-	public GameObject ballSpawner;
 
 	private GameObject hand;
 	private GameObject smallHand;
@@ -66,10 +65,6 @@ public class gamestateVisuals : MonoBehaviour {
 	public void CloseDoors() {
 		for(int i = 0; i < doorRed.transform.childCount; i++) doorRed.transform.GetChild(i).gameObject.SetActive(false);
 		for(int i = 0; i < doorBlue.transform.childCount; i++) doorBlue.transform.GetChild(i).gameObject.SetActive(false);
-	}
-
-	public void PresentWinningPlayers() {
-		
 	}
 
 	void Update () {

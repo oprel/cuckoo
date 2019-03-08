@@ -12,10 +12,17 @@ public class endingManager : MonoBehaviour {
     private List<Transform> winners = new List<Transform>();
     private List<Transform> losers = new List<Transform>();
     private static bool leftWins;
+    public PlayerArm[] arms;
 
     private void Awake() {
         self = this;
         endingCutscene.gameObject.SetActive(false);
+    }
+
+    public void presentWinner() {
+		for(int i = 0; i < arms.Length; i++) {
+            arms[i].Activate(winners[i].gameObject);
+        }
     }
 
     public void displayWinner() {
