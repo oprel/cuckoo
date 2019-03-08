@@ -18,6 +18,7 @@ public class gamestateVisuals : MonoBehaviour {
 	public float particleOffset;
 	public GameObject scoreParticles, falloutParticles, stunnedParticles;
 	public Light areaLight;
+	public GameObject ballSpawner;
 
 	private GameObject hand;
 	private GameObject smallHand;
@@ -54,10 +55,6 @@ public class gamestateVisuals : MonoBehaviour {
 
 		clockLight = GameObject.Find("Lighting/Clock Light").GetComponent<Light>();
 		
-		//start dark
-		//clockShowTime = clockShowDuration;	
-		//clockMinDelay = clockShowDuration;
-
 		doorRed = GameObject.FindGameObjectWithTag("RedDoor");
 		doorBlue = GameObject.FindGameObjectWithTag("BlueDoor");
 
@@ -71,8 +68,12 @@ public class gamestateVisuals : MonoBehaviour {
 		for(int i = 0; i < doorBlue.transform.childCount; i++) doorBlue.transform.GetChild(i).gameObject.SetActive(false);
 	}
 
+	public void PresentWinningPlayers() {
+		
+	}
+
 	void Update () {
-		//hand.transform.localScale = new Vector3(handBaseScale + Mathf.Sin(tickTime * 7) / 40, handBaseScale, hand.transform.localScale.z);
+		hand.transform.localScale = new Vector3(handBaseScale + Mathf.Sin(tickTime * 7) / 40, handBaseScale, hand.transform.localScale.z);
 		if (gameManager.ended){
 			areaLight.intensity = Mathf.Lerp(areaLight.intensity, baseDarkness, Time.deltaTime * 1);
 			clockLight.intensity = Mathf.Lerp(clockLight.intensity, 0, Time.deltaTime * 1);
@@ -91,11 +92,9 @@ public class gamestateVisuals : MonoBehaviour {
 		tickTime += Time.deltaTime;
 
 		//Kleine wijzer
-		
 		smallHand.transform.localRotation = Quaternion.Euler(0, 0, smallHand.transform.localEulerAngles.z - (tickSpeed * 360 / (gameManager.self.gameTime)) / (gameManager.self.gameTime / 2));
 		
 		//Giant Clock tick
-
 		hand.transform.rotation = Quaternion.Euler(0, 0, (hand.transform.eulerAngles.z + Mathf.Sin((1f - time) * 30) * (1f - time) / 3));
 		
 		//Ticking of master clock
@@ -108,54 +107,50 @@ public class gamestateVisuals : MonoBehaviour {
 			audioManager.PLAY_STATIONARY("Ride", 0.1f, 0.5f);
 			time = 0;
 		}
-		if(gameManager.GetCurrentGameTime()<0 && gameManager.self.scoreLeft == gameManager.self.scoreRight) suddenDeath.gameObject.SetActive(true);
+		if(gameManager.GetCurrentGameTime() < 0 && gameManager.self.scoreLeft == gameManager.self.scoreRight) suddenDeath.gameObject.SetActive(true);
 
 		//Lighting
 		clockLight.transform.position = new Vector3(Mathf.Lerp(10, -10, (tickTime / gameManager.self.gameTime)), clockLight.transform.position.y, clockLight.transform.position.z);
-		if (gameManager.GetCurrentGameTime()<15-clockShowTime/2){
-			return;
-		}
+		if (gameManager.GetCurrentGameTime() < 15 - clockShowTime / 2) return;
+
 		if(clockShowTime > 0) {
 			clockShowTime -= Time.deltaTime;
 			areaLight.intensity = Mathf.Lerp(areaLight.intensity, darknessOnClockShow, Time.deltaTime);
 		} else {
 			if(clockMinDelay > 0) clockMinDelay -= Time.deltaTime;
-			areaLight.intensity = Mathf.Lerp(areaLight.intensity, baseDarkness, Time.deltaTime * 1);
+			areaLight.intensity = Mathf.Lerp(areaLight.intensity, baseDarkness, Time.deltaTime);
 			int t = gameManager.GetCurrentGameTime();
-			if((t % 30 == 0 || t<= 15) && 
-				clockMinDelay <= 0 && t>0 && t!= (int)gameManager.self.gameTime) {
+			if((t % 30 == 0 || t <= 15) && 
+				clockMinDelay <= 0 && t > 0 && t!= (int)gameManager.self.gameTime) {
 				clockMinDelay = clockShowDuration;
 				clockShowTime = clockShowDuration;
 				StartCoroutine(showRemainingTime());
 			}
 		}
-	
 	}
 
-	private IEnumerator showRemainingTime(){
+	private IEnumerator showRemainingTime() {
 		timeDisplay.gameObject.SetActive(true);
 		string time = gameManager.GetCurrentGameTime().ToString().Replace("0","O");
 		timeDisplay.text = time + " SECONDS LEFT";
 		timeDisplay.canvasRenderer.SetAlpha(0.01f);
-		timeDisplay.CrossFadeAlpha(1f,clockShowDuration/4,false);
+		timeDisplay.CrossFadeAlpha(1f, clockShowDuration / 4, false);
 		float i = 1;
-		while(i>.25f){
-			i = clockShowTime/(clockShowDuration);
-			timeDisplay.characterSpacing = Mathf.SmoothStep(30f,20f,i);
+		while(i > .25f) {
+			i = clockShowTime / (clockShowDuration);
+			timeDisplay.characterSpacing = Mathf.SmoothStep(30f, 20f, i);
 			yield return null;
-			if (gameManager.GetCurrentGameTime()<10) break;
-
+			if (gameManager.GetCurrentGameTime() < 10) break;
 		}
 		timeDisplay.canvasRenderer.SetAlpha(1f);
-		timeDisplay.CrossFadeAlpha(0f,clockShowDuration/4,false);
+		timeDisplay.CrossFadeAlpha(0f, clockShowDuration / 4, false);
 		displayScore();
-
 	}
 
 	public static void screenShake() {
 		self.cameraShake.ShakeCamera(.2f,.2f);
 	}
-	public static void hitStun(float t = 5){
+	public static void hitStun(float t = 5) {
 		//self.StartCoroutine(stun(t));
 		return;
 	}
@@ -166,35 +161,34 @@ public class gamestateVisuals : MonoBehaviour {
 		Time.timeScale = s;
 	}
 
-	public static void displayScore(){
-		
+	public static void displayScore() {
 		string txt = gameManager.self.scoreLeft.ToString() + "−" + gameManager.self.scoreRight.ToString();
 		self.scoreDisplay.text = txt.Replace("0","O");
 	}
 
-	public static void scoreFeedback(bool leftGoal, int change){
+	public static void scoreFeedback(bool leftGoal, int change) {
 		hitStun();
 		displayScore();
-		if (leftGoal){
-			self.msgleft.speedChange(change>0);
+		if (leftGoal) {
+			self.msgleft.speedChange(change > 0);
 			Instantiate(self.scoreParticles, particlePos(self.gearLeft.transform.position), self.scoreParticles.transform.rotation);
-		}else{
-			self.msgright.speedChange(change>0);
+		} else {
+			self.msgright.speedChange(change > 0);
 			Instantiate(self.scoreParticles, particlePos(self.gearRight.transform.position), self.scoreParticles.transform.rotation);
 		}
 	}
 
-	public static Vector3 particlePos(Vector3 pos){
-		pos.y=1;
+	public static Vector3 particlePos(Vector3 pos) {
+		pos.y = 1;
 		return pos - pos.normalized * self.particleOffset;
 	}
 
-	public static void fallOut(Vector3 pos){
+	public static void fallOut(Vector3 pos) {
 		if (gameManager.ended) return;
-		Instantiate(self.falloutParticles, particlePos(pos*.8f), self.falloutParticles.transform.rotation);
+		Instantiate(self.falloutParticles, particlePos(pos * .8f), self.falloutParticles.transform.rotation);
 	}
 
-	public static void Stunned(Vector3 pos){
+	public static void Stunned(Vector3 pos) {
 		Instantiate(self.stunnedParticles, pos, self.stunnedParticles.transform.rotation);
 	}
 }

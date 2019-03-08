@@ -30,7 +30,6 @@ public class gameManager : MonoBehaviour {
 		visuals = GetComponent<gamestateVisuals>();
 		camShaker = Camera.main.GetComponent<cameraShake>();
 		gameTimer = self.gameTime;
-		
 	}
 
 	private void Start() {
@@ -52,7 +51,7 @@ public class gameManager : MonoBehaviour {
 		gameTimer -= Time.deltaTime;
 		timeDisplay.text = "time: " + (int)gameTimer + "/" + gameTime;
 		if(gameTimer < 0) timeDisplay.gameObject.SetActive(false);
-		if (Input.GetButton("Fire2")) ResetGame();
+		if (Input.GetButton("Fire2")) PlayerInput.loadScene(false); //ResetGame();
 		if (gameTimer <= 0 && scoreLeft != scoreRight && !ended) {
 			endingManager.endGame(scoreLeft > scoreRight);
 			ended = true;
@@ -65,7 +64,7 @@ public class gameManager : MonoBehaviour {
 
 	public void ResetGame(){
 		if(playerManager.self.getStream() != null) playerManager.self.getStream().Dispose();
-		Debug.Log("reset game");
+		KooKoo.print("Reset the game!");
 		SceneManager.LoadScene("Inputs");
 	}
 	public void SetFinalScore() {

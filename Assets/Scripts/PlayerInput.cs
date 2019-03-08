@@ -64,7 +64,7 @@ public class PlayerInput : MonoBehaviour {
 	public static string readArduinoInputs(int timeout = 1) {
 		if(stream == null) return null;
 		stream.ReadTimeout = timeout;
-		try { return stream.ReadLine();}
+		try { return stream.ReadLine(); }
 		catch(System.TimeoutException) {return null;}
 		catch(System.IO.IOException) {
 			KooKoo.print("Connection lost!", KooKoo.MessageType.ERR);
@@ -80,13 +80,13 @@ public class PlayerInput : MonoBehaviour {
     public static void loadScene(bool cutscene){
         self.StartCoroutine(loadSceneRoutine(cutscene));
     }
-    // Start is called before the first frame update
-    public static IEnumerator loadSceneRoutine(bool cutscene){
+
+    public static IEnumerator loadSceneRoutine(bool cutscene) {
         Scene main = SceneManager.GetSceneByName("main");
         if (main.isLoaded) SceneManager.UnloadSceneAsync(main);
         var loadedLevel = SceneManager.LoadSceneAsync("main");
         yield return loadedLevel;
-        Camera.main.GetComponent<Cutscene>().playCutscene=cutscene;
+        Camera.main.GetComponent<Cutscene>().playCutscene = cutscene;
         Camera.main.GetComponent<Cutscene>().Start();
     }
 }
