@@ -49,6 +49,7 @@ public class player : MonoBehaviour {
 	public ParticleSystem stunParticles;
 
 	private bool moveForward = true;
+	public bool cutscene = false;
 
 	private void Start() {
 		playerManager.addPlayer(leftTeam, this);
@@ -67,6 +68,8 @@ public class player : MonoBehaviour {
 	}
 
 	public void Update() {
+		if(cutscene) return;
+
 		if(transform.position.y < -1 && !fallingOut) StartCoroutine(fallout());
 		eyeGear.speed = rotationSpeed;
 		
@@ -82,6 +85,8 @@ public class player : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
+		if(cutscene) return;
+		
 		activityTimer += Time.deltaTime;
 
 		//Dazed

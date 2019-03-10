@@ -20,9 +20,8 @@ public class endingManager : MonoBehaviour {
     }
 
     public void presentWinner() {
-		for(int i = 0; i < arms.Length; i++) {
-            arms[i].Activate(winners[i].gameObject);
-        }
+        playerManager.self.SetIgnoreControls(true);
+		for(int i = 0; i < arms.Length; i++) arms[i].Activate(winners[i].gameObject);
     }
 
     public void displayWinner() {
