@@ -13,10 +13,15 @@ public class endingManager : MonoBehaviour {
     private List<Transform> losers = new List<Transform>();
     private static bool leftWins;
     public PlayerArm[] arms;
+    public static bool movingDoors;
+    public float doorSpeed;
 
     private void Awake() {
         self = this;
         endingCutscene.gameObject.SetActive(false);
+    }
+
+    private void Start() {
     }
 
     public void presentWinner() {
@@ -63,22 +68,39 @@ public class endingManager : MonoBehaviour {
 	}
 
     public void outside() {
-        StartCoroutine(shameDoors());
+       
+        StartCoroutine(shamePlayers());
     }
 
-    private IEnumerator shameDoors() {
-        for (float i = 0f; i < 1f; i+= 1f / 80f) {
+    public static void moveDoors(bool open){
+        if (movingDoors) return;
+        movingDoors=true;
+        if (open){
+            
+            self.StartCoroutine(self.openDoors());
+        }else{
+            self.StartCoroutine(self.closeDoors());
+        }
+    }
+
+    private IEnumerator openDoors() {
+        for (float i = 0f; i < 1f; i+= 1f / doorSpeed) {
             endDoorLeft.transform.rotation = Quaternion.Euler(0, Mathf.SmoothStep(-180, 0, i), 0);
             endDoorRight.transform.rotation = Quaternion.Euler(0, Mathf.SmoothStep(0, -180, i), 0);
             yield return null;
         }
-
-        StartCoroutine(celebratePlayers());
-        while (true) {
-            StartCoroutine(shamePlayers());
-            yield return new WaitForSeconds(600);
-            gameManager.self.ResetGame();
+    movingDoors=false;
+    }
+    private IEnumerator closeDoors() {
+        for (float i = 0f; i < 1f; i+= 1f / doorSpeed) {
+            endDoorLeft.transform.rotation = Quaternion.Euler(0, Mathf.SmoothStep(0,-180, i), 0);
+            endDoorRight.transform.rotation = Quaternion.Euler(0, Mathf.SmoothStep(-180,0, i), 0);
+            yield return null;
         }
+    movingDoors=false;
+
+        
+
     }
 
     public float radius;
@@ -103,6 +125,7 @@ public class endingManager : MonoBehaviour {
     }
 
     public Vector3 loserLocation;
+
     private IEnumerator shamePlayers() {
         foreach (Transform t in losers) {
             t.Find("trail").gameObject.SetActive(false);

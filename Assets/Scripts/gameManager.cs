@@ -33,7 +33,8 @@ public class gameManager : MonoBehaviour {
 	}
 
 	private void Start() {
-		if (!GameObject.Find("Input")) ResetGame();
+		//if (!GameObject.Find("Input")) ResetGame();
+		
 	}
 
 	public void DisableGameSounds() {
