@@ -70,7 +70,7 @@ public class player : MonoBehaviour {
 	public void Update() {
 		if(cutscene) return;
 
-		if(transform.position.y < -1 && !fallingOut) StartCoroutine(fallout());
+		if(transform.position.y < -3.5f && !fallingOut) StartCoroutine(fallout());
 		eyeGear.speed = rotationSpeed;
 		
 		speed = Mathf.Lerp(speed, speedTarget, Time.deltaTime * 2);
@@ -192,7 +192,7 @@ public class player : MonoBehaviour {
 	private IEnumerator fallout(){
 		fallingOut = true;
 		gamestateVisuals.fallOut(transform.position);
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(4f);
 		Reset();
 		fallingOut = false;
 	}

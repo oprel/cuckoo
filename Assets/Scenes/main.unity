@@ -725,7 +725,7 @@ PrefabInstance:
     - target: {fileID: 406454598900886874, guid: ee4758a7f33ac7644a824aa28e8271d8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.140929
+      value: 9.7
       objectReference: {fileID: 0}
     - target: {fileID: 406454598900886874, guid: ee4758a7f33ac7644a824aa28e8271d8,
         type: 3}
@@ -735,7 +735,7 @@ PrefabInstance:
     - target: {fileID: 406454598900886874, guid: ee4758a7f33ac7644a824aa28e8271d8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 30.5046
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 406454598900886874, guid: ee4758a7f33ac7644a824aa28e8271d8,
         type: 3}
@@ -1442,13 +1442,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 181100166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c58c0342fa0d94d8270464f7606c61, type: 3}
+  m_Script: {fileID: 11500000, guid: 94202b304b0646341a1f5790dcada846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trashPrefab: []
-  maxTrash: 3
+  maxTrash: 4
   energyUntilHit: 2
-  hitsUntilDrop: 2
+  hitsUntilDrop: 1
 --- !u!1 &184113529
 GameObject:
   m_ObjectHideFlags: 0
@@ -7815,18 +7814,7 @@ MonoBehaviour:
     focusOnTarget: 1
     postEvent:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1998128390}
-          m_MethodName: CloseDoors
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   - name: Focus on Player Blue
@@ -10556,7 +10544,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1311937653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11945,7 +11933,7 @@ PrefabInstance:
     - target: {fileID: 8612633017090886949, guid: 7c661b1e2ddc2fd48823e8f5ee064fc1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.888327
+      value: -9.9
       objectReference: {fileID: 0}
     - target: {fileID: 8612633017090886949, guid: 7c661b1e2ddc2fd48823e8f5ee064fc1,
         type: 3}
@@ -11955,7 +11943,7 @@ PrefabInstance:
     - target: {fileID: 8612633017090886949, guid: 7c661b1e2ddc2fd48823e8f5ee064fc1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8612633017090886949, guid: 7c661b1e2ddc2fd48823e8f5ee064fc1,
         type: 3}
@@ -14326,7 +14314,7 @@ MonoBehaviour:
     type: 3}
   falloutParticles: {fileID: 8257213516218503999, guid: e6686298e80c40142a11a576f839a48d,
     type: 3}
-  stunnedParticles: {fileID: 3617585793518345536, guid: 09879bae0333eb2409a9d6a0b58ed06f,
+  stunnedParticles: {fileID: 8257213516218503999, guid: 09879bae0333eb2409a9d6a0b58ed06f,
     type: 3}
   areaLight: {fileID: 2126251350}
   tickSpeed: 1

@@ -62,10 +62,6 @@ public class gamestateVisuals : MonoBehaviour {
 		displayScore();
 	}
 
-	public void CloseDoors() {
-		for(int i = 0; i < doorRed.transform.childCount; i++) doorRed.transform.GetChild(i).gameObject.SetActive(false);
-		for(int i = 0; i < doorBlue.transform.childCount; i++) doorBlue.transform.GetChild(i).gameObject.SetActive(false);
-	}
 
 	void Update () {
 		hand.transform.localScale = new Vector3(handBaseScale + Mathf.Sin(tickTime * 7) / 40, handBaseScale, hand.transform.localScale.z);
@@ -74,7 +70,7 @@ public class gamestateVisuals : MonoBehaviour {
 			clockLight.intensity = Mathf.Lerp(clockLight.intensity, 0, Time.deltaTime * 1);
 
 		} 
-		if (playerManager.self.isCutscenePlaying()) return;
+ 		if (playerManager.self.isCutscenePlaying()) return;
 		scoreLeft = gameManager.self.scoreLeft;
 		scoreRight = gameManager.self.scoreRight;
 		
@@ -164,13 +160,17 @@ public class gamestateVisuals : MonoBehaviour {
 	public static void scoreFeedback(bool leftGoal, int change) {
 		hitStun();
 		displayScore();
+		GameObject obj;
 		if (leftGoal) {
-			self.msgleft.speedChange(change > 0);
-			Instantiate(self.scoreParticles, particlePos(self.gearLeft.transform.position), self.scoreParticles.transform.rotation);
+			//self.msgleft.speedChange(change > 0);
+			obj = Instantiate(self.scoreParticles, particlePos(self.gearLeft.transform.position), self.scoreParticles.transform.rotation);
+			obj.GetComponentInChildren<TextMeshPro>().text="RED\nSCORES";
 		} else {
-			self.msgright.speedChange(change > 0);
-			Instantiate(self.scoreParticles, particlePos(self.gearRight.transform.position), self.scoreParticles.transform.rotation);
+			//self.msgright.speedChange(change > 0);
+			obj = Instantiate(self.scoreParticles, particlePos(self.gearRight.transform.position), self.scoreParticles.transform.rotation);
+			obj.GetComponentInChildren<TextMeshPro>().text="BLUE\nSCORES";
 		}
+		
 	}
 
 	public static Vector3 particlePos(Vector3 pos) {
