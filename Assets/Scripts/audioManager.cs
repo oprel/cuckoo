@@ -78,7 +78,7 @@ public class audioManager : MonoBehaviour {
 
 	void FixedUpdate() {
 		if(!boostMusic) mainBassSrc.mute = mainDrumsSrc.mute = mainMelodySrc.mute = muteMusic;
-		mainBassSrc.timeSamples = mainMelodySrc.timeSamples = mainDrumsSrc.timeSamples;
+		if(mainDrumsSrc.isPlaying) mainBassSrc.timeSamples = mainMelodySrc.timeSamples = mainDrumsSrc.timeSamples;
 
 		if(!boostMusic) foreach(Voice v in voices) v.Update();
 
