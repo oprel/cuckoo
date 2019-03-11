@@ -82,7 +82,7 @@ public class gameManager : MonoBehaviour {
 		audioManager.PLAY_STATIONARY("Collect", 0.1f, Random.Range(0.4f, 0.6f));
 		self.camShaker.ShakeCamera(0.15f, 0.1f);
 		foreach (trashSpawner p in self.planks) if(Random.Range(0, 10) < 3) p.scored();
-		gamestateVisuals.scoreFeedback(true,i);
+		gamestateVisuals.scoreFeedback(false,i);
 		
 	}
 
@@ -92,6 +92,6 @@ public class gameManager : MonoBehaviour {
 		audioManager.PLAY_STATIONARY("Collect", 0.1f, Random.Range(0.4f, 0.6f));
 		self.camShaker.ShakeCamera(0.15f, 0.1f);
 		foreach (trashSpawner p in self.planks) if(Random.Range(0, 10) < 3) p.scored();
-		gamestateVisuals.scoreFeedback(false,i);
+		gamestateVisuals.scoreFeedback(true,i);
 	}
 }

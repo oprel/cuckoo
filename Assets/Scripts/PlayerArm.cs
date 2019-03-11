@@ -20,8 +20,9 @@ public class PlayerArm : MonoBehaviour {
 	}
 
 	public void Activate(GameObject target) {
-		this.target = target;
 		gameObject.SetActive(true);
+		Start();
+		this.target = target;
 		this.target.GetComponent<player>().cutscene = true;
 		target.transform.position = holdJoint.transform.position; 
 		Rigidbody rb = target.GetComponent<Rigidbody>();
@@ -35,7 +36,6 @@ public class PlayerArm : MonoBehaviour {
 			endingManager.moveDoors(true);
 			for (float i = 0; i < 1; i+=1f/animationSpeed)
 			{
-				Debug.Log(i);
 				float tar = animationCurve.Evaluate(i)* extensionLength + baseScale;
 				armSprite.localScale = new Vector3(armBase.x, tar, armBase.z);
 				yield return null;

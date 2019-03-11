@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class trashManager : MonoBehaviour {
-    void FixedUpdate() {
-        trashSpawner.trashAmount = CountTrash();
+    public int maxTrash = 4;
+    public static int trashAmount;
+    public static trashManager self;
+    public float energyUntilHit = 2;
+    public int hitsUntilDrop = 1;
+
+    void Awake() {
+        self = this;
     }
 
-    private int CountTrash() {
+    public static int CountTrash() {
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Trash");
 		int num = 0;
 		foreach(GameObject ball in balls) if(ball.GetComponent<Rigidbody>() != null && !ball.GetComponent<Rigidbody>().isKinematic) num++;
-		return num;
+		trashAmount = num;
+        return num;
     }
 }

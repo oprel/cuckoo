@@ -5,11 +5,6 @@ using UnityEngine;
 public class trashSpawner : MonoBehaviour {
     public GameObject[] trashPrefab;
 
-	public static int trashAmount;
-    public int maxTrash = 3;
-
-    public float energyUntilHit = 2;
-    public int hitsUntilDrop = 2;
     private GameObject dropPoint;
     private float spawnDelay = 0;
     private int hit = 0;
@@ -36,7 +31,8 @@ public class trashSpawner : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if(other.tag == "Hitter" && item != null && shakeDelay <= 0) {
-            if(other.GetComponentInParent<player>().energy > energyUntilHit && trashAmount < maxTrash) {// && Mathf.Abs(other.transform.localEulerAngles.y) < 45) {
+            trashManager.CountTrash();
+            if(other.GetComponentInParent<player>().energy > trashManager.self.energyUntilHit && trashManager.trashAmount < trashManager.self.maxTrash) {// && Mathf.Abs(other.transform.localEulerAngles.y) < 45) {
                 hit += 3;
                 shakeDelay = 3;
                 audioManager.PLAY_SOUND("Hit", transform.position, 1200, Random.Range(0.9f, 1.2f));
@@ -49,13 +45,15 @@ public class trashSpawner : MonoBehaviour {
     private void Shake() {
         shake = 3;
         Camera.main.GetComponent<cameraShake>().ShakeCamera(0.25f, 0.05f);
-        if(hit >= hitsUntilDrop) DropItem();
+        if(hit >= trashManager.self.hitsUntilDrop) DropItem();
     }
 
     public void scored() {
+        trashManager.CountTrash();
+        if(trashManager.trashAmount >= trashManager.self.maxTrash) return;
         shakeDelay = 5;
         hit++;
-        if(hit >= hitsUntilDrop) DropItem();
+        if(hit >= trashManager.self.hitsUntilDrop) DropItem();
     }
 
     private GameObject SpawnItem() {
