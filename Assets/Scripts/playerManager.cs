@@ -108,8 +108,7 @@ public class playerManager : MonoBehaviour {
 				if(imp != impulses[i].lastImpulse && !impulses[i].shouldImpulse) impulses[i].shouldImpulse = true;
 				if(imp == impulses[i].lastImpulse && impulses[i].shouldImpulse) {	
 					impulses[i].shouldImpulse = false;
-					impulses[i].energy += 0.5f;
-					if(impulses[i].energy > 10) impulses[i].energy = 10;
+					if(impulses[i].energy + 0.5f < 10) impulses[i].energy += 0.5f;
 					continue;
 				}
 			} catch(System.IndexOutOfRangeException) {}
@@ -121,10 +120,12 @@ public class playerManager : MonoBehaviour {
 						for(int i = 0; i < leftPlayers.Count; i++) {
 							leftInput[i].direction = rotations[i];
 							if(!leftPlayers[i].isStunned()) leftInput[i].energy += impulses[i].energy;
+							leftInput[i].energy = Mathf.Clamp(leftInput[i].energy, 0, 10);
 						}
 						for(int i = 0; i < rightPlayers.Count; i++) {
 							rightInput[i].direction = rotations[i + 3];
 							if(!rightPlayers[i].isStunned()) rightInput[i].energy += impulses[i + 3].energy;
+							rightInput[i].energy = Mathf.Clamp(rightInput[i].energy, 0, 10);
 						}
 					}
 					catch(KeyNotFoundException) {}

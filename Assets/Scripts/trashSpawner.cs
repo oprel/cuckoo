@@ -5,7 +5,7 @@ using UnityEngine;
 public class trashSpawner : MonoBehaviour {
     public GameObject[] trashPrefab;
 
-	private static int trashAmount;
+	public static int trashAmount;
     public int maxTrash = 3;
 
     public float energyUntilHit = 2;
@@ -21,21 +21,12 @@ public class trashSpawner : MonoBehaviour {
 
     void Start() {
         dropPoint = transform.Find("Drop").gameObject;
-        trashAmount = CountTrash();
-    }
-
-    private int CountTrash() {
-        GameObject[] balls = GameObject.FindGameObjectsWithTag("Trash");
-		int num = 0;
-		foreach(GameObject ball in balls) num++;
-		return num;
     }
 
     void FixedUpdate() {
-        trashAmount = CountTrash();
         if(shakeDelay > 0) shakeDelay -= Time.deltaTime;
         if(spawnDelay > 0) spawnDelay -= Time.deltaTime;
-        if(item == null && spawnDelay <= 0 && trashAmount < maxTrash) item = SpawnItem();
+        if(item == null && spawnDelay <= 0) item = SpawnItem();
         if(shake > 0) {
             shake -= Time.deltaTime;
             transform.rotation = Quaternion.Euler(Mathf.Sin(shake*shake), Mathf.Cos(shake*shake*5)*2, Mathf.Sin(shake*shake));
@@ -45,9 +36,9 @@ public class trashSpawner : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if(other.tag == "Hitter" && item != null && shakeDelay <= 0) {
-            if(other.GetComponentInParent<player>().energy > energyUntilHit && Mathf.Abs(other.transform.localEulerAngles.y) < 45) {
-                hit++;
-                shakeDelay = 5;
+            if(other.GetComponentInParent<player>().energy > energyUntilHit && trashAmount < maxTrash) {// && Mathf.Abs(other.transform.localEulerAngles.y) < 45) {
+                hit += 3;
+                shakeDelay = 3;
                 audioManager.PLAY_SOUND("Hit", transform.position, 1200, Random.Range(0.9f, 1.2f));
                 audioManager.PLAY_SOUND("Collide", transform.position, 1200, Random.Range(0.9f, 1.2f));
                 Shake();
@@ -81,7 +72,7 @@ public class trashSpawner : MonoBehaviour {
         item.transform.SetParent(null);
         item.GetComponent<Rigidbody>().isKinematic = false;
         Vector3 dir = -item.transform.position.normalized * Random.Range(100,300);
-        dir.y = 0 ;
+        dir.y = 0;
         item.GetComponent<Rigidbody>().AddForce(dir);
         item = null;
         spawnDelay = 10;
